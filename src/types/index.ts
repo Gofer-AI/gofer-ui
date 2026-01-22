@@ -1,39 +1,60 @@
 export interface Video {
-  id: string;              // UUID
-  title: string;
-  source_url?: string;     // Video file URL for uploaded videos
-  duration_seconds: number;
-  thumbnail_url: string;
-  status: "processing" | "indexed" | "failed";
-  created_at: string;      // ISO timestamp
-  segment_count: number;
+  video_id: string;         // UUID
+  task_name: string;        // e.g., "pick_up_cup"
+  task_description: string; // e.g., "Picking up a cup from desk"
+  filename: string;
+  blob_url: string;
+  size_mb: number;
+  uploaded_at: string;      // ISO timestamp
+  status: "queued" | "processing" | "indexed" | "failed";
 }
 
-export interface SearchResult {
-  segment_id: string;
+export interface FrameResult {
+  frame_id: string;
   video_id: string;
-  video_title: string;
-  start_time: number;            // seconds
-  end_time: number;              // seconds
-  score: number;                 // similarity score 0-1
-  thumbnail_url: string;
-  visual_context: string;        // text description from Azure AI Vision
-  transcript_snippet?: string;   // optional
-  ai_summary?: string;          // optional GPT-4o summary (only if include_summary=true)
+  task_name: string;
+  task_description: string;
+  video_filename: string;
+  blob_url: string;
+  frame_number: number;
+  timestamp: number;            // seconds
+  description: string;          // multimodal description
+  similarity_score: number;     // 0-1
 }
 
 export interface SearchParams {
   query: string;
-  video_id?: string;        // optional: search within specific video
-  top_k?: number;           // default: 10
-  include_summary?: boolean // default: false
+  video_id?: string;        // optional: filter by specific video
+  task_name?: string;       // optional: filter by task
+  top_k?: number;           // default: 5
 }
 
 export interface SearchResponse {
-  results: SearchResult[];
-  query_time_ms: number;
+  query: string;
+  results: FrameResult[];
+  total: number;
 }
 
-export interface VideosResponse {
+export interface VideoListResponse {
   videos: Video[];
+  total: number;
+}
+
+export interface UploadResponse {
+  job_id: string;
+  task_name: string;
+  task_description: string;
+  status: string;
+  message: string;
+}
+
+export interface VideoClipInfo {
+  video_url: string;
+  clip_start: number;
+  clip_end: number;
+  seek_to: number;
+  duration: number;
+  video_id: string;
+  task_name: string;
+  task_description: string;
 }

@@ -1,12 +1,13 @@
 import { useState, useRef } from 'react';
 import { QueryClient, QueryClientProvider, useMutation } from '@tanstack/react-query';
 import Header from './components/Header';
+import VideoUpload from './components/VideoUpload';
 import ControlsPanel from './components/ControlsPanel';
 import VideoPlayer from './components/VideoPlayer';
 import type { VideoPlayerRef } from './components/VideoPlayer';
 import ResultsList from './components/ResultsList';
-import { searchVideos } from './api/client';
-import type { SearchResult } from './types';
+import { searchFrames, getVideoStreamUrl, getVideoClip } from './api/client';
+import type { FrameResult } from './types';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -18,21 +19,19 @@ const queryClient = new QueryClient({
 });
 
 function AppContent() {
-  const [uploadedVideo, setUploadedVideo] = useState<File | null>(null);
+  const [currentVideoId, setCurrentVideoId] = useState<string | null>(null);
+  const [currentTaskName, setCurrentTaskName] = useState<string | null>(null);
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
-  const [demoMode, setDemoMode] = useState(false);
-  const [searchResults, setSearchResults] = useState<SearchResult[]>([]);
-  const [queryTime, setQueryTime] = useState<number | undefined>();
+  const [searchResults, setSearchResults] = useState<FrameResult[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   const videoPlayerRef = useRef<VideoPlayerRef>(null);
 
   // Search mutation
   const searchMutation = useMutation({
-    mutationFn: searchVideos,
+    mutationFn: searchFrames,
     onSuccess: (data) => {
       setSearchResults(data.results);
-      setQueryTime(data.query_time_ms);
       setError(null);
     },
     onError: (err) => {
@@ -41,46 +40,45 @@ function AppContent() {
     },
   });
 
-  // Handle video upload
-  const handleVideoUpload = (file: File) => {
-    setUploadedVideo(file);
-    // Create a URL for the video to play in the player
-    const url = URL.createObjectURL(file);
-    setVideoUrl(url);
+  // Handle video upload success
+  const handleUploadSuccess = (jobId: string, taskName: string) => {
+    setCurrentVideoId(jobId);
+    setCurrentTaskName(taskName);
+    setVideoUrl(getVideoStreamUrl(jobId));
     setError(null);
-  };
-
-  // Handle demo mode toggle
-  const handleDemoModeToggle = () => {
-    setDemoMode(!demoMode);
-    if (!demoMode) {
-      setUploadedVideo(null);
-      if (videoUrl) {
-        URL.revokeObjectURL(videoUrl);
-        setVideoUrl(null);
-      }
-      setSearchResults([]);
-    }
+    setSearchResults([]);
   };
 
   // Handle search
-  const handleSearch = (query: string, topK: number, includeSummary: boolean) => {
-    if (!uploadedVideo && !demoMode) {
-      setError('Please upload a video first');
-      return;
-    }
-
+  const handleSearch = (query: string, topK: number) => {
     searchMutation.mutate({
       query,
-      video_id: demoMode ? 'demo-video-001' : undefined,
+      video_id: currentVideoId || undefined,
+      task_name: currentTaskName || undefined,
       top_k: topK,
-      include_summary: includeSummary,
     });
   };
 
-  // Handle jump to timestamp
-  const handleJumpToTime = (time: number) => {
-    videoPlayerRef.current?.seekTo(time);
+  // Handle jump to timestamp - loads clip and seeks
+  const handleJumpToTime = async (videoId: string, time: number) => {
+    try {
+      // Fetch clip info
+      const clipInfo = await getVideoClip(videoId, time, 2.0);
+
+      // Update video if different from current
+      if (videoId !== currentVideoId) {
+        setCurrentVideoId(videoId);
+        setVideoUrl(`http://localhost:8000${clipInfo.video_url}`);
+      }
+
+      // Seek to exact timestamp after video loads
+      setTimeout(() => {
+        videoPlayerRef.current?.seekTo(clipInfo.seek_to);
+      }, 100);
+    } catch (err) {
+      setError('Failed to load video clip');
+      console.error('Error loading clip:', err);
+    }
   };
 
   return (
@@ -97,15 +95,15 @@ function AppContent() {
 
         {/* Main Layout */}
         <div className="flex flex-col lg:flex-row gap-6">
-          {/* Left Column - Controls */}
-          <ControlsPanel
-            onVideoUpload={handleVideoUpload}
-            uploadedVideoName={uploadedVideo?.name || null}
-            demoMode={demoMode}
-            onDemoModeToggle={handleDemoModeToggle}
-            onSearch={handleSearch}
-            isSearching={searchMutation.isPending}
-          />
+          {/* Left Column - Upload & Controls */}
+          <div className="lg:w-96 space-y-6">
+            <VideoUpload onUploadSuccess={handleUploadSuccess} />
+            <ControlsPanel
+              onSearch={handleSearch}
+              isSearching={searchMutation.isPending}
+              hasVideo={!!currentVideoId}
+            />
+          </div>
 
           {/* Right Column - Video & Results */}
           <div className="flex-grow space-y-6">
@@ -113,15 +111,21 @@ function AppContent() {
             <VideoPlayer
               ref={videoPlayerRef}
               videoUrl={videoUrl || undefined}
-              title={uploadedVideo?.name}
+              title={currentTaskName || 'No video loaded'}
             />
 
             {/* Search Results */}
             <div className="bg-white rounded-lg border border-gray-200 p-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">Search Results</h2>
+              <h2 className="text-lg font-semibold text-gray-900 mb-4">
+                Search Results
+                {searchResults.length > 0 && (
+                  <span className="ml-2 text-sm font-normal text-gray-500">
+                    ({searchResults.length} frames found)
+                  </span>
+                )}
+              </h2>
               <ResultsList
                 results={searchResults}
-                queryTime={queryTime}
                 onJumpToTime={handleJumpToTime}
                 isLoading={searchMutation.isPending}
               />
