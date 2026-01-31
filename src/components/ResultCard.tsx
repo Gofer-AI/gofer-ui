@@ -5,9 +5,19 @@ interface ResultCardProps {
   result: FrameResult;
   onJump: (time: number) => void;
   isActive: boolean;
+  selectable?: boolean;
+  selected?: boolean;
+  onSelect?: (selected: boolean) => void;
 }
 
-export default function ResultCard({ result, onJump, isActive }: ResultCardProps) {
+export default function ResultCard({
+  result,
+  onJump,
+  isActive,
+  selectable = false,
+  selected = false,
+  onSelect
+}: ResultCardProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [showCopyNotification, setShowCopyNotification] = useState(false);
 
@@ -28,12 +38,24 @@ export default function ResultCard({ result, onJump, isActive }: ResultCardProps
   return (
     <div
       className={`border rounded-lg p-4 transition-all ${
-        isActive ? 'border-blue-500 bg-blue-50' : 'border-gray-200 bg-white hover:border-gray-300'
+        isActive ? 'border-blue-500 bg-blue-50' :
+        selected ? 'border-green-500 bg-green-50' :
+        'border-gray-200 bg-white hover:border-gray-300'
       }`}
     >
       <div className="space-y-3">
         {/* Header */}
         <div className="flex items-start justify-between gap-2">
+          {/* Checkbox for selection */}
+          {selectable && (
+            <input
+              type="checkbox"
+              checked={selected}
+              onChange={(e) => onSelect?.(e.target.checked)}
+              className="mt-1 h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded flex-shrink-0"
+            />
+          )}
+
           <div className="flex-grow min-w-0">
             <h3 className="font-semibold text-gray-900">
               Frame {result.frame_number} @ {formatTime(result.timestamp)}

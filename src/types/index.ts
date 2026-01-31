@@ -58,3 +58,32 @@ export interface VideoClipInfo {
   task_name: string;
   task_description: string;
 }
+
+// FreeMoCap Types - aligned with existing backend models
+export interface ClipRequest {
+  video_id: string;
+  start_time: number;
+  end_time: number;
+  task_name: string;
+  task_description: string;
+}
+
+export interface ClipResult {
+  clip_id: string | null;
+  video_id: string;
+  start_time: number;
+  end_time: number;
+  clip_url: string | null;
+  job_id: string | null;
+  status: string;  // "sent" or "failed"
+  error: string | null;
+}
+
+export interface BatchImportResponse {
+  batch_id: string;
+  total_clips: number;
+  submitted: number;
+  failed: number;
+  results: ClipResult[];
+  message: string;
+}

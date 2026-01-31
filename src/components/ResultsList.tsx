@@ -6,12 +6,20 @@ interface ResultsListProps {
   results: FrameResult[];
   onJumpToTime: (videoId: string, time: number) => void;
   isLoading: boolean;
+  hasSearched: boolean;
+  selectable?: boolean;
+  selectedIds?: Set<string>;
+  onSelect?: (result: FrameResult, selected: boolean) => void;
 }
 
 export default function ResultsList({
   results,
   onJumpToTime,
-  isLoading
+  isLoading,
+  hasSearched,
+  selectable = false,
+  selectedIds = new Set(),
+  onSelect
 }: ResultsListProps) {
   const [activeFrameId, setActiveFrameId] = useState<string | null>(null);
 
@@ -34,7 +42,17 @@ export default function ResultsList({
   if (results.length === 0) {
     return (
       <div className="text-center py-12 bg-gray-50 rounded-lg">
-        <p className="text-gray-600">No results yet. Upload a video and try searching.</p>
+        {hasSearched ? (
+          <div>
+            <p className="text-gray-600 font-medium">No matching frames found</p>
+            <p className="text-sm text-gray-500 mt-2">Try a different search query or upload more videos</p>
+          </div>
+        ) : (
+          <div>
+            <p className="text-gray-600 font-medium">Ready to search</p>
+            <p className="text-sm text-gray-500 mt-2">Enter a search query above to find specific actions in your videos</p>
+          </div>
+        )}
       </div>
     );
   }
@@ -49,6 +67,9 @@ export default function ResultsList({
             result={result}
             onJump={(time) => handleJump(result.video_id, time, result.frame_id)}
             isActive={activeFrameId === result.frame_id}
+            selectable={selectable}
+            selected={selectedIds.has(result.frame_id)}
+            onSelect={(selected) => onSelect?.(result, selected)}
           />
         ))}
       </div>

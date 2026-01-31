@@ -1,10 +1,19 @@
 import { API_BASE_URL } from '../constants';
-import type { VideoListResponse, SearchParams, SearchResponse, UploadResponse, VideoClipInfo } from '../types';
+import type {
+  SearchParams,
+  SearchResponse,
+  UploadResponse,
+  VideoClipInfo,
+  ClipRequest,
+  BatchImportResponse
+} from '../types';
 
-export async function fetchVideos(): Promise<VideoListResponse> {
-  const res = await fetch(`${API_BASE_URL}/videos/list`);
-  if (!res.ok) throw new Error('Failed to fetch videos');
-  return res.json();
+interface FreeMoCapStatusResponse {
+  session_id: string;
+  status: string;
+  progress?: number;
+  message?: string;
+  error?: string;
 }
 
 export async function searchFrames(params: SearchParams): Promise<SearchResponse> {
@@ -57,4 +66,42 @@ export async function checkAPIStatus(): Promise<boolean> {
   } catch {
     return false;
   }
+}
+
+// FreeMoCap Integration - uses existing /clips/batch-import-to-freemocap endpoint
+export async function batchProcessClipsForFreeMoCap(
+  clips: ClipRequest[],
+  freemocapEndpoint?: string
+): Promise<BatchImportResponse> {
+  const res = await fetch(`${API_BASE_URL}/clips/batch-import-to-freemocap`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      clips,
+      freemocap_endpoint: freemocapEndpoint,
+      processing_params: {
+        extract_3d_pose: true,
+        output_format: "json",
+        fps: 30
+      }
+    })
+  });
+
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.detail || 'Failed to submit batch');
+  }
+
+  return res.json();
+}
+
+export async function getFreeMoCapStatus(sessionId: string): Promise<FreeMoCapStatusResponse> {
+  const res = await fetch(`${API_BASE_URL}/freemocap/status/${sessionId}`);
+
+  if (!res.ok) {
+    const error = await res.json();
+    throw new Error(error.detail || 'Failed to get status');
+  }
+
+  return res.json();
 }

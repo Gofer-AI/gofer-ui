@@ -10,13 +10,3 @@ export const EXAMPLE_QUERIES = [
   "person standing still",
   "object on counter"
 ];
-
-// Example task names
-export const EXAMPLE_TASKS = [
-  "pick_up_cup",
-  "grasp_bottle",
-  "pour_water",
-  "open_door",
-  "place_object",
-  "reach_and_grasp"
-];
