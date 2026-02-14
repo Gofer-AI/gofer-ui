@@ -27,3 +27,13 @@ dist-ssr
 .env
 .env.local
 .env.production
+
+# Firebase service account keys (NEVER commit these)
+FireBase/
+*.json
+!tsconfig*.json
+!package*.json
+
+# Internal docs
+claude.md
+LABLAB_INTEGRATION.md

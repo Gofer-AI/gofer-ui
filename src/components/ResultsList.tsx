@@ -1,25 +1,31 @@
 import { useState } from 'react';
-import type { SearchResult } from '../types';
+import type { FrameResult } from '../types';
 import ResultCard from './ResultCard';
 
 interface ResultsListProps {
-  results: SearchResult[];
-  queryTime?: number;
-  onJumpToTime: (time: number, segmentId: string) => void;
+  results: FrameResult[];
+  onJumpToTime: (videoId: string, time: number) => void;
   isLoading: boolean;
+  hasSearched: boolean;
+  selectable?: boolean;
+  selectedIds?: Set<string>;
+  onSelect?: (result: FrameResult, selected: boolean) => void;
 }
 
 export default function ResultsList({
   results,
-  queryTime,
   onJumpToTime,
-  isLoading
+  isLoading,
+  hasSearched,
+  selectable = false,
+  selectedIds = new Set(),
+  onSelect
 }: ResultsListProps) {
-  const [activeSegmentId, setActiveSegmentId] = useState<string | null>(null);
+  const [activeFrameId, setActiveFrameId] = useState<string | null>(null);
 
-  const handleJump = (time: number, segmentId: string) => {
-    setActiveSegmentId(segmentId);
-    onJumpToTime(time, segmentId);
+  const handleJump = (videoId: string, time: number, frameId: string) => {
+    setActiveFrameId(frameId);
+    onJumpToTime(videoId, time);
   };
 
   if (isLoading) {
@@ -36,31 +42,34 @@ export default function ResultsList({
   if (results.length === 0) {
     return (
       <div className="text-center py-12 bg-gray-50 rounded-lg">
-        <p className="text-gray-600">No results yet. Try an example query.</p>
+        {hasSearched ? (
+          <div>
+            <p className="text-gray-600 font-medium">No matching frames found</p>
+            <p className="text-sm text-gray-500 mt-2">Try a different search query or upload more videos</p>
+          </div>
+        ) : (
+          <div>
+            <p className="text-gray-600 font-medium">Ready to search</p>
+            <p className="text-sm text-gray-500 mt-2">Enter a search query above to find specific actions in your videos</p>
+          </div>
+        )}
       </div>
     );
   }
 
   return (
     <div className="space-y-4">
-      {/* Metadata */}
-      <div className="flex items-center justify-between text-sm text-gray-600">
-        <span>
-          Found {results.length} result{results.length !== 1 ? 's' : ''}
-        </span>
-        {queryTime !== undefined && (
-          <span>in {queryTime.toFixed(0)} ms</span>
-        )}
-      </div>
-
       {/* Results */}
       <div className="space-y-3">
         {results.map((result) => (
           <ResultCard
-            key={result.segment_id}
+            key={result.frame_id}
             result={result}
-            onJump={(time) => handleJump(time, result.segment_id)}
-            isActive={activeSegmentId === result.segment_id}
+            onJump={(time) => handleJump(result.video_id, time, result.frame_id)}
+            isActive={activeFrameId === result.frame_id}
+            selectable={selectable}
+            selected={selectedIds.has(result.frame_id)}
+            onSelect={(selected) => onSelect?.(result, selected)}
           />
         ))}
       </div>
