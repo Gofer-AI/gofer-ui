@@ -87,3 +87,70 @@ export interface BatchImportResponse {
   results: ClipResult[];
   message: string;
 }
+
+// Semantic Search Result (matches /search_videos response)
+export interface SearchResult {
+  video_id: string;
+  similarity: number;
+  task: string;
+  objects: string[];
+  actions: string[];
+  created_at: string;
+  video_url?: string;
+}
+
+export interface SearchResultsResponse {
+  query: string;
+  top_k: number;
+  results: SearchResult[];
+}
+
+// R2R2R Response
+export interface R2R2RResponse {
+  video_id: string;
+  output_video: string;
+  output_hdf: string;
+  backend_metadata: Record<string, unknown>;
+}
+
+// LabLab Backend Types
+export interface ActionPrimitive {
+  primitive: "reach" | "grasp" | "lift" | "place" | "push" | "pull" | "rotate" | "walk" | "turn" | "release" | "hold" | "other";
+  args: {
+    acted_object: string | null;
+    hand: "left" | "right" | "both" | null;
+    direction: string | null;
+  };
+  confidence: number;
+}
+
+export interface WindowResult {
+  start_time_sec: number;
+  end_time_sec: number;
+  action_primitives: ActionPrimitive[];
+  scene_objects: string[];
+  notes: string | null;
+}
+
+export interface LabLabUploadResponse {
+  video_id: string;
+  path: string;
+}
+
+export interface LabLabAnalysisResponse {
+  video_id: string;
+  video_path: string;
+  native_fps: number;
+  target_fps: number;
+  sample_step: number;
+  num_keyframes: number;
+  num_windows: number;
+  window_results: WindowResult[];
+  aggregated_analysis?: {
+    task: string;
+    actions: string[];
+    objects: string[];
+    duration_sec: number;
+  };
+  stored_in_vector_db?: boolean;
+}
