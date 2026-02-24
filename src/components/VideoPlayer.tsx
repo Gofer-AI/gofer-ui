@@ -1,14 +1,39 @@
 import { useRef, useImperativeHandle, forwardRef } from 'react';
 
+/**
+ * Props for VideoPlayer component
+ */
 interface VideoPlayerProps {
+  /** URL of the video to play */
   videoUrl?: string;
+  /** Optional title to display below the video */
   title?: string;
 }
 
+/**
+ * Imperative handle interface for VideoPlayer ref
+ */
 export interface VideoPlayerRef {
+  /** Seek to a specific time in the video and start playing */
   seekTo: (time: number) => void;
 }
 
+/**
+ * VideoPlayer Component
+ *
+ * HTML5 video player with ref-based controls for programmatic seeking.
+ * Displays a placeholder when no video URL is provided.
+ *
+ * @example
+ * ```tsx
+ * const playerRef = useRef<VideoPlayerRef>(null);
+ *
+ * // Seek to timestamp
+ * playerRef.current?.seekTo(30.5);
+ *
+ * <VideoPlayer ref={playerRef} videoUrl={url} title="Demo Video" />
+ * ```
+ */
 const VideoPlayer = forwardRef<VideoPlayerRef, VideoPlayerProps>(
   ({ videoUrl, title }, ref) => {
     const videoRef = useRef<HTMLVideoElement>(null);

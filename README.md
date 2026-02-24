@@ -1,237 +1,330 @@
-# Gofer AI - Frontend
+# Gofer AI - Frontend UI
 
-Semantic Video Search for Creators
+> Building the Cognitive Layer Between Human Skill & Robotic Execution
 
-This is the frontend web application for Gofer AI, built for the Imagine Cup submission. It provides a clean, intuitive interface for searching videos using semantic queries powered by Azure AI.
+A web interface for robotics researchers to search demonstration videos and process them through the Real2Render2Real (R2R2R) pipeline for robot policy training.
 
-## Features
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-blue.svg)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-19.2-61dafb.svg)](https://reactjs.org/)
+[![Vite](https://img.shields.io/badge/Vite-5.4-646cff.svg)](https://vitejs.dev/)
 
-- **Semantic Video Search**: Search for moments in videos using natural language queries
-- **Timestamp Jumping**: Click to jump directly to relevant segments in the video player
-- **Demo Mode**: Toggle for reliable demos with a pre-indexed video
-- **AI Summaries**: Optional GPT-4o summaries for search results (slower)
-- **Copy Timestamps**: Easy one-click copying of segment timestamps
-- **Real-time API Status**: Visual indicator of backend connectivity
+## Overview
+
+Gofer AI bridges the gap between human demonstrations and robotic execution. This frontend interface allows researchers to:
+
+1. **Upload & Index** demonstration videos
+2. **Search** for specific actions using natural language
+3. **Retrieve** relevant video clips
+4. **Process** through R2R2R pipeline for robotics training
+
+The R2R2R (Real2Render2Real) workflow eliminates the need for physical robot hardware by reconstructing motion from video, generating 3D assets, and training robot policies in simulation.
+
+## Key Features
+
+### Semantic Video Search
+- Natural language queries (e.g., "person reaching for cup", "grasping a bottle")
+- Vector-based similarity search across indexed videos
+- Timestamp navigation to exact moments
+- Preview video clips before processing
+
+### R2R2R Pipeline Integration
+- Upload demonstration videos
+- Process selected clips through R2R2R
+- Download processed outputs:
+  - **Video (MP4)** - Reconstructed motion
+  - **HDF5/JSON** - Robot training data
+
+### Video Management
+- Upload videos with real-time progress (SSE)
+- Support for multiple formats (.mp4, .avi, .mov, .mkv, .webm)
+- AI-powered analysis for action primitive detection
+- Temporal windowing for detailed scene understanding
+
+### Authentication
+- Firebase-based demo access
+- Protected routes for authenticated users
+- Session management
 
 ## Tech Stack
 
-- **React 18** with TypeScript
-- **Vite** for fast development and building
-- **Tailwind CSS** for styling
-- **TanStack Query** (React Query) for API state management
-- **Azure AI Services** (via backend API)
+| Category | Technology | Version |
+|----------|-----------|---------|
+| **Framework** | React | 19.2 |
+| **Language** | TypeScript | 5.9 |
+| **Build** | Vite | 5.4 |
+| **Styling** | Tailwind CSS | 3.4 |
+| **State** | Context API + React Query | 5.90 |
+| **Routing** | React Router | 7.13 |
+| **Auth** | Firebase | 12.9 |
 
-## Prerequisites
+## Getting Started
 
-- Node.js 20.11.0 or higher
-- npm 10.2.4 or higher
-- Backend API running at `http://localhost:8000`
+### Prerequisites
 
-## Installation
+- Node.js 20.11.0+
+- npm 10.2.4+
+- Compatible backend API (provides video search & R2R2R processing)
+
+### Installation
 
 ```bash
-# Install dependencies
+git clone https://github.com/yourusername/gofer-ui.git
+cd gofer-ui
 npm install
 ```
 
-## Configuration
+### Configuration
 
-1. Copy the example environment file:
+Create `.env` file:
+
 ```bash
-cp .env.example .env
-```
-
-2. Update `.env` if your backend is running on a different URL:
-```
+# Backend API URL
 VITE_API_BASE_URL=http://localhost:8000
+
+# Firebase (for demo authentication)
+VITE_FIREBASE_API_KEY=your_api_key
+VITE_FIREBASE_AUTH_DOMAIN=your_project.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=your_project_id
+VITE_FIREBASE_STORAGE_BUCKET=your_project.appspot.com
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+VITE_FIREBASE_APP_ID=your_app_id
+VITE_FIREBASE_MEASUREMENT_ID=your_measurement_id
 ```
 
-3. Update demo video constants in `src/constants.ts`:
-```typescript
-export const DEMO_VIDEO_ID = "your-video-id"; // Replace with actual ID from backend
-```
-
-## Running the Application
-
-### Development Mode
+### Run
 
 ```bash
+# Development
 npm run dev
-```
 
-The app will be available at `http://localhost:5173` (or the next available port).
-
-### Production Build
-
-```bash
-# Build for production
+# Production build
 npm run build
-
-# Preview production build
 npm run preview
 ```
+
+## Workflow
+
+### 1. Upload Mode
+
+```
+Upload Video → AI Analysis → Index for Search
+```
+
+- Upload demonstration videos
+- AI detects action primitives and objects
+- Videos indexed in vector database
+- Real-time processing status via SSE
+
+### 2. Search Mode
+
+```
+Query → Search Results → Select → R2R2R → Download
+```
+
+**Example workflow:**
+1. Enter query: "person grasping a cup"
+2. Review search results with similarity scores
+3. Preview video at specific timestamps
+4. Select video for R2R2R processing
+5. Download MP4 + HDF5 data for robot training
 
 ## Project Structure
 
 ```
 gofer-ui/
 ├── src/
-│   ├── components/          # React components
-│   │   ├── Header.tsx       # Header with logo and API status
-│   │   ├── ControlsPanel.tsx # Video selector and search controls
-│   │   ├── VideoPlayer.tsx  # HTML5 video player with seeking
-│   │   ├── ResultsList.tsx  # Search results container
-│   │   ├── ResultCard.tsx   # Individual result card
-│   │   └── ExampleQueries.tsx # Example query chips
 │   ├── api/
-│   │   └── client.ts        # API fetch wrappers
-│   ├── utils/
-│   │   └── time.ts          # Time formatting utilities
+│   │   └── client.ts             # All backend API calls
+│   ├── components/
+│   │   ├── LabLabDemo.tsx       # Main UI (upload/search)
+│   │   ├── ProcessingStatus.tsx # Real-time SSE status
+│   │   ├── ErrorBoundary.tsx    # Error handling
+│   │   └── ...
+│   ├── context/                  # State management
+│   │   ├── AppContext.tsx       # App mode, errors
+│   │   ├── VideoContext.tsx     # Upload, analysis
+│   │   └── SearchContext.tsx    # Search, results
+│   ├── lib/
+│   │   ├── auth.ts              # Firebase auth
+│   │   └── firebase.ts
+│   ├── pages/
+│   │   ├── Landing.tsx          # Public page
+│   │   └── Login.tsx            # Demo access
 │   ├── types/
-│   │   └── index.ts         # TypeScript interfaces
-│   ├── constants.ts         # App constants and config
-│   ├── App.tsx              # Main app component
-│   ├── main.tsx             # Entry point
-│   └── index.css            # Tailwind CSS imports
-├── .env.example             # Environment variables template
-├── .env                     # Local environment variables
-├── package.json
-├── tsconfig.json
-├── tailwind.config.js
-└── README.md
+│   │   └── index.ts             # TypeScript types
+│   ├── constants.ts              # Config values
+│   ├── AppRouter.tsx             # Routes + providers
+│   └── main.tsx
+└── ...
 ```
 
-## Usage Guide
+## Architecture
 
-### Basic Search Flow
+### State Management
 
-1. **Select a Video**: Choose an indexed video from the dropdown (or enable Demo Mode)
-2. **Enter a Query**: Type a natural language search query
-3. **Configure Options**:
-   - Adjust `top_k` for number of results (1-20)
-   - Toggle "Generate AI summaries" if needed
-4. **Search**: Click the Search button or press Enter
-5. **View Results**: Browse results with thumbnails, scores, and context
-6. **Jump to Timestamp**: Click "Jump" to seek the video to that moment
-7. **Copy Timestamp**: Click "Copy Timestamp" to copy the time range
-
-### Demo Mode
-
-Enable Demo Mode to use a hardcoded demo video:
-- Automatically selects the demo video ID
-- Disables the video selector dropdown
-- Ensures reliable demos even if indexing isn't complete
-- Shows a visual indicator when active
-
-### Example Queries
-
-Try these example queries (available as clickable chips):
-- "explain how the AI model works"
-- "biggest challenge they faced"
-- "showing a product demo on screen"
-
-## API Integration
-
-The frontend communicates with the backend API at `http://localhost:8000`:
-
-### Endpoints Used
-
-1. **GET** `/api/v1/videos` - Fetch indexed videos
-2. **POST** `/api/v1/search` - Search videos with semantic queries
-
-### Expected Response Format
-
-**Videos Response:**
-```json
-{
-  "videos": [
-    {
-      "id": "uuid",
-      "title": "Video Title",
-      "source_url": "video-url",
-      "duration_seconds": 3600,
-      "thumbnail_url": "thumbnail-url",
-      "status": "indexed",
-      "created_at": "2024-01-01T00:00:00Z",
-      "segment_count": 24
-    }
-  ]
-}
+```
+ErrorBoundary
+└─ QueryClientProvider (React Query - API state)
+   └─ AppProvider (UI mode)
+      └─ VideoProvider (video state)
+         └─ SearchProvider (search state)
+            └─ Router
 ```
 
-**Search Response:**
-```json
-{
-  "results": [
-    {
-      "segment_id": "segment-uuid",
-      "video_id": "video-uuid",
-      "video_title": "Video Title",
-      "start_time": 120.5,
-      "end_time": 180.0,
-      "score": 0.92,
-      "thumbnail_url": "thumbnail-url",
-      "visual_context": "Description from Azure AI Vision",
-      "transcript_snippet": "Optional transcript",
-      "ai_summary": "Optional GPT-4o summary"
-    }
-  ],
-  "query_time_ms": 245
-}
+**Context Hooks:**
+
+```typescript
+// App state
+import { useApp } from './context';
+const { mode, setMode, error, setError } = useApp();
+
+// Video state
+import { useVideo } from './context';
+const { videoFile, videoId, analysisResult } = useVideo();
+
+// Search state
+import { useSearch } from './context';
+const { query, searchResults, selectedResult } = useSearch();
+```
+
+### API Functions
+
+Located in `src/api/client.ts`:
+
+```typescript
+// Upload & Analysis
+uploadVideoLabLab(file)           // Upload video
+analyzeVideo(videoId, task)       // AI analysis
+
+// Search
+semanticSearch(query, top_k)      // Find relevant videos
+
+// R2R2R Processing
+processR2R2R(file)                // Process for robotics
+
+// Downloads
+getVideoDownloadUrl(videoId)      // Get video file
+getHDFDownloadUrl(videoId)        // Get training data
+```
+
+## Backend API Requirements
+
+The UI expects these endpoints:
+
+| Method | Endpoint | Purpose |
+|--------|----------|---------|
+| POST | `/upload_video` | Upload demonstration video |
+| POST | `/analyze_video?video_id=...` | Analyze with AI |
+| POST | `/search_videos` | Semantic search |
+| POST | `/r2r2r` | R2R2R processing |
+| GET | `/download/video/{id}` | Download processed video |
+| GET | `/download/hdf/{id}` | Download robot data |
+| GET | `/videos/{jobId}/status/stream` | SSE processing status |
+| GET | `/` | Health check |
+
+## Development
+
+### Adding Features
+
+1. Define types in `src/types/index.ts`
+2. Add constants to `src/constants.ts`
+3. Create API functions in `src/api/client.ts`
+4. Build UI components with JSDoc
+5. Update context if needed
+
+### Code Style
+
+- TypeScript strict mode
+- JSDoc comments for all functions
+- Constants over magic strings
+- Functional components with hooks
+
+### Constants Configuration
+
+All config in `src/constants.ts`:
+
+```typescript
+export const API_TIMEOUTS = {
+  UPLOAD: 5 * 60 * 1000,      // 5 min
+  ANALYSIS: 10 * 60 * 1000,   // 10 min
+  HEALTH_CHECK: 5 * 1000,     // 5 sec
+};
+
+export const UI = {
+  MAX_FILE_SIZE_MB: 500,
+  SUPPORTED_VIDEO_FORMATS: ['.mp4', '.avi', '.mov', '.mkv', '.webm'],
+};
+```
+
+## Contributing
+
+1. Fork repository
+2. Create feature branch: `git checkout -b feature/my-feature`
+3. Commit changes: `git commit -m 'feat: add feature'`
+4. Push: `git push origin feature/my-feature`
+5. Open Pull Request
+
+### Commit Convention
+
+```
+feat: Add new feature
+fix: Fix bug
+docs: Update docs
+refactor: Refactor code
+test: Add tests
 ```
 
 ## Troubleshooting
 
-### API Connection Issues
+### Cannot Connect to API
 
-If you see "Unable to connect to API":
-1. Ensure the backend is running at `http://localhost:8000`
-2. Check that CORS is properly configured in the backend
-3. Verify the `VITE_API_BASE_URL` in `.env`
+- Check `VITE_API_BASE_URL` in `.env`
+- Verify backend is running
+- Check CORS configuration
 
-### No Videos Showing
+### Upload Fails
 
-1. Check that videos have been indexed in the backend
-2. Ensure videos have `status: "indexed"` (not "processing" or "failed")
-3. Try enabling Demo Mode as a fallback
+- Verify file size < 500MB
+- Check format is supported
+- Inspect browser Network tab
 
-### Video Player Not Working
+### Search Returns No Results
 
-1. Ensure the video `source_url` is a valid video file URL
-2. Check browser console for CORS or network errors
-3. Verify the video format is supported by HTML5 video
+- Ensure videos are indexed
+- Check backend logs
+- Verify vector database is populated
 
-## Development Notes
+### R2R2R Processing Timeout
 
-### Adding New Features
+- Large videos may need longer timeout
+- Adjust `API_TIMEOUTS.ANALYSIS` in `constants.ts`
 
-- Components use functional React with hooks
-- API calls are managed with TanStack Query for caching and loading states
-- Tailwind CSS for all styling (no custom CSS needed)
-- TypeScript types are defined in `src/types/index.ts`
+## Use Cases
 
-### Code Style
+### Robot Imitation Learning
 
-- TypeScript strict mode enabled
-- Tailwind CSS utility classes for styling
-- ESLint and Prettier recommended for consistency
+1. Upload human demonstration videos
+2. Search: "pick up object from table"
+3. Select best demonstrations
+4. Process through R2R2R
+5. Train robot policy with generated data
 
-## Demo Day Checklist
+### Dataset Curation
 
-Before Jan 8 demo:
+1. Index large video corpus
+2. Query: "grasping cylindrical objects"
+3. Collect relevant clips
+4. Export for model training
 
-- [ ] Backend is running and indexed demo video
-- [ ] Update `DEMO_VIDEO_ID` in `src/constants.ts`
-- [ ] Test all example queries
-- [ ] Verify timestamp jumping works
-- [ ] Check AI summaries toggle
-- [ ] Test on demo presentation computer
-- [ ] Have backup screenshots/video recording
+### Motion Analysis
 
-## License
+1. Upload task videos
+2. AI analyzes action primitives
+3. Review temporal windows
+4. Extract motion data
 
-Proprietary - Gofer AI Imagine Cup Submission
+---
 
-## Support
+**For backend setup, see backend repository.**
 
-For issues or questions, contact the Gofer AI team.
+**For development notes, see `CLAUDE.md`.**
