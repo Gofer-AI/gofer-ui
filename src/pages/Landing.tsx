@@ -48,7 +48,11 @@ export default function Landing() {
         {/* Header/Nav */}
         <nav className="px-6 py-4 flex items-center justify-between">
           <div>
-            <Link to="/" className="text-white font-bold text-3xl tracking-tight hover:text-blue-400 transition-colors">
+            <Link
+              to="/"
+              onClick={() => setShowForm(false)}
+              className="text-white font-bold text-3xl tracking-tight hover:text-blue-400 transition-colors"
+            >
               Gofer <span className="text-blue-500">AI</span>
             </Link>
           </div>
