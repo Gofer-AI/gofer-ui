@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { submitWaitlistRequest } from '../lib/waitlist';
 import type { WaitlistFormData } from '../types';
 
@@ -165,13 +166,19 @@ export default function WaitlistForm({ onSuccess }: WaitlistFormProps) {
 
   if (submitSuccess) {
     return (
-      <div className="max-w-2xl mx-auto bg-green-900/20 border border-green-500/30 rounded-lg p-8 text-center">
-        <div className="w-16 h-16 mx-auto mb-4 bg-green-500/20 rounded-full flex items-center justify-center">
-          <svg className="w-8 h-8 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-          </svg>
+      <div className="max-w-2xl mx-auto">
+        <div className="mb-6">
+          <Link to="/" className="inline-block text-white font-bold text-2xl tracking-tight hover:text-blue-400 transition-colors">
+            Gofer <span className="text-blue-500">AI</span>
+          </Link>
         </div>
-        <h3 className="text-2xl font-bold text-white mb-3">Request Submitted Successfully!</h3>
+        <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-8 text-center">
+          <div className="w-16 h-16 mx-auto mb-4 bg-green-500/20 rounded-full flex items-center justify-center">
+            <svg className="w-8 h-8 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+            </svg>
+          </div>
+          <h3 className="text-2xl font-bold text-white mb-3">Request Submitted Successfully!</h3>
         <p className="text-gray-300 mb-6">
           Thank you for your interest in Gofer AI. We've received your demo access request.
         </p>
@@ -181,7 +188,7 @@ export default function WaitlistForm({ onSuccess }: WaitlistFormProps) {
           <ol className="space-y-3 text-gray-300 text-sm">
             <li className="flex items-start">
               <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 font-semibold mr-3 flex-shrink-0">1</span>
-              <span>Our team will review your application within 2-3 business days</span>
+              <span>Our team will review your application within 1 to 2 weeks</span>
             </li>
             <li className="flex items-start">
               <span className="inline-flex items-center justify-center w-6 h-6 rounded-full bg-blue-500/20 text-blue-400 font-semibold mr-3 flex-shrink-0">2</span>
@@ -194,9 +201,10 @@ export default function WaitlistForm({ onSuccess }: WaitlistFormProps) {
           </ol>
         </div>
 
-        <p className="text-gray-400 text-xs">
-          Questions? Email us at <a href="mailto:contact@goferai.space" className="text-blue-400 hover:text-blue-300">contact@goferai.space</a>
-        </p>
+          <p className="text-gray-400 text-xs">
+            Questions? Email us at <a href="mailto:contact@goferai.space" className="text-blue-400 hover:text-blue-300">contact@goferai.space</a>
+          </p>
+        </div>
       </div>
     );
   }
