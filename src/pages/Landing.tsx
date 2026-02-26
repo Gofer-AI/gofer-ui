@@ -173,9 +173,9 @@ export default function Landing() {
               <Link to="/demo-login" className="hover:text-gray-400 transition-colors">
                 Demo
               </Link>
-              <a href="mailto:contact@gofer-ai.com" className="hover:text-gray-400 transition-colors">
+              <Link to="/contact" className="hover:text-gray-400 transition-colors">
                 Contact
-              </a>
+              </Link>
             </div>
           </div>
         </footer>

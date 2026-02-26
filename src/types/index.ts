@@ -195,6 +195,33 @@ export interface WaitlistRequest extends WaitlistFormData {
 }
 
 /**
+ * Contact form data (user input)
+ */
+export interface ContactFormData {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
+/**
+ * Contact request status
+ */
+export type ContactStatus = 'new' | 'read' | 'responded' | 'archived';
+
+/**
+ * Complete contact request (stored in Firestore)
+ */
+export interface ContactRequest extends ContactFormData {
+  id: string;
+  status: ContactStatus;
+  submitted_at: Date;
+  read_at?: Date;
+  responded_at?: Date;
+  response_message?: string;
+}
+
+/**
  * Waitlist submission response
  */
 export interface WaitlistSubmissionResponse {

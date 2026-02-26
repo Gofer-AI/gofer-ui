@@ -344,7 +344,7 @@ export default function Documentation() {
                     </svg>
                   </summary>
                   <p className="text-gray-400 mt-4">
-                    Yes! We offer commercial licensing. Contact us at contact@gofer-ai.com to discuss your use case and get a custom plan.
+                    Yes! We offer commercial licensing. Contact us at contact@goferai.space to discuss your use case and get a custom plan.
                   </p>
                 </details>
 
@@ -373,7 +373,7 @@ export default function Documentation() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <a
-                    href="mailto:contact@gofer-ai.com"
+                    href="mailto:contact@goferai.space"
                     className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
                   >
                     Contact Support
@@ -413,9 +413,9 @@ export default function Documentation() {
               <a href="https://github.com/Gofer-AI" target="_blank" rel="noopener noreferrer" className="hover:text-gray-400 transition-colors">
                 GitHub
               </a>
-              <a href="mailto:contact@gofer-ai.com" className="hover:text-gray-400 transition-colors">
+              <Link to="/contact" className="hover:text-gray-400 transition-colors">
                 Contact
-              </a>
+              </Link>
             </div>
           </div>
         </div>

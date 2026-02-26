@@ -367,9 +367,9 @@ export default function Features() {
               <a href="https://github.com/Gofer-AI" target="_blank" rel="noopener noreferrer" className="hover:text-gray-400 transition-colors">
                 GitHub
               </a>
-              <a href="mailto:contact@gofer-ai.com" className="hover:text-gray-400 transition-colors">
+              <Link to="/contact" className="hover:text-gray-400 transition-colors">
                 Contact
-              </a>
+              </Link>
             </div>
           </div>
         </div>

@@ -27,6 +27,26 @@ service cloud.firestore {
                             && request.auth.token.admin == true;
     }
 
+    // Contact requests collection
+    match /contact_requests/{document} {
+      // Public can CREATE new contact requests
+      allow create: if request.resource.data.keys().hasAll([
+                        'email', 'name', 'subject',
+                        'message', 'status', 'submitted_at'
+                       ])
+                    && request.resource.data.status == 'new'
+                    && request.resource.data.email is string
+                    && request.resource.data.email.matches('^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$')
+                    && request.resource.data.name is string
+                    && request.resource.data.subject is string
+                    && request.resource.data.message is string
+                    && request.resource.data.message.size() >= 20;
+
+      // Admin can read, update, and delete
+      allow read, update, delete: if request.auth != null
+                                  && request.auth.token.admin == true;
+    }
+
     // Catch-all: deny everything else (PUT THIS LAST!)
     match /{document=**} {
       allow read, write: if false;

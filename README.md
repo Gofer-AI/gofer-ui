@@ -45,6 +45,15 @@ The R2R2R (Real2Render2Real) workflow eliminates the need for physical robot har
 - Protected routes for authenticated users
 - Session management
 
+### Contact Form & Email Notifications
+- Contact form at `/contact` route
+- Firebase Cloud Functions for email automation
+- Resend integration for email delivery
+- Admin notifications sent to contact@goferai.space
+- User confirmation emails
+- Rate limiting (3 requests/hour per email)
+- XSS protection and input sanitization
+
 ## Tech Stack
 
 | Category | Technology | Version |
@@ -298,6 +307,159 @@ test: Add tests
 
 - Large videos may need longer timeout
 - Adjust `API_TIMEOUTS.ANALYSIS` in `constants.ts`
+
+## Contact Form Deployment
+
+### Prerequisites
+- Firebase CLI installed: `npm install -g firebase-tools`
+- Resend account (free tier: 100 emails/day)
+- ImprovMX email forwarding configured
+
+### Deploy Steps
+
+**1. Install function dependencies:**
+```bash
+cd functions
+npm install
+```
+
+**2. Deploy Firestore rules:**
+```bash
+firebase deploy --only firestore:rules
+```
+
+**3. Set environment secrets:**
+```bash
+# Resend API key
+firebase functions:secrets:set RESEND_API_KEY
+
+# Your email (registered with Resend)
+firebase functions:secrets:set FROM_EMAIL
+```
+
+**4. Build and deploy Cloud Functions:**
+```bash
+cd functions
+npm run build
+cd ..
+firebase deploy --only functions
+```
+
+**5. Test:**
+- Visit `/contact` page
+- Submit test message
+- Verify emails received
+
+### Email Flow
+```
+User submits form → Firestore → Cloud Function triggered
+                                      ↓
+                            Resend sends 2 emails:
+                            1. Admin: contact@goferai.space
+                            2. User: confirmation email
+```
+
+### Monitoring
+```bash
+# Watch logs
+firebase functions:log --only sendContactEmails --follow
+
+# Check Resend dashboard
+https://resend.com/emails
+```
+
+### Security
+
+**Frontend (.env) - Safe to expose:**
+- `VITE_*` variables are public (bundled in frontend)
+- Firebase config is NOT a secret (security = Firestore rules)
+
+**Backend (Firebase Secrets) - NEVER expose:**
+- `RESEND_API_KEY` - Only in Firebase Functions
+- `FROM_EMAIL` - Only in Firebase Functions
+
+**Firestore Rules:**
+- Users can only CREATE contact requests
+- Users cannot READ any requests (including their own)
+- Only admins can read/update/delete
+
+**Protection Features:**
+- [ACTIVE] Rate limiting (3 requests/hour per email)
+- [ACTIVE] XSS sanitization (strips HTML tags)
+- [ACTIVE] Email validation (format + typo detection)
+- [ACTIVE] Input length limits (max 5000 chars)
+- [ACTIVE] API keys secured in Cloud Functions
+
+**Network Tab Check:**
+- [SAFE] Should see: Firestore requests with form data
+- [DANGER] Should NOT see: RESEND_API_KEY, FROM_EMAIL, service account keys
+
+---
+
+## Deploying to Vercel
+
+### 1. Push to GitHub
+
+```bash
+# Ensure .env is not tracked
+git status | grep .env  # Should return nothing
+
+# If .env appears, remove it:
+git rm --cached .env
+
+# Commit and push
+git add .
+git commit -m "feat: add contact form with email notifications"
+git push origin feature-2
+```
+
+### 2. Connect to Vercel
+
+1. Go to https://vercel.com
+2. Click **Add New Project**
+3. Import your GitHub repository
+4. Configure:
+   - **Framework Preset:** Vite
+   - **Build Command:** `npm run build`
+   - **Output Directory:** `dist`
+
+### 3. Set Environment Variables in Vercel
+
+In **Vercel Dashboard → Settings → Environment Variables**, add:
+
+```
+VITE_API_BASE_URL=http://155.138.214.77:8001
+VITE_FIREBASE_API_KEY=AIzaSyDBwxXmbt1lE00C1Z5RJhnuPszpSNUiiZM
+VITE_FIREBASE_AUTH_DOMAIN=goferai-f2ecd.firebaseapp.com
+VITE_FIREBASE_PROJECT_ID=goferai-f2ecd
+VITE_FIREBASE_STORAGE_BUCKET=goferai-f2ecd.firebasestorage.app
+VITE_FIREBASE_MESSAGING_SENDER_ID=978500514733
+VITE_FIREBASE_APP_ID=1:978500514733:web:d539d9f1c3bd3c1382e724
+VITE_FIREBASE_MEASUREMENT_ID=G-7LZVBQ8950
+```
+
+**Important:** Do NOT add RESEND_API_KEY or FROM_EMAIL to Vercel (backend only).
+
+### 4. Deploy
+
+Click **Deploy** - Vercel will build and deploy automatically.
+
+### 5. Update Domain (Optional)
+
+If using custom domain from Vercel:
+1. Go to Vercel project → Settings → Domains
+2. Add `goferai.space`
+3. Update DNS records as shown
+
+### 6. Test Production
+
+After deployment:
+- Visit your Vercel URL (e.g., `gofer-ui.vercel.app`)
+- Test contact form at `/contact`
+- Verify emails are sent
+- Check Network tab for security
+
+---
 
 ## Use Cases
 

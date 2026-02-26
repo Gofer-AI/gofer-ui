@@ -1,5 +1,8 @@
 import { Link } from 'react-router-dom';
 import PageHeader from '../components/PageHeader';
+import ChidiImage from '../assets/Chidi.png';
+import JasonImage from '../assets/Jason.JPG';
+import LabLabLogo from '../assets/lablab_surge_transparent.png';
 
 export default function About() {
   return (
@@ -59,10 +62,30 @@ export default function About() {
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            {/* Team Member 1 */}
+            {/* Team Member 1 - Jason */}
             <div className="bg-gray-900/60 border border-gray-800 rounded-xl p-8 text-center hover:border-blue-600/50 transition-colors">
-              <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-blue-700 rounded-full mx-auto mb-4 flex items-center justify-center">
-                <span className="text-2xl font-bold text-white">CK</span>
+              <div className="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full">
+                <img
+                  src={JasonImage}
+                  alt="Jason Okorie"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              <h3 className="text-xl font-semibold text-white mb-2">Jason Okorie</h3>
+              <p className="text-purple-400 text-sm mb-3">Co-Founder</p>
+              <p className="text-gray-400 text-sm">
+                Collaborating on strategic vision and robotics innovation
+              </p>
+            </div>
+
+            {/* Team Member 2 - Chidi */}
+            <div className="bg-gray-900/60 border border-gray-800 rounded-xl p-8 text-center hover:border-blue-600/50 transition-colors">
+              <div className="w-32 h-32 mx-auto mb-4 overflow-hidden rounded-full">
+                <img
+                  src={ChidiImage}
+                  alt="Chidi Okoro"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <h3 className="text-xl font-semibold text-white mb-2">Chidi Okoro</h3>
               <p className="text-blue-400 text-sm mb-3">Co-Founder</p>
@@ -71,27 +94,47 @@ export default function About() {
               </p>
             </div>
 
-            {/* Team Member 2 */}
-            <div className="bg-gray-900/60 border border-gray-800 rounded-xl p-8 text-center hover:border-blue-600/50 transition-colors">
-              <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-purple-700 rounded-full mx-auto mb-4 flex items-center justify-center">
-                <span className="text-2xl font-bold text-white">JO</span>
-              </div>
-              <h3 className="text-xl font-semibold text-white mb-2">Jason Okorie</h3>
-              <p className="text-purple-400 text-sm mb-3">Co-Founder</p>
-              <p className="text-gray-400 text-sm">
-                Strategic advisor and robotics innovation specialist
-              </p>
-            </div>
-
             <div className="bg-gray-900/60 border border-gray-800 rounded-xl p-8 text-center hover:border-blue-600/50 transition-colors">
               <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-green-700 rounded-full mx-auto mb-4 flex items-center justify-center">
                 <span className="text-2xl font-bold text-white">?</span>
               </div>
               <h3 className="text-xl font-semibold text-white mb-2">Join Us</h3>
-              <p className="text-green-400 text-sm mb-3">Open Position</p>
+              <p className="text-green-400 text-sm mb-3">Open for Collaboration</p>
               <p className="text-gray-400 text-sm">
                 Help us build the future of human-robot collaboration
               </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* LabLab Hackathon Section */}
+      <section className="px-6 py-20 border-b border-gray-800">
+        <div className="max-w-4xl mx-auto">
+          <div className="bg-gradient-to-br from-purple-600/10 to-blue-600/10 border border-gray-800 rounded-2xl p-12 text-center">
+            <div className="flex flex-col items-center space-y-6">
+              <img
+                src={LabLabLogo}
+                alt="LabLab AI Surge Hackathon"
+                className="h-24 w-auto"
+              />
+              <h2 className="text-3xl font-bold text-white">
+                Born at LabLab AI Surge Hackathon
+              </h2>
+              <p className="text-gray-400 text-lg max-w-2xl">
+                Gofer AI was created during the LabLab AI Surge Hackathon, where we pioneered innovative solutions for human-robot collaboration using cutting-edge multimodal AI technology.
+              </p>
+              <div className="flex flex-wrap gap-4 justify-center text-sm">
+                <span className="px-4 py-2 bg-purple-600/20 border border-purple-600/30 rounded-lg text-purple-300">
+                  Multimodal AI
+                </span>
+                <span className="px-4 py-2 bg-blue-600/20 border border-blue-600/30 rounded-lg text-blue-300">
+                  Computer Vision
+                </span>
+                <span className="px-4 py-2 bg-green-600/20 border border-green-600/30 rounded-lg text-green-300">
+                  Robotics Learning
+                </span>
+              </div>
             </div>
           </div>
         </div>
@@ -143,9 +186,9 @@ export default function About() {
               <a href="https://github.com/Gofer-AI" target="_blank" rel="noopener noreferrer" className="hover:text-gray-400 transition-colors">
                 GitHub
               </a>
-              <a href="mailto:contact@gofer-ai.com" className="hover:text-gray-400 transition-colors">
+              <Link to="/contact" className="hover:text-gray-400 transition-colors">
                 Contact
-              </a>
+              </Link>
             </div>
           </div>
         </div>

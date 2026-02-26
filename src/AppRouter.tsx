@@ -5,6 +5,7 @@ import Landing from './pages/Landing';
 import About from './pages/About';
 import Features from './pages/Features';
 import Documentation from './pages/Documentation';
+import Contact from './pages/Contact';
 import LabLabDemo from './components/LabLabDemo';
 import ProfileMenu from './components/ProfileMenu';
 import { ErrorBoundaryWithLogging } from './components/ErrorBoundary';
@@ -79,6 +80,7 @@ export default function AppRouter() {
                   <Route path="/about" element={<About />} />
                   <Route path="/features" element={<Features />} />
                   <Route path="/documentation" element={<Documentation />} />
+                  <Route path="/contact" element={<Contact />} />
 
                   {/* Hidden demo login */}
                   <Route path="/demo-login" element={<Login />} />
