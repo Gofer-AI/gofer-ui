@@ -5,6 +5,7 @@ import WaitlistForm from '../components/WaitlistForm';
 
 export default function Landing() {
   const [showForm, setShowForm] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -56,22 +57,24 @@ export default function Landing() {
               Gofer <span className="text-blue-500">AI</span>
             </Link>
           </div>
-          <div className="flex items-center gap-6">
+
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-6">
             <Link
               to="/features"
-              className="text-sm text-gray-400 hover:text-gray-300 transition-colors hidden md:block"
+              className="text-sm text-gray-400 hover:text-gray-300 transition-colors"
             >
               Features
             </Link>
             <Link
               to="/about"
-              className="text-sm text-gray-400 hover:text-gray-300 transition-colors hidden md:block"
+              className="text-sm text-gray-400 hover:text-gray-300 transition-colors"
             >
               About
             </Link>
             <Link
               to="/documentation"
-              className="text-sm text-gray-400 hover:text-gray-300 transition-colors hidden md:block"
+              className="text-sm text-gray-400 hover:text-gray-300 transition-colors"
             >
               Docs
             </Link>
@@ -82,7 +85,129 @@ export default function Landing() {
               Demo Access
             </Link>
           </div>
+
+          {/* Mobile Navigation */}
+          <div className="flex md:hidden items-center gap-4">
+            <Link
+              to="/demo-login"
+              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors"
+            >
+              Demo Access
+            </Link>
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="text-gray-400 hover:text-white transition-colors"
+              aria-label="Toggle menu"
+            >
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                {mobileMenuOpen ? (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                ) : (
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                )}
+              </svg>
+            </button>
+          </div>
         </nav>
+
+        {/* Mobile Menu Overlay */}
+        {mobileMenuOpen && (
+          <div className="md:hidden fixed inset-0 z-50 bg-gray-950/95 backdrop-blur-sm">
+            <div className="flex flex-col h-full">
+              {/* Mobile Menu Header */}
+              <div className="px-6 py-4 flex items-center justify-between border-b border-gray-800">
+                <Link
+                  to="/"
+                  onClick={() => {
+                    setShowForm(false);
+                    setMobileMenuOpen(false);
+                  }}
+                  className="text-white font-bold text-3xl tracking-tight hover:text-blue-400 transition-colors"
+                >
+                  Gofer <span className="text-blue-500">AI</span>
+                </Link>
+                <button
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="text-gray-400 hover:text-white transition-colors"
+                  aria-label="Close menu"
+                >
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Mobile Menu Links */}
+              <div className="flex-1 px-6 py-8 space-y-2">
+                <Link
+                  to="/features"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-4 py-3 text-lg text-gray-300 hover:text-white hover:bg-gray-800/50 rounded-lg transition-colors"
+                >
+                  Features
+                </Link>
+                <Link
+                  to="/about"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-4 py-3 text-lg text-gray-300 hover:text-white hover:bg-gray-800/50 rounded-lg transition-colors"
+                >
+                  About
+                </Link>
+                <Link
+                  to="/documentation"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-4 py-3 text-lg text-gray-300 hover:text-white hover:bg-gray-800/50 rounded-lg transition-colors"
+                >
+                  Docs
+                </Link>
+                <Link
+                  to="/contact"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-4 py-3 text-lg text-gray-300 hover:text-white hover:bg-gray-800/50 rounded-lg transition-colors"
+                >
+                  Contact
+                </Link>
+              </div>
+
+              {/* Mobile Menu Footer */}
+              <div className="px-6 py-6 border-t border-gray-800">
+                <Link
+                  to="/demo-login"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block w-full text-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
+                >
+                  Demo Access
+                </Link>
+              </div>
+            </div>
+          </div>
+        )}
+
 
         {/* Hero Section */}
         <main className="flex-1 flex items-center justify-center px-6 py-12">
