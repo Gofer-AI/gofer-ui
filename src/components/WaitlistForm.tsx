@@ -356,7 +356,8 @@ export default function WaitlistForm({ onSuccess }: WaitlistFormProps) {
       <button
         type="submit"
         disabled={isSubmitting}
-        className="w-full py-4 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 disabled:opacity-50 text-white font-semibold rounded-lg transition-colors"
+        className="w-full py-4 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 disabled:bg-blue-800 disabled:opacity-50 text-white font-semibold rounded-lg transition-colors touch-manipulation"
+        style={{ WebkitTapHighlightColor: 'transparent' }}
       >
         {isSubmitting ? 'Submitting...' : 'Request Demo Access'}
       </button>
