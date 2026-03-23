@@ -110,8 +110,8 @@ export default function Landing() {
           </button>
         )}
 
-        {/* Dark overlay for readability - stronger on mobile */}
-        <div className="absolute inset-0 bg-gray-950/75 md:bg-gray-950/70 pointer-events-none" />
+        {/* Dark overlay for readability - much stronger on mobile */}
+        <div className="absolute inset-0 bg-gray-950/85 md:bg-gray-950/70 pointer-events-none" />
       </div>
 
       {/* Content layer */}
@@ -280,38 +280,38 @@ export default function Landing() {
 
 
         {/* Hero Section */}
-        <main className="flex-1 flex items-center justify-center px-6 py-12">
-          <div className="max-w-4xl mx-auto text-center space-y-8">
-            {/* Headline */}
-            <div className="space-y-4">
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight drop-shadow-lg">
+        <main className="flex-1 flex items-center justify-center px-4 md:px-6 py-8 md:py-12">
+          <div className="max-w-4xl mx-auto text-center space-y-6 md:space-y-8 w-full">
+            {/* Headline with strong background on mobile */}
+            <div className="space-y-4 bg-gray-950/80 md:bg-transparent backdrop-blur-md md:backdrop-blur-none rounded-2xl p-6 md:p-0">
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight drop-shadow-2xl">
                 Gofer <span className="text-blue-400">AI</span>
               </h1>
-              <p className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto leading-relaxed drop-shadow-md">
+              <p className="text-lg md:text-2xl text-white md:text-gray-200 max-w-3xl mx-auto leading-relaxed drop-shadow-lg font-medium md:font-normal">
                 Building the Cognitive Layer Between Human Skill & Robotic Execution
               </p>
             </div>
 
-            {/* Waitlist CTA */}
-            <div className="max-w-2xl mx-auto">
+            {/* Waitlist CTA - Enhanced for mobile */}
+            <div className="max-w-2xl mx-auto w-full">
               {!showForm ? (
-                <div className="space-y-4">
+                <div className="space-y-4 bg-gray-950/90 md:bg-transparent backdrop-blur-md md:backdrop-blur-none rounded-2xl p-6 md:p-0">
                   <button
                     onClick={() => setShowForm(true)}
-                    className="w-full max-w-md mx-auto block px-8 py-4 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-lg font-semibold rounded-lg transition-colors shadow-lg shadow-blue-600/20 touch-manipulation"
+                    className="w-full max-w-md mx-auto block px-8 py-5 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-xl md:text-lg font-bold rounded-xl transition-all shadow-2xl shadow-blue-600/40 hover:shadow-blue-600/60 touch-manipulation border-2 border-blue-400/50"
                     style={{ WebkitTapHighlightColor: 'transparent' }}
                   >
                     Request Demo Access
                   </button>
-                  <p className="text-sm text-gray-400 text-center">
+                  <p className="text-base md:text-sm text-white md:text-gray-400 text-center font-medium md:font-normal px-4">
                     Get early access to test Gofer AI with your robotics research
                   </p>
                 </div>
               ) : (
-                <div className="bg-gray-900/90 backdrop-blur-sm border border-gray-800 rounded-2xl p-6 md:p-8 shadow-2xl">
+                <div className="bg-gray-950/95 md:bg-gray-900/90 backdrop-blur-lg border border-gray-700 md:border-gray-800 rounded-2xl p-6 md:p-8 shadow-2xl">
                   <button
                     onClick={() => setShowForm(false)}
-                    className="mb-4 text-sm text-gray-400 hover:text-gray-300 transition-colors"
+                    className="mb-4 text-base md:text-sm text-gray-300 md:text-gray-400 hover:text-white transition-colors font-medium"
                   >
                     ← Back
                   </button>
@@ -320,46 +320,46 @@ export default function Landing() {
               )}
             </div>
 
-            {/* Feature Highlights */}
-            <div className="grid md:grid-cols-3 gap-6 mt-16 max-w-4xl mx-auto">
+            {/* Feature Highlights - Enhanced mobile contrast */}
+            <div className="grid md:grid-cols-3 gap-4 md:gap-6 mt-8 md:mt-16 max-w-4xl mx-auto">
               {/* Feature 1 */}
-              <div className="bg-gray-900/60 backdrop-blur-sm border border-gray-800 rounded-xl p-6 text-left">
-                <div className="w-12 h-12 bg-blue-600/20 rounded-lg flex items-center justify-center mb-4">
-                  <svg className="w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="bg-gray-950/90 md:bg-gray-900/60 backdrop-blur-md border border-gray-700 md:border-gray-800 rounded-xl p-5 md:p-6 text-left shadow-xl">
+                <div className="w-14 h-14 md:w-12 md:h-12 bg-blue-600/30 md:bg-blue-600/20 rounded-lg flex items-center justify-center mb-4">
+                  <svg className="w-7 h-7 md:w-6 md:h-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                       d="M15 12a3 3 0 11-6 0 3 3 0 016 0z M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-2">Action Detection</h3>
-                <p className="text-sm text-gray-400 leading-relaxed">
+                <h3 className="text-lg md:text-lg font-bold md:font-semibold text-white mb-2">Action Detection</h3>
+                <p className="text-sm text-gray-200 md:text-gray-400 leading-relaxed">
                   Advanced vision AI analyzes human demonstrations to identify precise action primitives and object interactions.
                 </p>
               </div>
 
               {/* Feature 2 */}
-              <div className="bg-gray-900/60 backdrop-blur-sm border border-gray-800 rounded-xl p-6 text-left">
-                <div className="w-12 h-12 bg-blue-600/20 rounded-lg flex items-center justify-center mb-4">
-                  <svg className="w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="bg-gray-950/90 md:bg-gray-900/60 backdrop-blur-md border border-gray-700 md:border-gray-800 rounded-xl p-5 md:p-6 text-left shadow-xl">
+                <div className="w-14 h-14 md:w-12 md:h-12 bg-blue-600/30 md:bg-blue-600/20 rounded-lg flex items-center justify-center mb-4">
+                  <svg className="w-7 h-7 md:w-6 md:h-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                       d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-2">Semantic Search</h3>
-                <p className="text-sm text-gray-400 leading-relaxed">
+                <h3 className="text-lg md:text-lg font-bold md:font-semibold text-white mb-2">Semantic Search</h3>
+                <p className="text-sm text-gray-200 md:text-gray-400 leading-relaxed">
                   Find relevant demonstrations using natural language queries powered by multimodal embeddings.
                 </p>
               </div>
 
               {/* Feature 3 */}
-              <div className="bg-gray-900/60 backdrop-blur-sm border border-gray-800 rounded-xl p-6 text-left">
-                <div className="w-12 h-12 bg-blue-600/20 rounded-lg flex items-center justify-center mb-4">
-                  <svg className="w-6 h-6 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="bg-gray-950/90 md:bg-gray-900/60 backdrop-blur-md border border-gray-700 md:border-gray-800 rounded-xl p-5 md:p-6 text-left shadow-xl">
+                <div className="w-14 h-14 md:w-12 md:h-12 bg-blue-600/30 md:bg-blue-600/20 rounded-lg flex items-center justify-center mb-4">
+                  <svg className="w-7 h-7 md:w-6 md:h-6 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                       d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-white mb-2">Robot Instructions</h3>
-                <p className="text-sm text-gray-400 leading-relaxed">
+                <h3 className="text-lg md:text-lg font-bold md:font-semibold text-white mb-2">Robot Instructions</h3>
+                <p className="text-sm text-gray-200 md:text-gray-400 leading-relaxed">
                   Automatically generate executable robot commands from analyzed human demonstrations.
                 </p>
               </div>
@@ -368,18 +368,18 @@ export default function Landing() {
           </div>
         </main>
 
-        {/* Footer */}
-        <footer className="px-6 py-6 text-center border-t border-gray-800/50">
+        {/* Footer - Enhanced mobile visibility */}
+        <footer className="px-6 py-6 text-center border-t border-gray-700 md:border-gray-800/50 bg-gray-950/70 md:bg-transparent backdrop-blur-sm md:backdrop-blur-none">
           <div className="max-w-4xl mx-auto">
-            <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
+            <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-300 md:text-gray-500">
               <span>Gofer AI © 2026</span>
-              <a href="https://github.com/Gofer-AI" target="_blank" rel="noopener noreferrer" className="hover:text-gray-400 transition-colors">
+              <a href="https://github.com/Gofer-AI" target="_blank" rel="noopener noreferrer" className="hover:text-white md:hover:text-gray-400 transition-colors">
                 GitHub
               </a>
-              <Link to="/demo-login" className="hover:text-gray-400 transition-colors">
+              <Link to="/demo-login" className="hover:text-white md:hover:text-gray-400 transition-colors">
                 Demo
               </Link>
-              <Link to="/contact" className="hover:text-gray-400 transition-colors">
+              <Link to="/contact" className="hover:text-white md:hover:text-gray-400 transition-colors">
                 Contact
               </Link>
             </div>
