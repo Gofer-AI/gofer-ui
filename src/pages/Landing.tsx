@@ -6,65 +6,48 @@ import WaitlistForm from '../components/WaitlistForm';
 export default function Landing() {
   const [showForm, setShowForm] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [videoPlaying, setVideoPlaying] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
+    const overlay = overlayRef.current;
+    if (!video || !overlay) return;
 
-    const playVideo = () => {
-      const playPromise = video.play();
-
-      if (playPromise !== undefined) {
-        playPromise
-          .then(() => {
-            console.log('[VIDEO] Autoplay successful');
-            setVideoPlaying(true);
-          })
-          .catch(err => {
-            console.log('[VIDEO] Autoplay prevented:', err);
-            setVideoPlaying(false);
-          });
-      }
+    const tryPlay = () => {
+      video.play()
+        .then(() => {
+          // Hide overlay smoothly via CSS, no React state = no re-render
+          overlay.style.opacity = '0';
+          overlay.style.pointerEvents = 'none';
+        })
+        .catch(() => {
+          overlay.style.opacity = '1';
+          overlay.style.pointerEvents = 'auto';
+        });
     };
 
-    // Try to play on mount
-    playVideo();
+    tryPlay();
 
-    // Add event listeners
-    const handlePlay = () => setVideoPlaying(true);
-    const handlePause = () => setVideoPlaying(false);
-
-    video.addEventListener('play', handlePlay);
-    video.addEventListener('pause', handlePause);
-
-    // Try to play on user interaction (for mobile Safari)
-    const handleUserInteraction = () => {
-      if (video.paused) {
-        playVideo();
-      }
-    };
-
-    document.addEventListener('touchstart', handleUserInteraction, { once: true });
-    document.addEventListener('click', handleUserInteraction, { once: true });
+    // One-shot unlock for mobile Safari autoplay policy
+    const unlock = () => { if (video.paused) tryPlay(); };
+    document.addEventListener('touchstart', unlock, { once: true });
+    document.addEventListener('click', unlock, { once: true });
 
     return () => {
-      video.removeEventListener('play', handlePlay);
-      video.removeEventListener('pause', handlePause);
-      document.removeEventListener('touchstart', handleUserInteraction);
-      document.removeEventListener('click', handleUserInteraction);
+      document.removeEventListener('touchstart', unlock);
+      document.removeEventListener('click', unlock);
     };
   }, []);
 
   const handleVideoClick = () => {
     const video = videoRef.current;
-    if (video && video.paused) {
+    const overlay = overlayRef.current;
+    if (video && overlay && video.paused) {
       video.play().then(() => {
-        setVideoPlaying(true);
-      }).catch(err => {
-        console.log('[VIDEO] Manual play failed:', err);
-      });
+        overlay.style.opacity = '0';
+        overlay.style.pointerEvents = 'none';
+      }).catch(() => {});
     }
   };
 
@@ -80,35 +63,29 @@ export default function Landing() {
           playsInline
           preload="auto"
           className="absolute inset-0 w-full h-full object-cover"
-          style={{ objectPosition: 'center 40%' }}
+          style={{ objectPosition: 'center 40%', willChange: 'transform' }}
           aria-hidden="true"
-          onClick={handleVideoClick}
-          // @ts-ignore - webkit prefix for older iOS
+          // @ts-ignore
           webkit-playsinline="true"
         >
           <source src={landingVideo} type="video/mp4" />
         </video>
 
-        {/* Play button overlay for mobile when video is paused */}
-        {!videoPlaying && (
-          <button
-            onClick={handleVideoClick}
-            className="absolute inset-0 w-full h-full flex flex-col items-center justify-center bg-gray-950/90 backdrop-blur-md z-10 transition-all hover:bg-gray-950/85 touch-manipulation"
-            aria-label="Play background video"
-            style={{ WebkitTapHighlightColor: 'transparent' }}
-          >
-            <div className="w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center shadow-2xl shadow-blue-600/50 mb-4 hover:scale-110 active:scale-95 transition-transform">
-              <svg
-                className="w-12 h-12 text-white ml-1"
-                fill="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            </div>
-            <p className="text-white text-sm font-medium">Tap to play background video</p>
-          </button>
-        )}
+        {/* Play button overlay — hidden via ref (no React state = no re-render interrupting video) */}
+        <div
+          ref={overlayRef}
+          onClick={handleVideoClick}
+          className="absolute inset-0 w-full h-full flex flex-col items-center justify-center bg-gray-950/90 backdrop-blur-md z-10 cursor-pointer touch-manipulation"
+          style={{ opacity: 1, transition: 'opacity 0.6s ease', WebkitTapHighlightColor: 'transparent' }}
+          aria-label="Play background video"
+        >
+          <div className="w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center shadow-2xl shadow-blue-600/50 mb-4 hover:scale-110 active:scale-95 transition-transform">
+            <svg className="w-12 h-12 text-white ml-1" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+          </div>
+          <p className="text-white text-sm font-medium">Tap to play</p>
+        </div>
 
         {/* Dark overlay for readability - much stronger on mobile */}
         <div className="absolute inset-0 bg-gray-950/85 md:bg-gray-950/70 pointer-events-none" />
