@@ -271,8 +271,8 @@ export default function ContactForm({ onSuccess, onCancel }: ContactFormProps) {
 
       <p className="text-gray-400 text-xs text-center">
         Or email us directly at{' '}
-        <a href="mailto:contact@goferai.space" className="text-blue-400 hover:text-blue-300">
-          contact@goferai.space
+        <a href="mailto:support@goferai.space" className="text-blue-400 hover:text-blue-300">
+          support@goferai.space
         </a>
       </p>
     </form>

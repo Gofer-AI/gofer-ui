@@ -202,7 +202,7 @@ export default function WaitlistForm({ onSuccess }: WaitlistFormProps) {
         </div>
 
           <p className="text-gray-400 text-xs">
-            Questions? Email us at <a href="mailto:contact@goferai.space" className="text-blue-400 hover:text-blue-300">contact@goferai.space</a>
+            Questions? Email us at <a href="mailto:support@goferai.space" className="text-blue-400 hover:text-blue-300">support@goferai.space</a>
           </p>
         </div>
       </div>

@@ -344,7 +344,7 @@ export default function Documentation() {
                     </svg>
                   </summary>
                   <p className="text-gray-400 mt-4">
-                    Yes! We offer commercial licensing. Contact us at contact@goferai.space to discuss your use case and get a custom plan.
+                    Yes! We offer commercial licensing. Contact us at support@goferai.space to discuss your use case and get a custom plan.
                   </p>
                 </details>
 
@@ -373,7 +373,7 @@ export default function Documentation() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <a
-                    href="mailto:contact@goferai.space"
+                    href="mailto:support@goferai.space"
                     className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
                   >
                     Contact Support

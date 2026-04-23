@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import landingVideo from '../assets/LandingPage.mp4';
 import WaitlistForm from '../components/WaitlistForm';
+import goferLogo from '/gofer-logo.png';
 
 export default function Landing() {
   const [showForm, setShowForm] = useState(false);
@@ -17,7 +18,6 @@ export default function Landing() {
     const tryPlay = () => {
       video.play()
         .then(() => {
-          // Hide overlay smoothly via CSS, no React state = no re-render
           overlay.style.opacity = '0';
           overlay.style.pointerEvents = 'none';
         })
@@ -27,14 +27,23 @@ export default function Landing() {
         });
     };
 
+    // Seamless manual loop — seek back 0.2s before end to avoid native loop flash/cut
+    const handleTimeUpdate = () => {
+      if (video.duration && video.currentTime >= video.duration - 0.2) {
+        video.currentTime = 0;
+        video.play().catch(() => {});
+      }
+    };
+
+    video.addEventListener('timeupdate', handleTimeUpdate);
     tryPlay();
 
-    // One-shot unlock for mobile Safari autoplay policy
     const unlock = () => { if (video.paused) tryPlay(); };
     document.addEventListener('touchstart', unlock, { once: true });
     document.addEventListener('click', unlock, { once: true });
 
     return () => {
+      video.removeEventListener('timeupdate', handleTimeUpdate);
       document.removeEventListener('touchstart', unlock);
       document.removeEventListener('click', unlock);
     };
@@ -58,7 +67,6 @@ export default function Landing() {
         <video
           ref={videoRef}
           autoPlay
-          loop
           muted
           playsInline
           preload="auto"
@@ -99,9 +107,16 @@ export default function Landing() {
             <Link
               to="/"
               onClick={() => setShowForm(false)}
-              className="text-white font-bold text-3xl tracking-tight hover:text-blue-400 transition-colors"
+              className="flex items-center gap-3 hover:opacity-90 transition-opacity"
             >
-              Gofer <span className="text-blue-500">AI</span>
+              <img
+                src={goferLogo}
+                alt="Gofer AI"
+                className="w-9 h-9 rounded-full shadow-lg shadow-blue-600/40"
+              />
+              <span className="text-white font-bold text-2xl tracking-tight">
+                Gofer <span className="text-blue-400">AI</span>
+              </span>
             </Link>
           </div>
 
@@ -180,13 +195,13 @@ export default function Landing() {
               <div className="px-6 py-4 flex items-center justify-between border-b border-gray-800">
                 <Link
                   to="/"
-                  onClick={() => {
-                    setShowForm(false);
-                    setMobileMenuOpen(false);
-                  }}
-                  className="text-white font-bold text-3xl tracking-tight hover:text-blue-400 transition-colors"
+                  onClick={() => { setShowForm(false); setMobileMenuOpen(false); }}
+                  className="flex items-center gap-3 hover:opacity-90 transition-opacity"
                 >
-                  Gofer <span className="text-blue-500">AI</span>
+                  <img src={goferLogo} alt="Gofer AI" className="w-9 h-9 rounded-full shadow-lg shadow-blue-600/40" />
+                  <span className="text-white font-bold text-2xl tracking-tight">
+                    Gofer <span className="text-blue-400">AI</span>
+                  </span>
                 </Link>
                 <button
                   onClick={() => setMobileMenuOpen(false)}
@@ -261,6 +276,13 @@ export default function Landing() {
           <div className="max-w-4xl mx-auto text-center space-y-6 md:space-y-8 w-full">
             {/* Headline with strong background on mobile */}
             <div className="space-y-4 bg-gray-950/80 md:bg-transparent backdrop-blur-md md:backdrop-blur-none rounded-2xl p-6 md:p-0">
+              <div className="flex items-center justify-center gap-4 mb-2">
+                <img
+                  src={goferLogo}
+                  alt="Gofer AI"
+                  className="w-16 h-16 md:w-20 md:h-20 rounded-full shadow-2xl shadow-blue-600/50"
+                />
+              </div>
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight drop-shadow-2xl">
                 Gofer <span className="text-blue-400">AI</span>
               </h1>
