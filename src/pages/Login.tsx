@@ -32,7 +32,7 @@ export default function Login() {
       <nav className="bg-gray-900 border-b border-gray-800 px-6 py-4">
         <div className="max-w-7xl mx-auto">
           <Link to="/" className="text-white font-bold text-2xl tracking-tight hover:text-blue-400 transition-colors">
-            Gofer <span className="text-blue-500">AI</span>
+            Gofer <span className="text-blue-600">AI</span>
           </Link>
         </div>
       </nav>

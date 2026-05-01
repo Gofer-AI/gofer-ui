@@ -14,7 +14,7 @@ export default function About() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center space-y-6 mb-16">
             <h1 className="text-5xl md:text-6xl font-bold text-white">
-              About Gofer <span className="text-blue-500">AI</span>
+              About Gofer <span className="text-blue-600">AI</span>
             </h1>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto">
               We're building the cognitive layer that bridges human skill and robotic execution through advanced vision AI and semantic understanding.

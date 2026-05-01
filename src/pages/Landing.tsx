@@ -1,12 +1,14 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import landingVideo from '../assets/LandingPage.mp4';
-import WaitlistForm from '../components/WaitlistForm';
-import goferLogo from '/gofer-logo.png';
+import goferLogo from '/gofer-logo-square.png';
+import { submitToWaitlist } from '../lib/waitlist';
 
 export default function Landing() {
-  const [showForm, setShowForm] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [waitlistEmail, setWaitlistEmail] = useState('');
+  const [waitlistStatus, setWaitlistStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [waitlistError, setWaitlistError] = useState('');
   const videoRef = useRef<HTMLVideoElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
 
@@ -106,7 +108,6 @@ export default function Landing() {
           <div>
             <Link
               to="/"
-              onClick={() => setShowForm(false)}
               className="flex items-center gap-3 hover:opacity-90 transition-opacity"
             >
               <img
@@ -115,7 +116,7 @@ export default function Landing() {
                 className="w-9 h-9 rounded-full shadow-lg shadow-blue-600/40"
               />
               <span className="text-white font-bold text-2xl tracking-tight">
-                Gofer <span className="text-blue-400">AI</span>
+                Gofer <span className="text-blue-600">AI</span>
               </span>
             </Link>
           </div>
@@ -140,22 +141,10 @@ export default function Landing() {
             >
               Docs
             </Link>
-            <Link
-              to="/demo-login"
-              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors"
-            >
-              Demo Access
-            </Link>
           </div>
 
           {/* Mobile Navigation */}
           <div className="flex md:hidden items-center gap-4">
-            <Link
-              to="/demo-login"
-              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors"
-            >
-              Demo Access
-            </Link>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className="text-gray-400 hover:text-white transition-colors"
@@ -195,12 +184,12 @@ export default function Landing() {
               <div className="px-6 py-4 flex items-center justify-between border-b border-gray-800">
                 <Link
                   to="/"
-                  onClick={() => { setShowForm(false); setMobileMenuOpen(false); }}
+                  onClick={() => setMobileMenuOpen(false)}
                   className="flex items-center gap-3 hover:opacity-90 transition-opacity"
                 >
                   <img src={goferLogo} alt="Gofer AI" className="w-9 h-9 rounded-full shadow-lg shadow-blue-600/40" />
                   <span className="text-white font-bold text-2xl tracking-tight">
-                    Gofer <span className="text-blue-400">AI</span>
+                    Gofer <span className="text-blue-600">AI</span>
                   </span>
                 </Link>
                 <button
@@ -258,13 +247,7 @@ export default function Landing() {
 
               {/* Mobile Menu Footer */}
               <div className="px-6 py-6 border-t border-gray-800">
-                <Link
-                  to="/demo-login"
-                  onClick={() => setMobileMenuOpen(false)}
-                  className="block w-full text-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
-                >
-                  Demo Access
-                </Link>
+                <p className="text-center text-xs text-gray-500">Gofer AI &copy; 2026</p>
               </div>
             </div>
           </div>
@@ -284,38 +267,61 @@ export default function Landing() {
                 />
               </div>
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white tracking-tight drop-shadow-2xl">
-                Gofer <span className="text-blue-400">AI</span>
+                Gofer <span className="text-blue-600">AI</span>
               </h1>
               <p className="text-lg md:text-2xl text-white md:text-gray-200 max-w-3xl mx-auto leading-relaxed drop-shadow-lg font-medium md:font-normal">
                 Building the Cognitive Layer Between Human Skill & Robotic Execution
               </p>
             </div>
 
-            {/* Waitlist CTA - Enhanced for mobile */}
-            <div className="max-w-2xl mx-auto w-full">
-              {!showForm ? (
-                <div className="space-y-4 bg-gray-950/90 md:bg-transparent backdrop-blur-md md:backdrop-blur-none rounded-2xl p-6 md:p-0">
-                  <button
-                    onClick={() => setShowForm(true)}
-                    className="w-full max-w-md mx-auto block px-8 py-5 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white text-xl md:text-lg font-bold rounded-xl transition-all shadow-2xl shadow-blue-600/40 hover:shadow-blue-600/60 touch-manipulation border-2 border-blue-400/50"
-                    style={{ WebkitTapHighlightColor: 'transparent' }}
-                  >
-                    Request Demo Access
-                  </button>
-                  <p className="text-base md:text-sm text-white md:text-gray-400 text-center font-medium md:font-normal px-4">
-                    Get early access to test Gofer AI with your robotics research
-                  </p>
+            {/* Waitlist CTA */}
+            <div className="max-w-xl mx-auto w-full px-2">
+              {waitlistStatus === 'success' ? (
+                <div className="text-center py-4">
+                  <p className="text-green-400 font-medium text-lg">You're on the list!</p>
+                  <p className="text-gray-400 text-sm mt-1">We'll reach out when access opens up.</p>
                 </div>
               ) : (
-                <div className="bg-gray-950/95 md:bg-gray-900/90 backdrop-blur-lg border border-gray-700 md:border-gray-800 rounded-2xl p-6 md:p-8 shadow-2xl">
+                <form
+                  onSubmit={async (e) => {
+                    e.preventDefault();
+                    setWaitlistStatus('loading');
+                    setWaitlistError('');
+                    const result = await submitToWaitlist(waitlistEmail);
+                    if (result.success) {
+                      setWaitlistStatus('success');
+                      setWaitlistEmail('');
+                    } else {
+                      setWaitlistStatus('error');
+                      setWaitlistError(result.error ?? 'Something went wrong. Try again.');
+                    }
+                  }}
+                  className="flex items-center bg-gray-900/80 backdrop-blur-md border border-gray-700 rounded-full px-2 py-2 shadow-2xl focus-within:border-blue-600 transition-colors"
+                >
+                  <input
+                    type="email"
+                    required
+                    value={waitlistEmail}
+                    onChange={(e) => {
+                      setWaitlistEmail(e.target.value);
+                      if (waitlistStatus === 'error') setWaitlistStatus('idle');
+                    }}
+                    placeholder="Enter your email to join the waitlist"
+                    className="flex-1 bg-transparent text-white placeholder-gray-500 text-sm md:text-base px-4 outline-none"
+                    style={{ WebkitTapHighlightColor: 'transparent' }}
+                  />
                   <button
-                    onClick={() => setShowForm(false)}
-                    className="mb-4 text-base md:text-sm text-gray-300 md:text-gray-400 hover:text-white transition-colors font-medium"
+                    type="submit"
+                    disabled={waitlistStatus === 'loading'}
+                    className="flex-shrink-0 px-5 py-2.5 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 disabled:opacity-60 text-white text-sm font-semibold rounded-full transition-colors touch-manipulation whitespace-nowrap"
+                    style={{ WebkitTapHighlightColor: 'transparent' }}
                   >
-                    ← Back
+                    {waitlistStatus === 'loading' ? '...' : 'Join Waitlist'}
                   </button>
-                  <WaitlistForm />
-                </div>
+                </form>
+              )}
+              {waitlistStatus === 'error' && (
+                <p className="text-red-400 text-sm text-center mt-3">{waitlistError}</p>
               )}
             </div>
 
@@ -375,11 +381,20 @@ export default function Landing() {
               <a href="https://github.com/Gofer-AI" target="_blank" rel="noopener noreferrer" className="hover:text-white md:hover:text-gray-400 transition-colors">
                 GitHub
               </a>
-              <Link to="/demo-login" className="hover:text-white md:hover:text-gray-400 transition-colors">
-                Demo
-              </Link>
+              <button
+                onClick={() => setShowForm(true)}
+                className="hover:text-white md:hover:text-gray-400 transition-colors"
+              >
+                Join Waitlist
+              </button>
               <Link to="/contact" className="hover:text-white md:hover:text-gray-400 transition-colors">
                 Contact
+              </Link>
+              <Link to="/privacy-policy" className="hover:text-white md:hover:text-gray-400 transition-colors">
+                Privacy Policy
+              </Link>
+              <Link to="/contributor-terms" className="hover:text-white md:hover:text-gray-400 transition-colors">
+                Contributor Terms
               </Link>
             </div>
           </div>

@@ -6,6 +6,8 @@ import About from './pages/About';
 import Features from './pages/Features';
 import Documentation from './pages/Documentation';
 import Contact from './pages/Contact';
+import PrivacyPolicy from './pages/PrivacyPolicy';
+import ContributorTerms from './pages/ContributorTerms';
 import LabLabDemo from './components/LabLabDemo';
 import ProfileMenu from './components/ProfileMenu';
 import { ErrorBoundaryWithLogging } from './components/ErrorBoundary';
@@ -35,7 +37,7 @@ function AppLayout() {
       <nav className="bg-gray-900 border-b border-gray-800 px-6 py-4 flex items-center justify-between">
         <div>
           <Link to="/" className="text-white font-bold text-2xl tracking-tight hover:text-blue-400 transition-colors">
-            Gofer <span className="text-blue-500">AI</span>
+            Gofer <span className="text-blue-600">AI</span>
           </Link>
           <p className="text-xs text-gray-500 mt-1 hidden sm:block">
             Building the Cognitive Layer Between Human Skill & Robotic Execution
@@ -81,6 +83,8 @@ export default function AppRouter() {
                   <Route path="/features" element={<Features />} />
                   <Route path="/documentation" element={<Documentation />} />
                   <Route path="/contact" element={<Contact />} />
+                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+                  <Route path="/contributor-terms" element={<ContributorTerms />} />
 
                   {/* Hidden demo login */}
                   <Route path="/demo-login" element={<Login />} />

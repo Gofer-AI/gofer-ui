@@ -169,7 +169,7 @@ export default function WaitlistForm({ onSuccess }: WaitlistFormProps) {
       <div className="max-w-2xl mx-auto">
         <div className="mb-6">
           <Link to="/" className="inline-block text-white font-bold text-2xl tracking-tight hover:text-blue-400 transition-colors">
-            Gofer <span className="text-blue-500">AI</span>
+            Gofer <span className="text-blue-600">AI</span>
           </Link>
         </div>
         <div className="bg-green-900/20 border border-green-500/30 rounded-lg p-8 text-center">

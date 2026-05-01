@@ -14,7 +14,7 @@ export default function PageHeader() {
       <nav className="bg-gray-900 border-b border-gray-800 px-6 py-4 flex items-center justify-between sticky top-0 z-50">
         <div>
           <Link to="/" className="text-white font-bold text-2xl tracking-tight hover:text-blue-400 transition-colors">
-            Gofer <span className="text-blue-500">AI</span>
+            Gofer <span className="text-blue-600">AI</span>
           </Link>
         </div>
 
@@ -110,7 +110,7 @@ export default function PageHeader() {
                 onClick={() => setMobileMenuOpen(false)}
                 className="text-white font-bold text-2xl tracking-tight hover:text-blue-400 transition-colors"
               >
-                Gofer <span className="text-blue-500">AI</span>
+                Gofer <span className="text-blue-600">AI</span>
               </Link>
               <button
                 onClick={() => setMobileMenuOpen(false)}

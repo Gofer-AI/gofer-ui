@@ -16,7 +16,6 @@ export async function submitToWaitlist(
   email: string
 ): Promise<{ success: boolean; error?: string }> {
   try {
-    // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email.trim())) {
       return { success: false, error: 'Please enter a valid email address.' };
@@ -24,26 +23,30 @@ export async function submitToWaitlist(
 
     const normalizedEmail = email.trim().toLowerCase();
 
-    // Check if email already exists
-    const waitlistRef = collection(db, WAITLIST_COLLECTION);
-    const q = query(waitlistRef, where('email', '==', normalizedEmail));
+    // Check for duplicate in waitlist_requests
+    const requestsRef = collection(db, WAITLIST_REQUESTS_COLLECTION);
+    const q = query(requestsRef, where('email', '==', normalizedEmail));
     const snapshot = await getDocs(q);
 
     if (!snapshot.empty) {
       return { success: false, error: 'This email is already on the waitlist.' };
     }
 
-    // Add to waitlist
-    await addDoc(waitlistRef, {
+    // Write to waitlist_requests with fields required by Firestore rules
+    await addDoc(requestsRef, {
       email: normalizedEmail,
-      timestamp: Timestamp.now(),
+      full_name: '',
+      organization: '',
+      role: '',
+      use_case: '',
       status: 'pending',
-      source: 'landing_page'
+      submitted_at: Timestamp.now(),
+      source: 'landing_inline',
     });
 
     return { success: true };
   } catch (err) {
-    console.error('Waitlist submission error:', err);
+    console.error('[WAITLIST] submitToWaitlist error:', err);
     return { success: false, error: 'Connection error. Please try again.' };
   }
 }
