@@ -9,7 +9,6 @@ export interface WaitlistEntry {
   source?: string;
 }
 
-const WAITLIST_COLLECTION = 'waitlist';
 const WAITLIST_REQUESTS_COLLECTION = 'waitlist_requests';
 
 export async function submitToWaitlist(

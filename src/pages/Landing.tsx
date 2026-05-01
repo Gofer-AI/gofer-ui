@@ -382,7 +382,7 @@ export default function Landing() {
                 GitHub
               </a>
               <button
-                onClick={() => setShowForm(true)}
+                onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
                 className="hover:text-white md:hover:text-gray-400 transition-colors"
               >
                 Join Waitlist
