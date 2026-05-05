@@ -83,7 +83,7 @@ export default function AppRouter() {
                   <Route path="/features" element={<Features />} />
                   <Route path="/documentation" element={<Documentation />} />
                   <Route path="/contact" element={<Contact />} />
-                  <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+<Route path="/privacy-policy" element={<PrivacyPolicy />} />
                   <Route path="/contributor-terms" element={<ContributorTerms />} />
 
                   {/* Hidden demo login */}

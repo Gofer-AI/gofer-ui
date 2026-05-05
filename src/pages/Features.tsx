@@ -339,7 +339,7 @@ export default function Features() {
             Experience the future of robot learning with Gofer AI
           </p>
           <Link
-            to="/"
+            to="/contact"
             className="inline-block px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold rounded-lg transition-colors"
           >
             Request Demo Access

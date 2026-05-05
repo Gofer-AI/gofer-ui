@@ -21,14 +21,6 @@ export default function PageHeader() {
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center gap-6">
           <Link
-            to="/"
-            className={`text-sm transition-colors ${
-              isActive('/') ? 'text-blue-400 font-medium' : 'text-gray-400 hover:text-gray-300'
-            }`}
-          >
-            Home
-          </Link>
-          <Link
             to="/features"
             className={`text-sm transition-colors ${
               isActive('/features') ? 'text-blue-400 font-medium' : 'text-gray-400 hover:text-gray-300'
@@ -135,17 +127,6 @@ export default function PageHeader() {
 
             {/* Mobile Menu Links */}
             <div className="flex-1 px-6 py-8 space-y-2">
-              <Link
-                to="/"
-                onClick={() => setMobileMenuOpen(false)}
-                className={`block px-4 py-3 text-lg rounded-lg transition-colors ${
-                  isActive('/')
-                    ? 'text-white bg-blue-600/20 font-medium'
-                    : 'text-gray-300 hover:text-white hover:bg-gray-800/50'
-                }`}
-              >
-                Home
-              </Link>
               <Link
                 to="/features"
                 onClick={() => setMobileMenuOpen(false)}

@@ -57,10 +57,10 @@ export default function Documentation() {
                     Fill out the waitlist form on our landing page to request access to the demo platform. We'll review your application and send you login credentials.
                   </p>
                   <Link
-                    to="/"
+                    to="/contact"
                     className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors"
                   >
-                    Go to Landing Page
+                    Contact Us
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
@@ -371,20 +371,12 @@ export default function Documentation() {
                 <p className="text-gray-400 mb-6">
                   Our team is here to support you
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <div className="flex justify-center">
                   <a
-                    href="mailto:support@goferai.space"
+                    href="/contact"
                     className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
                   >
                     Contact Support
-                  </a>
-                  <a
-                    href="https://github.com/Gofer-AI"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white font-semibold rounded-lg transition-colors border border-gray-700"
-                  >
-                    View on GitHub
                   </a>
                 </div>
               </div>
