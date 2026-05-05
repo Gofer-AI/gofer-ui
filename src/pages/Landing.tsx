@@ -70,7 +70,7 @@ export default function Landing() {
   };
 
   return (
-    <div className="bg-gray-950">
+    <div className="bg-gray-950 page-enter">
     {/* ── Hero ── */}
     <div className="relative min-h-screen overflow-hidden">
       <DottedSurface />
