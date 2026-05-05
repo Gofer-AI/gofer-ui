@@ -30,6 +30,7 @@ export default function Landing() {
           overlay.style.pointerEvents = 'none';
         })
         .catch(() => {
+          // Autoplay blocked — reveal the tap-to-play button
           overlay.style.opacity = '1';
           overlay.style.pointerEvents = 'auto';
         });
@@ -90,12 +91,12 @@ export default function Landing() {
           <source src={landingVideo} type="video/mp4" />
         </video>
 
-        {/* Play button overlay — hidden via ref (no React state = no re-render interrupting video) */}
+        {/* Play button overlay — shown only if autoplay is blocked */}
         <div
           ref={overlayRef}
           onClick={handleVideoClick}
           className="absolute inset-0 w-full h-full flex flex-col items-center justify-center bg-gray-950/90 backdrop-blur-md z-10 cursor-pointer touch-manipulation"
-          style={{ opacity: 1, transition: 'opacity 0.6s ease', WebkitTapHighlightColor: 'transparent' }}
+          style={{ opacity: 0, pointerEvents: 'none', transition: 'opacity 0.6s ease', WebkitTapHighlightColor: 'transparent' }}
           aria-label="Play background video"
         >
           <div className="w-24 h-24 bg-blue-600 rounded-full flex items-center justify-center shadow-2xl shadow-blue-600/50 mb-4 hover:scale-110 active:scale-95 transition-transform">
