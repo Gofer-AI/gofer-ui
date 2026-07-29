@@ -640,7 +640,7 @@ export default function Landing() {
             <a href="https://www.linkedin.com/company/gofer-ai" target="_blank" rel="noopener noreferrer" className="opacity-50 hover:opacity-90 transition-opacity">
               <img src={linkedinIcon} alt="LinkedIn" className="w-4 h-4 object-contain" />
             </a>
-            <a href="https://github.com/goferaispace" target="_blank" rel="noopener noreferrer" className="opacity-50 hover:opacity-90 transition-opacity">
+            <a href="https://github.com/Gofer-AI" target="_blank" rel="noopener noreferrer" className="opacity-50 hover:opacity-90 transition-opacity">
               <img src={githubIcon} alt="GitHub" className="w-5 h-5 object-contain" />
             </a>
           </div>
