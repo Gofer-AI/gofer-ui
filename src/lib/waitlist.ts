@@ -1,6 +1,7 @@
 import { collection, addDoc, query, where, getDocs, Timestamp } from 'firebase/firestore';
 import { db } from './firebase';
 import type { WaitlistFormData, WaitlistSubmissionResponse } from '../types';
+import { sanitizeInput } from './contact';
 
 export interface WaitlistEntry {
   email: string;
@@ -87,11 +88,11 @@ export async function submitWaitlistRequest(
     // Add to waitlist_requests collection
     console.log('[WAITLIST] Adding to Firestore...');
     const dataToSubmit = {
-      full_name: formData.full_name.trim(),
+      full_name: sanitizeInput(formData.full_name),
       email: normalizedEmail,
-      organization: formData.organization.trim(),
-      role: formData.role.trim(),
-      use_case: formData.use_case.trim(),
+      organization: sanitizeInput(formData.organization),
+      role: sanitizeInput(formData.role),
+      use_case: sanitizeInput(formData.use_case),
       linkedin_url: formData.linkedin_url?.trim() || null,
       website: formData.website?.trim() || null,
       status: 'pending',

@@ -64,7 +64,7 @@ async function checkRateLimit(email: string): Promise<boolean> {
 /**
  * Sanitize user input to prevent XSS attacks
  */
-function sanitizeInput(input: string): string {
+export function sanitizeInput(input: string): string {
   return input
     .trim()
     .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')

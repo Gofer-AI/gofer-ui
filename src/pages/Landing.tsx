@@ -151,6 +151,12 @@ export default function Landing() {
             >
               Docs
             </Link>
+            <a
+              href="/newsletter"
+              className="text-sm text-gray-400 hover:text-gray-300 transition-colors"
+            >
+              Newsletter
+            </a>
           </div>
 
           {/* Mobile Navigation */}
@@ -246,6 +252,13 @@ export default function Landing() {
                 >
                   Docs
                 </Link>
+                <a
+                  href="/newsletter"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block px-4 py-3 text-lg text-gray-300 hover:text-white hover:bg-gray-800/50 rounded-lg transition-colors"
+                >
+                  Newsletter
+                </a>
                 <Link
                   to="/contact"
                   onClick={() => setMobileMenuOpen(false)}

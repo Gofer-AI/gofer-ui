@@ -44,6 +44,12 @@ export default function PageHeader() {
           >
             Docs
           </Link>
+          <a
+            href="/newsletter"
+            className="text-sm text-gray-400 hover:text-gray-300 transition-colors"
+          >
+            Newsletter
+          </a>
           <Link
             to="/demo-login"
             className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors"
@@ -160,6 +166,13 @@ export default function PageHeader() {
               >
                 Docs
               </Link>
+              <a
+                href="/newsletter"
+                onClick={() => setMobileMenuOpen(false)}
+                className="block px-4 py-3 text-lg rounded-lg transition-colors text-gray-300 hover:text-white hover:bg-gray-800/50"
+              >
+                Newsletter
+              </a>
               <Link
                 to="/contact"
                 onClick={() => setMobileMenuOpen(false)}
