@@ -1,13 +1,9 @@
 {
-  "cleanUrls": true,
-  "rewrites": [
-    { "source": "/about", "destination": "/index.html" },
-    { "source": "/features", "destination": "/index.html" },
-    { "source": "/documentation", "destination": "/index.html" },
-    { "source": "/contact", "destination": "/index.html" },
-    { "source": "/privacy-policy", "destination": "/index.html" },
-    { "source": "/contributor-terms", "destination": "/index.html" },
-    { "source": "/demo-login", "destination": "/index.html" },
-    { "source": "/app", "destination": "/index.html" }
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/newsletter", "dest": "/newsletter/index.html" },
+    { "src": "/newsletter/([^/.]+)", "dest": "/newsletter/$1.html" },
+    { "src": "/intern-day", "dest": "/intern-day/index.html" },
+    { "src": "/(.*)", "dest": "/index.html" }
   ]
 }
