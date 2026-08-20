@@ -34,6 +34,7 @@ FireBase/
 !tsconfig*.json
 !package*.json
 !vercel.json
+!src/i18n/*.json
 
 # Internal docs
 claude.md
