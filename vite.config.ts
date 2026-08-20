@@ -2,20 +2,22 @@ import { defineConfig, type Plugin } from 'vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 
-// Serve the static newsletter at clean URLs (/newsletter, /newsletter/jun2026)
-// during dev by mapping extensionless requests to their .html files before
-// Vite's static/SPA middleware runs. Asset requests (containing a dot) are left alone.
-function newsletterCleanUrls(): Plugin {
+// Serve the static sections (newsletter, blog, faq) at clean URLs
+// (e.g. /blog, /blog/origin-post) during dev by mapping extensionless requests
+// to their .html files before Vite's static/SPA middleware runs. Asset requests
+// (containing a dot) are left alone. Mirrors the vercel.json routes in production.
+function staticSectionCleanUrls(): Plugin {
+  const sections = ['newsletter', 'blog', 'faq']
+  const pattern = new RegExp(`^/(${sections.join('|')})(?:/([^./]+))?/?$`)
   return {
-    name: 'newsletter-clean-urls',
+    name: 'static-section-clean-urls',
     configureServer(server) {
       server.middlewares.use((req, _res, next) => {
         const reqPath = (req.url || '').split('?')[0]
-        if (reqPath === '/newsletter' || reqPath === '/newsletter/') {
-          req.url = '/newsletter/index.html'
-        } else {
-          const match = reqPath.match(/^\/newsletter\/([^./]+)\/?$/)
-          if (match) req.url = `/newsletter/${match[1]}.html`
+        const match = reqPath.match(pattern)
+        if (match) {
+          const [, section, slug] = match
+          req.url = slug ? `/${section}/${slug}.html` : `/${section}/index.html`
         }
         next()
       })
@@ -25,7 +27,7 @@ function newsletterCleanUrls(): Plugin {
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), newsletterCleanUrls()],
+  plugins: [react(), staticSectionCleanUrls()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

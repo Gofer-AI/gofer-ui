@@ -5,6 +5,7 @@ import Landing from './pages/Landing';
 import About from './pages/About';
 import Features from './pages/Features';
 import Documentation from './pages/Documentation';
+import HowItWorks from './pages/HowItWorks';
 import Contact from './pages/Contact';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import ContributorTerms from './pages/ContributorTerms';
@@ -82,6 +83,7 @@ export default function AppRouter() {
                   <Route path="/about" element={<About />} />
                   <Route path="/features" element={<Features />} />
                   <Route path="/documentation" element={<Documentation />} />
+                  <Route path="/how-it-works" element={<HowItWorks />} />
                   <Route path="/contact" element={<Contact />} />
 <Route path="/privacy-policy" element={<PrivacyPolicy />} />
                   <Route path="/contributor-terms" element={<ContributorTerms />} />

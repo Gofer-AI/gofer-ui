@@ -1,49 +1,52 @@
 import { Link } from 'react-router-dom';
-import PageHeader from '../components/PageHeader';
+import { useTranslation } from 'react-i18next';
+import SiteHeader from '../components/SiteHeader';
+import SiteFooter from '../components/SiteFooter';
 import ChidiImage from '../assets/Chidi.png';
 import JasonImage from '../assets/Jason.JPG';
 import LabLabLogo from '../assets/lablab_surge_transparent.png';
 
 export default function About() {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-gray-950">
-      <PageHeader />
+      <SiteHeader />
 
       {/* Hero Section */}
       <section className="px-6 py-20 border-b border-gray-800">
         <div className="max-w-6xl mx-auto">
           <div className="text-center space-y-6 mb-16">
             <h1 className="text-5xl md:text-6xl font-bold text-white">
-              About Gofer <span className="text-blue-600">AI</span>
+              {t('about.heroTitlePre')} Gofer <span className="text-blue-600">AI</span> {t('about.heroTitlePost')}
             </h1>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-              We're building the cognitive layer that bridges human skill and robotic execution through advanced vision AI and semantic understanding.
+              {t('about.heroSubtitle')}
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div className="space-y-6">
-              <h2 className="text-3xl font-bold text-white">Our Mission</h2>
+              <h2 className="text-3xl font-bold text-white">{t('about.missionTitle')}</h2>
               <p className="text-gray-400 leading-relaxed">
-                Gofer AI is pioneering the future of human-robot collaboration. We believe that teaching robots should be as natural as showing a colleague how to do something.
+                {t('about.missionP1')}
               </p>
               <p className="text-gray-400 leading-relaxed">
-                Our platform uses state-of-the-art multimodal AI to analyze human demonstrations, extract actionable primitives, and generate executable robot instructions - no programming required.
+                {t('about.missionP2')}
               </p>
             </div>
             <div className="bg-gradient-to-br from-blue-600/10 to-purple-600/10 border border-gray-800 rounded-2xl p-8">
               <div className="space-y-8">
                 <div>
                   <div className="text-4xl font-bold text-blue-500 mb-2">70%</div>
-                  <p className="text-gray-400">Reduction in robot training time</p>
+                  <p className="text-gray-400">{t('about.stat1')}</p>
                 </div>
                 <div>
                   <div className="text-4xl font-bold text-blue-500 mb-2">10x</div>
-                  <p className="text-gray-400">Faster demonstration retrieval</p>
+                  <p className="text-gray-400">{t('about.stat2')}</p>
                 </div>
                 <div>
                   <div className="text-4xl font-bold text-blue-500 mb-2">100%</div>
-                  <p className="text-gray-400">No-code robot programming</p>
+                  <p className="text-gray-400">{t('about.stat3')}</p>
                 </div>
               </div>
             </div>
@@ -55,9 +58,9 @@ export default function About() {
       <section className="px-6 py-20 border-b border-gray-800">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">The Team</h2>
+            <h2 className="text-4xl font-bold text-white mb-4">{t('about.teamTitle')}</h2>
             <p className="text-gray-400 max-w-2xl mx-auto">
-              Built by researchers and engineers passionate about making robotics accessible to everyone.
+              {t('about.teamSubtitle')}
             </p>
           </div>
 
@@ -72,9 +75,9 @@ export default function About() {
                 />
               </div>
               <h3 className="text-xl font-semibold text-white mb-2">Jason Okorie</h3>
-              <p className="text-purple-400 text-sm mb-3">Co-Founder</p>
+              <p className="text-purple-400 text-sm mb-3">{t('about.jasonRole')}</p>
               <p className="text-gray-400 text-sm">
-                Collaborating on strategic vision and robotics innovation
+                {t('about.jasonBio')}
               </p>
             </div>
 
@@ -88,9 +91,9 @@ export default function About() {
                 />
               </div>
               <h3 className="text-xl font-semibold text-white mb-2">Chidi Okoro</h3>
-              <p className="text-blue-400 text-sm mb-3">Co-Founder</p>
+              <p className="text-blue-400 text-sm mb-3">{t('about.chidiRole')}</p>
               <p className="text-gray-400 text-sm">
-                AI researcher specializing in computer vision and robotics learning
+                {t('about.chidiBio')}
               </p>
             </div>
 
@@ -98,10 +101,10 @@ export default function About() {
               <div className="w-20 h-20 bg-gradient-to-br from-green-500 to-green-700 rounded-full mx-auto mb-4 flex items-center justify-center">
                 <span className="text-2xl font-bold text-white">?</span>
               </div>
-              <h3 className="text-xl font-semibold text-white mb-2">Join Us</h3>
-              <p className="text-green-400 text-sm mb-3">Open for Collaboration</p>
+              <h3 className="text-xl font-semibold text-white mb-2">{t('about.joinTitle')}</h3>
+              <p className="text-green-400 text-sm mb-3">{t('about.joinRole')}</p>
               <p className="text-gray-400 text-sm">
-                Help us build the future of human-robot collaboration
+                {t('about.joinBio')}
               </p>
             </div>
           </div>
@@ -119,20 +122,20 @@ export default function About() {
                 className="h-24 w-auto"
               />
               <h2 className="text-3xl font-bold text-white">
-                Born at LabLab AI Surge Hackathon
+                {t('about.lablabTitle')}
               </h2>
               <p className="text-gray-400 text-lg max-w-2xl">
-                Gofer AI was created during the LabLab AI Surge Hackathon, where we pioneered innovative solutions for human-robot collaboration using cutting-edge multimodal AI technology.
+                {t('about.lablabBody')}
               </p>
               <div className="flex flex-wrap gap-4 justify-center text-sm">
                 <span className="px-4 py-2 bg-purple-600/20 border border-purple-600/30 rounded-lg text-purple-300">
-                  Multimodal AI
+                  {t('about.tag1')}
                 </span>
                 <span className="px-4 py-2 bg-blue-600/20 border border-blue-600/30 rounded-lg text-blue-300">
-                  Computer Vision
+                  {t('about.tag2')}
                 </span>
                 <span className="px-4 py-2 bg-green-600/20 border border-green-600/30 rounded-lg text-green-300">
-                  Robotics Learning
+                  {t('about.tag3')}
                 </span>
               </div>
             </div>
@@ -144,55 +147,29 @@ export default function About() {
       <section className="px-6 py-20">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl font-bold text-white mb-6">
-            Ready to Transform Robot Learning?
+            {t('about.ctaTitle')}
           </h2>
           <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
-            Join researchers and roboticists who are using Gofer AI to accelerate their work.
+            {t('about.ctaBody')}
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               to="/contact"
               className="px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold rounded-lg transition-colors"
             >
-              Request Demo Access
+              {t('cta.applyBeta')}
             </Link>
             <Link
               to="/documentation"
               className="px-8 py-4 bg-gray-800 hover:bg-gray-700 text-white text-lg font-semibold rounded-lg transition-colors border border-gray-700"
             >
-              View Documentation
+              {t('cta.viewDocs')}
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="px-6 py-8 border-t border-gray-800">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="text-sm text-gray-500">
-              Gofer AI © 2026. All rights reserved.
-            </div>
-            <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
-              <Link to="/" className="hover:text-gray-400 transition-colors">
-                Home
-              </Link>
-              <Link to="/about" className="hover:text-gray-400 transition-colors">
-                About
-              </Link>
-              <Link to="/features" className="hover:text-gray-400 transition-colors">
-                Features
-              </Link>
-              <a href="https://github.com/Gofer-AI" target="_blank" rel="noopener noreferrer" className="hover:text-gray-400 transition-colors">
-                GitHub
-              </a>
-              <Link to="/contact" className="hover:text-gray-400 transition-colors">
-                Contact
-              </Link>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

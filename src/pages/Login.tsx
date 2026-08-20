@@ -1,6 +1,8 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { loginUser } from '../lib/auth';
+import SiteHeader from '../components/SiteHeader';
+import SiteFooter from '../components/SiteFooter';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -27,18 +29,11 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-950">
-      {/* Header/Nav */}
-      <nav className="bg-gray-900 border-b border-gray-800 px-6 py-4">
-        <div className="max-w-7xl mx-auto">
-          <Link to="/" className="text-white font-bold text-2xl tracking-tight hover:text-blue-400 transition-colors">
-            Gofer <span className="text-blue-600">AI</span>
-          </Link>
-        </div>
-      </nav>
+    <div className="min-h-screen bg-gray-950 flex flex-col">
+      <SiteHeader />
 
       {/* Login Content */}
-      <div className="flex flex-col items-center justify-center px-4 py-12">
+      <div className="flex-1 flex flex-col items-center justify-center px-4 py-12">
         {/* Tagline */}
         <div className="mb-10 text-center">
           <h2 className="text-2xl font-bold text-white tracking-tight mb-3">
@@ -126,12 +121,9 @@ export default function Login() {
             </button>
           </form>
         </div>
-
-        {/* Footer */}
-        <p className="mt-8 text-gray-700 text-xs text-center">
-          Gofer AI © 2026
-        </p>
       </div>
+
+      <SiteFooter />
     </div>
   );
 }

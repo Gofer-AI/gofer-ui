@@ -1,19 +1,22 @@
 import { Link } from 'react-router-dom';
-import PageHeader from '../components/PageHeader';
+import { useTranslation } from 'react-i18next';
+import SiteHeader from '../components/SiteHeader';
+import SiteFooter from '../components/SiteFooter';
 
 export default function Features() {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-gray-950">
-      <PageHeader />
+      <SiteHeader />
 
       {/* Hero Section */}
       <section className="px-6 py-20 border-b border-gray-800">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-            Powerful Features for Modern Robotics
+            {t('features.heroTitle')}
           </h1>
           <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            Everything you need to teach robots through natural human demonstrations
+            {t('features.heroSubtitle')}
           </p>
         </div>
       </section>
@@ -30,10 +33,10 @@ export default function Features() {
                 </svg>
               </div>
               <h2 className="text-4xl font-bold text-white">
-                Advanced Action Detection
+                {t('features.f1Title')}
               </h2>
               <p className="text-lg text-gray-400 leading-relaxed">
-                Our multimodal AI analyzes video demonstrations to identify precise action primitives: reach, grasp, move, place, release, and more.
+                {t('features.f1Body')}
               </p>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
@@ -43,8 +46,8 @@ export default function Features() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-white font-semibold mb-1">Frame-by-Frame Analysis</h3>
-                    <p className="text-gray-400 text-sm">Extract actions at your specified frame rate with temporal precision</p>
+                    <h3 className="text-white font-semibold mb-1">{t('features.f1aTitle')}</h3>
+                    <p className="text-gray-400 text-sm">{t('features.f1aBody')}</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -54,8 +57,8 @@ export default function Features() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-white font-semibold mb-1">Object Interaction Detection</h3>
-                    <p className="text-gray-400 text-sm">Identify which hand is interacting with which objects</p>
+                    <h3 className="text-white font-semibold mb-1">{t('features.f1bTitle')}</h3>
+                    <p className="text-gray-400 text-sm">{t('features.f1bBody')}</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -65,8 +68,8 @@ export default function Features() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-white font-semibold mb-1">Visual Timeline</h3>
-                    <p className="text-gray-400 text-sm">Color-coded visualization of action sequences over time</p>
+                    <h3 className="text-white font-semibold mb-1">{t('features.f1cTitle')}</h3>
+                    <p className="text-gray-400 text-sm">{t('features.f1cBody')}</p>
                   </div>
                 </div>
               </div>
@@ -140,10 +143,10 @@ export default function Features() {
                 </svg>
               </div>
               <h2 className="text-4xl font-bold text-white">
-                Semantic Video Search
+                {t('features.f2Title')}
               </h2>
               <p className="text-lg text-gray-400 leading-relaxed">
-                Find relevant demonstrations instantly using natural language. Our AI-powered search understands context, not just keywords.
+                {t('features.f2Body')}
               </p>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
@@ -153,8 +156,8 @@ export default function Features() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-white font-semibold mb-1">Multimodal Embeddings</h3>
-                    <p className="text-gray-400 text-sm">Search across video frames, audio, and text descriptions</p>
+                    <h3 className="text-white font-semibold mb-1">{t('features.f2aTitle')}</h3>
+                    <p className="text-gray-400 text-sm">{t('features.f2aBody')}</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -164,8 +167,8 @@ export default function Features() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-white font-semibold mb-1">Ranked Results</h3>
-                    <p className="text-gray-400 text-sm">Relevance scoring shows the best matches first</p>
+                    <h3 className="text-white font-semibold mb-1">{t('features.f2bTitle')}</h3>
+                    <p className="text-gray-400 text-sm">{t('features.f2bBody')}</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -175,8 +178,8 @@ export default function Features() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-white font-semibold mb-1">Instant Playback</h3>
-                    <p className="text-gray-400 text-sm">Click any result to view the demonstration immediately</p>
+                    <h3 className="text-white font-semibold mb-1">{t('features.f2cTitle')}</h3>
+                    <p className="text-gray-400 text-sm">{t('features.f2cBody')}</p>
                   </div>
                 </div>
               </div>
@@ -197,10 +200,10 @@ export default function Features() {
                 </svg>
               </div>
               <h2 className="text-4xl font-bold text-white">
-                Intelligent Automation
+                {t('features.f3Title')}
               </h2>
               <p className="text-lg text-gray-400 leading-relaxed">
-                Transform human demonstrations into actionable insights. Our platform automatically extracts and structures knowledge from video demonstrations.
+                {t('features.f3Body')}
               </p>
               <div className="space-y-4">
                 <div className="flex items-start gap-3">
@@ -210,8 +213,8 @@ export default function Features() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-white font-semibold mb-1">Structured Output</h3>
-                    <p className="text-gray-400 text-sm">Receive organized, machine-readable data from demonstrations</p>
+                    <h3 className="text-white font-semibold mb-1">{t('features.f3aTitle')}</h3>
+                    <p className="text-gray-400 text-sm">{t('features.f3aBody')}</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -221,8 +224,8 @@ export default function Features() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-white font-semibold mb-1">3D Motion Analysis</h3>
-                    <p className="text-gray-400 text-sm">Capture precise movement trajectories and spatial relationships</p>
+                    <h3 className="text-white font-semibold mb-1">{t('features.f3bTitle')}</h3>
+                    <p className="text-gray-400 text-sm">{t('features.f3bBody')}</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
@@ -232,8 +235,8 @@ export default function Features() {
                     </svg>
                   </div>
                   <div>
-                    <h3 className="text-white font-semibold mb-1">Flexible Integration</h3>
-                    <p className="text-gray-400 text-sm">Export data in multiple formats for your robotics workflow</p>
+                    <h3 className="text-white font-semibold mb-1">{t('features.f3cTitle')}</h3>
+                    <p className="text-gray-400 text-sm">{t('features.f3cBody')}</p>
                   </div>
                 </div>
               </div>
@@ -277,9 +280,9 @@ export default function Features() {
       <section className="px-6 py-20 border-b border-gray-800 bg-gray-900/30">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-white mb-4">More Features</h2>
+            <h2 className="text-4xl font-bold text-white mb-4">{t('features.moreTitle')}</h2>
             <p className="text-gray-400 max-w-2xl mx-auto">
-              Additional capabilities that make Gofer AI the complete robotics learning platform
+              {t('features.moreSubtitle')}
             </p>
           </div>
 
@@ -292,9 +295,9 @@ export default function Features() {
                     d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-white mb-3">Configurable Analysis</h3>
+              <h3 className="text-xl font-semibold text-white mb-3">{t('features.m1Title')}</h3>
               <p className="text-gray-400 leading-relaxed">
-                Adjust frame rate, window size, and detection parameters to match your use case
+                {t('features.m1Body')}
               </p>
             </div>
 
@@ -306,9 +309,9 @@ export default function Features() {
                     d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-white mb-3">Real-time Processing</h3>
+              <h3 className="text-xl font-semibold text-white mb-3">{t('features.m2Title')}</h3>
               <p className="text-gray-400 leading-relaxed">
-                Stream video analysis with live updates and instant feedback on detected actions
+                {t('features.m2Body')}
               </p>
             </div>
 
@@ -320,9 +323,9 @@ export default function Features() {
                     d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-white mb-3">Export & Integration</h3>
+              <h3 className="text-xl font-semibold text-white mb-3">{t('features.m3Title')}</h3>
               <p className="text-gray-400 leading-relaxed">
-                Download results in multiple formats or integrate directly via our API
+                {t('features.m3Body')}
               </p>
             </div>
           </div>
@@ -333,47 +336,21 @@ export default function Features() {
       <section className="px-6 py-20">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl font-bold text-white mb-6">
-            Ready to Get Started?
+            {t('features.ctaTitle')}
           </h2>
           <p className="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
-            Experience the future of robot learning with Gofer AI
+            {t('features.ctaBody')}
           </p>
           <Link
             to="/contact"
             className="inline-block px-8 py-4 bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold rounded-lg transition-colors"
           >
-            Request Demo Access
+            {t('cta.applyBeta')}
           </Link>
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="px-6 py-8 border-t border-gray-800">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="text-sm text-gray-500">
-              Gofer AI © 2026. All rights reserved.
-            </div>
-            <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
-              <Link to="/" className="hover:text-gray-400 transition-colors">
-                Home
-              </Link>
-              <Link to="/about" className="hover:text-gray-400 transition-colors">
-                About
-              </Link>
-              <Link to="/features" className="hover:text-gray-400 transition-colors">
-                Features
-              </Link>
-              <a href="https://github.com/Gofer-AI" target="_blank" rel="noopener noreferrer" className="hover:text-gray-400 transition-colors">
-                GitHub
-              </a>
-              <Link to="/contact" className="hover:text-gray-400 transition-colors">
-                Contact
-              </Link>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

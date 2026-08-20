@@ -3,6 +3,10 @@
     { "handle": "filesystem" },
     { "src": "/newsletter", "dest": "/newsletter/index.html" },
     { "src": "/newsletter/([^/.]+)", "dest": "/newsletter/$1.html" },
+    { "src": "/blog", "dest": "/blog/index.html" },
+    { "src": "/blog/([^/.]+)", "dest": "/blog/$1.html" },
+    { "src": "/faq", "dest": "/faq/index.html" },
+    { "src": "/faq/([^/.]+)", "dest": "/faq/$1.html" },
     { "src": "/intern-day", "dest": "/intern-day/index.html" },
     { "src": "/(.*)", "dest": "/index.html" }
   ]

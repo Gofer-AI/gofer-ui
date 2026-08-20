@@ -3,60 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>NVIDIA and Gofer AI's Next Steps - Gofer AI</title>
+    <title>Inside Gofer AI's Strategic NVIDIA HQ Visit - Gofer AI</title>
+    <meta name="description" content="Gofer AI visits NVIDIA Headquarters in Santa Clara for a strategic immersion session with NVIDIA Inception.">
     <link rel="stylesheet" href="/newsletter/style.css">
 </head>
-<body>
+<body data-page-type="newsletter">
+    <div id="page-curtain"></div>
+    <nav class="top-header-bar">
+        <div class="top-header-container">
+            <a href="/" class="top-header-brand">
+                <img src="/newsletter/gofer-logo-square.png" alt="Gofer AI Logo">
+                <span>Gofer <span class="brand-ai">AI</span></span>
+            </a>
+            <div class="top-header-links">
+                <a href="/features" data-i18n="nav_features">Features</a>
+                <a href="/about" data-i18n="nav_about">About</a>
+                <a href="/documentation" data-i18n="nav_docs">Docs</a>
+                <a href="/newsletter" class="active" data-i18n="nav_newsletter">Newsletter</a>
+                <a href="/blog" data-i18n="nav_blog">Blog</a>
+                <a href="/faq" data-i18n="nav_faq">FAQ</a>
+                <div class="lang-dropdown" id="lang-dropdown">
+                    <button class="lang-trigger" id="lang-trigger" type="button" aria-haspopup="true" aria-expanded="false">
+                        <img src="/newsletter/enflag.png" id="lang-current-flag" alt="Language flag">
+                        <span id="lang-current-label">EN</span>
+                        <span class="lang-arrow">▾</span>
+                    </button>
+                    <div class="lang-menu" role="menu">
+                        <button class="lang-option" type="button" onclick="setLanguage('en')"><img src="/newsletter/enflag.png" alt="English flag"> EN</button>
+                        <button class="lang-option" type="button" onclick="setLanguage('es')"><img src="/newsletter/esflag.svg" alt="Bandera de España"> ES</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
     <canvas id="particle-canvas"></canvas>
-    
+    <a href="/" class="waitlist-float" aria-label="Join Waitlist">
+        <img src="/newsletter/goferailogoblue.png" alt="Gofer AI">
+        <span data-i18n="btn_join_waitlist">Join Waitlist</span>
+    </a>
+
     <div class="fluid-header-container">
-        <canvas id="molecule-canvas"></canvas>
+        <video class="bg-video" autoplay muted loop playsinline preload="metadata">
+            <source src="/newsletter/newsletterbackgroundvideo.mp4" type="video/mp4">
+        </video>
         <header class="seamless-header">
             <img class="header-logo" src="/newsletter/gofer-logo-square.png" alt="Gofer AI Logo">
-            <h1 class="header-title">Gofer <span class="brand-ai">AI</span> <span class="header-dim">Newsletter</span></h1>
+            <h1 class="header-title">Gofer <span class="brand-ai">AI</span> <span class="header-dim" data-i18n="header_newsletter">Newsletter</span></h1>
             <ul class="nav-links">
-                <li><a href="/">Home</a></li>
-                <li><a href="/features">Features</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/documentation">Docs</a></li>
-                <li><a href="/newsletter">Recent Dispatches</a></li>
-                <li><a href="/newsletter/newsletter">Full Newsletter</a></li>
-                <li><a href="/contact">Contact</a></li>
+                <li><a href="/" data-i18n="nav_gofer_home">Home</a></li>
+                <li><a href="/newsletter" data-i18n="nav_recent_dispatches">Recent Dispatches</a></li>
+                <li><a href="/newsletter/newsletter" data-i18n="nav_full_newsletter">Full Newsletter</a></li>
             </ul>
         </header>
     </div>
 
     <div class="container">
-        <div id="jun2026" class="page">
+        <div class="page">
             <div class="article-content reveal">
                 <div class="article-header-banner">
-                    <span class="kicker">Silicon Valley Takeover</span>
-                    <h1 class="main-title">Inside Gofer AI's Strategic NVIDIA HQ Visit</h1>
-                    <span class="date-subtitle">June 2026</span>
+                    <span class="kicker" data-i18n="jun_kicker">Silicon Valley Takeover</span>
+                    <h1 class="main-title" data-i18n="jun_title">Inside Gofer AI's Strategic NVIDIA HQ Visit</h1>
+                    <span class="date-subtitle" data-i18n="jun_date">June 2026</span>
                 </div>
-
                 <div class="article-body-content">
-                    <img src="/newsletter/jun.jpg" alt="Article Image" style="width:100%; border-radius:12px; max-height:500px; object-fit:cover; margin-bottom: 25px; display: block;">
-                    <h4>NVIDIA Immersion</h4>
-                    <p>Welcome back to the Gofer AI Newsletter!<br>
-                    Gofer AI recently had the opportunity to visit NVIDIA's headquarters in Santa Clara, California and meet with the NVIDIA Inception for Startups team. The visit was a valuable chance to learn more about the resources, guidance, and ecosystem that NVIDIA has built to help ambitious AI companies like our own accelerate their growth. We're grateful for the conversations, insights, and support provided by the team, and we're excited to continue building alongside one of the industry's leading innovators in the heart of Silicon Valley.</p>
+                    <img src="/newsletter/jun.jpg" alt="NVIDIA HQ Visit" style="width:100%; border-radius:12px; max-height:500px; object-fit:cover; margin-bottom: 25px; display: block;">
 
-                    <h4>Innovation at NVIDIA GTC Taipei</h4>
-                    <p>With the latest announcements and breakthroughs unveiled at NVIDIA GTC Taipei, it's clear that the pace of artificial intelligence and robotics innovation continues to outpace itself. From advances in AI infrastructure and accelerated computing to the next generation of robotics technologies, the conference showcased how rapidly the field is evolving and the incredible opportunities that lie ahead for startups scaling real-world AI applications.</p>
+                    <h4>Welcome to Our June Newsletter!</h4>
+                    <p>This month, the Gofer AI team had an extraordinary opportunity to visit NVIDIA Headquarters in Santa Clara, California, for a high-level strategic immersion session organized through the NVIDIA Inception for Startups program.</p>
 
-                    <h4>Solving the Robotics Data Bottleneck</h4>
-                    <p>At Gofer AI, our mission is to help solve one of the biggest challenges facing modern robotics: the data bottleneck. Building capable robotic systems requires vast amounts of diverse, high-quality training data, yet collecting and labeling that data remains one of the greatest barriers to deploying robots in real-world environments. By making it easier to generate, manage, and leverage robotics data, we're helping accelerate the development of more capable, adaptable, and reliable robotic systems at a cheaper price than ever before.</p>
+                    <h4>Immersion at NVIDIA HQ</h4>
+                    <p>The day was filled with meetings and collaborative workshops with key members of the NVIDIA Inception team. We explored how to best position Gofer AI within the AI accelerator ecosystem, refine our go-to-market strategy, and leverage NVIDIA's computing resources and developer toolkits to accelerate our platform development.</p>
 
-                    <h4>Growing Through Collaboration</h4>
-                    <p>Collaborating with major companies like NVIDIA reinforces our belief that meaningful progress comes through a strong ecosystem of partners working toward a common goal. Access to world-class technology, technical expertise, and startup resources enables companies like Gofer AI to move faster while remaining focused on solving impactful problems.</p>
+                    <h4>Key Takeaways</h4>
+                    <ul style="margin: 15px 0 25px 25px; line-height: 1.8; color: var(--text-muted);">
+                        <li>Deep dive into how NVIDIA Inception supports early-stage AI startups from ideation to scale</li>
+                        <li>Strategic alignment on how Gofer AI's spatial data pipelines complement NVIDIA's robotics and embodied AI initiatives</li>
+                        <li>Access to NVIDIA's developer ecosystem, including compute credits, technical advisory support, and industry connections</li>
+                        <li>Clarity on our next development milestones leading toward our beta launch</li>
+                    </ul>
 
-                    <h4>Looking Ahead</h4>
-                    <p>We're energized by everything we learned during our visit and inspired by the innovations NVIDIA continues to share with the world. As AI and robotics continue to transform industries around the world, we look forward to deepening our collaboration with NVIDIA, contributing to the broader robotics ecosystem, and continuing our work to remove barriers that prevent intelligent robots from operating effectively in the real world.</p>
-
-                    <p>We are just getting started. Thank you to everyone who has supported us on this journey!</p>
+                    <h4>What's Next</h4>
+                    <p>Our NVIDIA HQ visit was a pivotal moment that sharpened our vision and bolstered our network. The momentum from this visit is directly fueling our preparations for the Gofer AI Beta Launch. Stay tuned for more exciting updates this summer!</p>
 
                     <p style="margin-top: 30px;"><strong>Go For It!</strong><br>-The Gofer AI Team</p>
-
                     <a href="/newsletter/newsletter" class="back-link">← Back to Newsletter</a>
                 </div>
             </div>
@@ -68,23 +98,24 @@
             <img src="/newsletter/gofer-logo-square.png" alt="Gofer AI Logo">
             <div class="footer-brand">Gofer <span class="brand-ai">AI</span></div>
             <div class="footer-links">
-                <a href="/contact">Contact</a>
-                <a href="/privacy-policy">Privacy</a>
-                <a href="/contributor-terms">Contributor Terms</a>
+                <a href="/contact" data-i18n="footer_contact">Contact</a>
+                <a href="/privacy-policy" data-i18n="footer_privacy">Privacy</a>
+                <a href="/contributor-terms" data-i18n="footer_contributor_terms">Contributor Terms</a>
             </div>
         </div>
         <div class="footer-bottom">
             <div class="copyright">© Gofer AI 2026</div>
             <div class="social-links">
-                <a href="https://www.linkedin.com/company/gofer-ai" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                <a href="https://www.linkedin.com/company/gofer-ai" aria-label="LinkedIn">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
                 </a>
-                <a href="https://github.com/Gofer-AI" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                <a href="https://github.com/goferaispace" aria-label="GitHub">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
                 </a>
             </div>
         </div>
     </footer>
+
     <script src="/newsletter/script.js"></script>
 </body>
 </html>

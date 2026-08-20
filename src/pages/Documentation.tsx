@@ -1,19 +1,22 @@
 import { Link } from 'react-router-dom';
-import PageHeader from '../components/PageHeader';
+import { useTranslation } from 'react-i18next';
+import SiteHeader from '../components/SiteHeader';
+import SiteFooter from '../components/SiteFooter';
 
 export default function Documentation() {
+  const { t } = useTranslation();
   return (
     <div className="min-h-screen bg-gray-950">
-      <PageHeader />
+      <SiteHeader />
 
       {/* Hero Section */}
       <section className="px-6 py-20 border-b border-gray-800">
         <div className="max-w-6xl mx-auto text-center">
           <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">
-            Documentation
+            {t('documentation.heroTitle')}
           </h1>
           <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            Everything you need to know to get started with Gofer AI
+            {t('documentation.heroSubtitle')}
           </p>
         </div>
       </section>
@@ -48,47 +51,25 @@ export default function Documentation() {
           <main className="lg:col-span-3 space-y-16">
             {/* Getting Started */}
             <section id="getting-started">
-              <h2 className="text-3xl font-bold text-white mb-6">Getting Started</h2>
+              <h2 className="text-3xl font-bold text-white mb-6">{t('documentation.gsTitle')}</h2>
 
               <div className="space-y-6">
                 <div className="bg-gray-900/60 border border-gray-800 rounded-xl p-6">
-                  <h3 className="text-xl font-semibold text-white mb-4">1. Request Demo Access</h3>
+                  <h3 className="text-xl font-semibold text-white mb-4">{t('documentation.gs1Title')}</h3>
                   <p className="text-gray-400 mb-4">
-                    Fill out the waitlist form on our landing page to request access to the demo platform. We'll review your application and send you login credentials.
+                    {t('documentation.gs1Body')}
                   </p>
                   <Link
                     to="/contact"
                     className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors"
                   >
-                    Contact Us
+                    {t('documentation.gs1Link')}
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   </Link>
                 </div>
 
-                <div className="bg-gray-900/60 border border-gray-800 rounded-xl p-6">
-                  <h3 className="text-xl font-semibold text-white mb-4">2. Login to Demo</h3>
-                  <p className="text-gray-400 mb-4">
-                    Once approved, use your demo credentials to access the platform. Demo users can upload videos, run analysis, and explore all features.
-                  </p>
-                  <Link
-                    to="/demo-login"
-                    className="inline-flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors"
-                  >
-                    Demo Login
-                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                  </Link>
-                </div>
-
-                <div className="bg-gray-900/60 border border-gray-800 rounded-xl p-6">
-                  <h3 className="text-xl font-semibold text-white mb-4">3. Upload Your First Video</h3>
-                  <p className="text-gray-400">
-                    Start by uploading a demonstration video. Supported formats include MP4, MOV, and AVI. For best results, use videos with clear visibility of hands and objects.
-                  </p>
-                </div>
               </div>
             </section>
 
@@ -98,7 +79,7 @@ export default function Documentation() {
 
               <div className="space-y-6">
                 <p className="text-gray-400 leading-relaxed">
-                  Our action detection feature uses Google's Gemini Vision API to analyze video demonstrations and extract action primitives like REACH, GRASP, MOVE, PLACE, and RELEASE.
+                  Our action detection feature analyzes video demonstrations to extract action primitives like REACH, GRASP, MOVE, PLACE, and RELEASE.
                 </p>
 
                 <div className="bg-gray-900/60 border border-gray-800 rounded-xl p-6">
@@ -385,33 +366,7 @@ export default function Documentation() {
         </div>
       </div>
 
-      {/* Footer */}
-      <footer className="px-6 py-8 border-t border-gray-800">
-        <div className="max-w-6xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-            <div className="text-sm text-gray-500">
-              Gofer AI © 2026. All rights reserved.
-            </div>
-            <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-gray-500">
-              <Link to="/" className="hover:text-gray-400 transition-colors">
-                Home
-              </Link>
-              <Link to="/about" className="hover:text-gray-400 transition-colors">
-                About
-              </Link>
-              <Link to="/features" className="hover:text-gray-400 transition-colors">
-                Features
-              </Link>
-              <a href="https://github.com/Gofer-AI" target="_blank" rel="noopener noreferrer" className="hover:text-gray-400 transition-colors">
-                GitHub
-              </a>
-              <Link to="/contact" className="hover:text-gray-400 transition-colors">
-                Contact
-              </Link>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }

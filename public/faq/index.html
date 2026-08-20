@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Gofer AI - FAQ</title>
+    <meta name="description" content="Frequently asked questions about Gofer AI — plain-language answers for contributors, task instructions, earnings, privacy, and robotics technology.">
+    <link rel="stylesheet" href="/faq/style.css">
+</head>
+<body data-page-type="faq">
+    <div id="page-curtain"></div>
+    <nav class="top-header-bar">
+        <div class="top-header-container">
+            <a href="/" class="top-header-brand">
+                <img src="/faq/gofer-logo-square.png" alt="Gofer AI Logo">
+                <span>Gofer <span class="brand-ai">AI</span></span>
+            </a>
+            <div class="top-header-links">
+                <a href="/features" data-i18n="nav_features">Features</a>
+                <a href="/about" data-i18n="nav_about">About</a>
+                <a href="/documentation" data-i18n="nav_docs">Docs</a>
+                <a href="/newsletter" data-i18n="nav_newsletter">Newsletter</a>
+                <a href="/blog" data-i18n="nav_blog">Blog</a>
+                <a href="/faq" class="active" data-i18n="nav_faq">FAQ</a>
+                <div class="lang-dropdown" id="lang-dropdown">
+                    <button class="lang-trigger" id="lang-trigger" type="button" aria-haspopup="true" aria-expanded="false">
+                        <img src="/faq/enflag.png" id="lang-current-flag" alt="Language flag">
+                        <span id="lang-current-label">EN</span>
+                        <span class="lang-arrow">▾</span>
+                    </button>
+                    <div class="lang-menu" role="menu">
+                        <button class="lang-option" type="button" role="menuitem" onclick="setLanguage('en')">
+                            <img src="/faq/enflag.png" alt="English flag"> EN
+                        </button>
+                        <button class="lang-option" type="button" role="menuitem" onclick="setLanguage('es')">
+                            <img src="/faq/esflag.svg" alt="Bandera de España"> ES
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Jump to Section Widget -->
+    <aside class="jump-widget" id="jump-widget">
+        <div class="jump-widget-collapsed">
+            <span class="jump-arrow">→</span>
+            <span class="jump-text" data-i18n="jump_to_section">Jump to Section</span>
+            <span class="jump-arrow">→</span>
+        </div>
+        <div class="jump-widget-expanded">
+            <h4 class="jump-title" data-i18n="jump_to_section">Jump to Section</h4>
+            <div class="year-dropdown">
+                <div class="year-header">
+                    <span data-i18n="faq_categories">Categories</span>
+                    <span class="year-arrow">▼</span>
+                </div>
+                <div class="months-menu">
+                    <a href="#featured" class="month-link"><span data-i18n="nav_featured">Featured Overview</span> <span class="month-arrow">▸</span></a>
+                    <a href="#getting-started" class="month-link"><span data-i18n="nav_getting_started">Getting Started &amp; Tasks</span> <span class="month-arrow">▸</span></a>
+                    <a href="#earnings-payouts" class="month-link"><span data-i18n="nav_earnings_payouts">Revenue &amp; Licensing</span> <span class="month-arrow">▸</span></a>
+                    <a href="#data-privacy" class="month-link"><span data-i18n="nav_data_privacy">Data &amp; Privacy</span> <span class="month-arrow">▸</span></a>
+                    <a href="#support-contact" class="month-link"><span data-i18n="nav_support_contact">Support &amp; Help</span> <span class="month-arrow">▸</span></a>
+                    <a href="#robotics-faq" class="month-link"><span data-i18n="nav_robotics_faq">Robotics &amp; Technology</span> <span class="month-arrow">▸</span></a>
+                    <a href="#company-faq" class="month-link"><span data-i18n="nav_company_faq">Company Background</span> <span class="month-arrow">▸</span></a>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <canvas id="particle-canvas"></canvas>
+    <a href="/" class="waitlist-float" aria-label="Join Waitlist">
+        <img src="/faq/goferailogoblue.png" alt="Gofer AI">
+        <span data-i18n="btn_join_waitlist">Join Waitlist</span>
+    </a>
+
+    <div class="fluid-header-container">
+        <video class="bg-video" autoplay muted loop playsinline preload="metadata">
+            <source src="/faq/faqbackgroundvideo.mp4" type="video/mp4">
+        </video>
+        <header class="seamless-header">
+            <img class="header-logo" src="/faq/gofer-logo-square.png" alt="Gofer AI Logo">
+            <h1 class="header-title">Gofer <span class="brand-ai">AI</span> <span class="header-dim" data-i18n="header_faq">FAQ</span></h1>
+            <ul class="nav-links">
+                <li><a href="/" data-i18n="nav_gofer_home">Home</a></li>
+                <li><a href="#getting-started" data-i18n="nav_getting_started">Getting Started</a></li>
+                <li><a href="#earnings-payouts" data-i18n="nav_earnings_payouts">Revenue</a></li>
+                <li><a href="#data-privacy" data-i18n="nav_data_privacy">Privacy</a></li>
+                <li><a href="#support-contact" data-i18n="nav_support_contact">Support</a></li>
+                <li><a href="#robotics-faq" data-i18n="nav_robotics_faq">Robotics</a></li>
+            </ul>
+        </header>
+    </div>
+
+    <div class="container">
+
+        <!-- ── FEATURED Q&A: WHAT IS GOFER AI? ────────────────────────── -->
+        <h2 class="faq-section-title reveal" id="featured" data-i18n="nav_featured">Featured Overview</h2>
+        <div class="newsletter-card reveal" style="padding: 32px;">
+            <div>
+                <span class="kicker" data-i18n="faq_featured_kicker">Platform Overview</span>
+                <h3 class="main-title" data-i18n="faq_featured_title">What is Gofer AI?</h3>
+                <p data-i18n="faq_featured_desc">Gofer AI helps businesses and community organizations turn approved examples of everyday hands-on work — sorting, packing, folding, stocking, food handling, tool use, and other object interactions — into structured training data for physical AI and robotics. During the organization-led beta, approved teams capture short task demonstrations with the GoferEco app. Our capture platform is coming soon for organizations.</p>
+                <a class="btn" href="/faq/faq-what-is-gofer" data-i18n="btn_read_full_answer">Read Full Overview →</a>
+            </div>
+            <div>
+                <img src="/faq/betareleaseimagedraft.png" alt="What is Gofer AI" style="width:100%; border-radius:12px; max-height:280px; object-fit:cover; display: block;">
+            </div>
+        </div>
+
+        <!-- ── SECTION 1: GETTING STARTED & TASKS ──────────────────────── -->
+        <h2 class="faq-section-title reveal" id="getting-started" data-i18n="nav_getting_started">Getting Started &amp; Tasks</h2>
+        
+        <div class="faq-card reveal">
+            <h4 class="faq-q" data-i18n="faq_q_how_works">Q: How does it work?</h4>
+            <div class="faq-a" data-i18n="faq_a_how_works">
+                <p>Getting started through an approved Partner Organization takes three simple steps:</p>
+                <ol class="faq-steps">
+                    <li><strong>Join your organization's program</strong> in the GoferEco app using an organization code or invitation.</li>
+                    <li><strong>Follow the on-screen prompt</strong> for an assigned Task and record a short clip (usually under a couple of minutes).</li>
+                    <li><strong>Submit it</strong> for review. Once it's accepted and verified, it's added to your program's activity.</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="faq-card reveal">
+            <h4 class="faq-q" data-i18n="faq_q_get_started">Q: What do I need to get started?</h4>
+            <p class="faq-a" data-i18n="faq_a_get_started">A: A supported smartphone and access to an approved Partner Program. No special equipment. Your organization provides an organization code or invitation, and adult participants complete a quick one-time verification before their first submission.</p>
+        </div>
+
+        <div class="faq-card reveal">
+            <h4 class="faq-q" data-i18n="faq_q_phones">Q: What phones are supported?</h4>
+            <p class="faq-a" data-i18n="faq_a_phones">A: GoferEco is available on iPhone. Recording uses your phone's camera and motion sensors, so it runs on a real device (not an emulator).</p>
+        </div>
+
+        <div class="faq-card reveal">
+            <h4 class="faq-q" data-i18n="faq_q_age">Q: Do I have to be 18?</h4>
+            <p class="faq-a" data-i18n="faq_a_age">A: Yes. Gofer is for adults only (18+), and there's a quick one-time age and identity check before you can submit your first clip.</p>
+        </div>
+
+        <!-- ── SECTION 2: EARNINGS & PAYOUTS ──────────────────────────── -->
+        <h2 class="faq-section-title reveal" id="earnings-payouts" data-i18n="nav_earnings_payouts">Revenue &amp; Licensing</h2>
+        
+        <div class="faq-card reveal">
+            <h4 class="faq-q" data-i18n="faq_q_earnings">Q: How does the commercial model work?</h4>
+            <p class="faq-a" data-i18n="faq_a_earnings">A: Revenue share for the organization-led beta is generally governed by the Partner Agreement and paid to the Partner Organization when qualifying data is licensed. An individual is paid directly by Gofer AI only if a written Task offer says so, and no specific revenue is guaranteed.</p>
+        </div>
+
+        <!-- ── SECTION 3: DATA OWNERSHIP & PRIVACY ─────────────────────── -->
+        <h2 class="faq-section-title reveal" id="data-privacy" data-i18n="nav_data_privacy">Data Ownership &amp; Privacy</h2>
+        
+        <div class="faq-card reveal">
+            <h4 class="faq-q" data-i18n="faq_q_ownership">Q: Who owns the recordings?</h4>
+            <p class="faq-a" data-i18n="faq_a_ownership">A: Organizations and their participants retain ownership of what they record, subject to the license granted when a submission is accepted. Partner Organizations control which purchaser industries their program data can be licensed to.</p>
+        </div>
+
+        <div class="faq-card reveal">
+            <h4 class="faq-q" data-i18n="faq_q_uses">Q: What are my recordings used for?</h4>
+            <p class="faq-a" data-i18n="faq_a_uses">A: They become training examples that help robots learn everyday hand skills. Some uses are always off-limits, no matter what — <strong>military, defence, and surveillance are never permitted.</strong></p>
+        </div>
+
+        <div class="faq-card reveal">
+            <h4 class="faq-q" data-i18n="faq_q_privacy">Q: Is my privacy protected?</h4>
+            <p class="faq-a" data-i18n="faq_a_privacy">A: Yes. You decide what to record and which uses you allow, and we handle your data with care. Full details are in our <a href="/privacy-policy" style="color: var(--brand-blue);">Privacy Policy</a> and <a href="/contributor-terms" style="color: var(--brand-blue);">Contributor Terms</a>, linked from the app and this site.</p>
+        </div>
+
+        <!-- ── SECTION 4: SUPPORT & QUESTIONS ─────────────────────────── -->
+        <h2 class="faq-section-title reveal" id="support-contact" data-i18n="nav_support_contact">Support &amp; Help</h2>
+        
+        <div class="faq-card reveal">
+            <h4 class="faq-q" data-i18n="faq_q_help">Q: How do I get help or ask a question?</h4>
+            <p class="faq-a" data-i18n="faq_a_help">A: Reach out through the <a href="/contact" style="color: var(--brand-blue);">contact link on goferai.space</a> and we'll get back to you.</p>
+        </div>
+
+        <!-- ── SECTION 5: ROBOTICS & TECHNOLOGY ───────────────────────── -->
+        <h2 class="faq-section-title reveal" id="robotics-faq" data-i18n="nav_robotics_faq">Robotics &amp; Technology</h2>
+        
+        <div class="faq-card reveal">
+            <h4 class="faq-q" data-i18n="rob_q1">Q: What is a Semantic VLA?</h4>
+            <p class="faq-a">A: A Semantic Vision-Language-Action (VLA) model is a neural network architecture that integrates visual perception, natural language understanding, and physical action generation into a unified system. Gofer AI's platform is built around enhancing VLA models with high-quality, real-world semantic demonstration data.</p>
+        </div>
+        
+        <div class="faq-card reveal">
+            <h4 class="faq-q" data-i18n="rob_q2">Q: How does RAG apply to robotics?</h4>
+            <p class="faq-a">A: Retrieval-Augmented Generation (RAG) in robotics allows a robot's control system to query a structured memory of past demonstrations, successful actions, or semantic knowledge at runtime. Rather than relying solely on pre-trained weights, a RAG-enabled robot can retrieve relevant past experience to make better decisions in novel situations.</p>
+        </div>
+
+        <div class="faq-card reveal">
+            <h4 class="faq-q" data-i18n="rob_q3">Q: What is the "data bottleneck"?</h4>
+            <p class="faq-a">A: The data bottleneck refers to the chronic shortage of high-quality, real-world training data that limits the performance and generalizability of robotic AI systems. Unlike language models which can be trained on internet text, robots need precise, semantically labeled sensorimotor data that is extremely expensive and time-consuming to collect at scale. Solving this bottleneck is Gofer AI's core mission.</p>
+        </div>
+
+        <div class="faq-card reveal">
+            <h4 class="faq-q" data-i18n="rob_q4">Q: What are imitation learning pipelines?</h4>
+            <p class="faq-a">A: Imitation learning (IL) pipelines allow robots to learn behaviors by observing and replicating human demonstrations, rather than through hand-coded rules or pure reinforcement learning. Common techniques include Behavior Cloning (BC) and Dataset Aggregation (DAgger). Gofer AI's platform makes high-quality IL data collection and curation scalable and accessible.</p>
+        </div>
+
+        <div class="faq-card reveal">
+            <h4 class="faq-q" data-i18n="rob_q5">Q: How do spatial AI models work?</h4>
+            <p class="faq-a">A: Spatial AI models process multi-modal sensory inputs — such as RGB video, depth data, and motion sensors — to build a geometric and semantic understanding of 3D environments. These models enable robots to reason about object positions, scene layouts, and physical affordances critical for manipulation and navigation.</p>
+        </div>
+
+        <!-- ── SECTION 6: COMPANY BACKGROUND ──────────────────────────── -->
+        <h2 class="faq-section-title reveal" id="company-faq" data-i18n="nav_company_faq">Company Background</h2>
+        
+        <div class="faq-card reveal">
+            <h4 class="faq-q" data-i18n="company_q1">Q: When was Gofer AI founded?</h4>
+            <p class="faq-a">A: Gofer AI was born in February 2026 during the LabLab 'Launch &amp; Fund Your Own Startup' Hackathon, where our team earned 2nd place. We formally incorporated as a company in April 2026.</p>
+        </div>
+
+        <div class="faq-card reveal">
+            <h4 class="faq-q" data-i18n="company_q2">Q: Where is the team located?</h4>
+            <p class="faq-a" data-i18n="company_a2">A: The Gofer AI team is distributed across the United States, with our primary hubs located in Silicon Valley and along the East Coast, uniting top engineering talent and spatial computing researchers nationwide.</p>
+        </div>
+
+        <div class="faq-card reveal">
+            <h4 class="faq-q" data-i18n="company_q3">Q: Are you currently hiring?</h4>
+            <p class="faq-a">A: Gofer AI is a fast-growing early-stage startup and we are always interested in connecting with talented engineers, researchers, and builders who are passionate about robotics and spatial AI. Reach out at <a href="/contact" style="color: var(--brand-blue);">goferai.space/contact</a>.</p>
+        </div>
+
+        <div class="faq-card reveal">
+            <h4 class="faq-q" data-i18n="company_q4">Q: Who are your investors?</h4>
+            <p class="faq-a">A: Gofer AI is currently supported through accelerator programs and strategic partnerships, including NVIDIA Inception and Google for Startups. We are in active discussions with investors as we approach our beta launch and beyond.</p>
+        </div>
+
+        <div class="faq-card reveal">
+            <h4 class="faq-q" data-i18n="company_q5">Q: How can we partner with you?</h4>
+            <p class="faq-a">A: We are actively seeking partnerships with robotics labs, research institutions, enterprise AI teams, and hardware manufacturers. To explore a potential collaboration, please reach out through our <a href="/contact" style="color: var(--brand-blue);">contact page</a>.</p>
+        </div>
+
+        <!-- ── PUBLIC OVERVIEW DISCLAIMER ─────────────────────────────── -->
+        <p class="reveal" style="text-align: center; color: var(--text-dark-grey); font-size: 13.5px; margin: 45px auto 25px; max-width: 700px; font-style: italic; line-height: 1.6;">
+            This is a public overview. Where it differs from our <a href="/privacy-policy" style="color: var(--brand-blue); text-decoration: underline;">Privacy Policy</a> or <a href="/contributor-terms" style="color: var(--brand-blue); text-decoration: underline;">Contributor Terms</a>, those documents are the authoritative source.
+        </p>
+
+    </div>
+
+    <footer class="site-footer">
+        <div class="footer-top">
+            <img src="/faq/gofer-logo-square.png" alt="Gofer AI Logo">
+            <div class="footer-brand">Gofer <span class="brand-ai">AI</span></div>
+            <div class="footer-links">
+                <a href="/contact">Contact</a>
+                <a href="/privacy-policy">Privacy</a>
+                <a href="/contributor-terms">Contributor Terms</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="copyright">© Gofer AI 2026</div>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/company/gofer-ai" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                </a>
+                <a href="https://github.com/goferaispace" aria-label="GitHub">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/faq/script.js"></script>
+</body>
+</html>
