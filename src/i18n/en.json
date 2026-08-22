@@ -1,6 +1,7 @@
 {
   "nav": {
     "features": "Features",
+    "technology": "Technology",
     "about": "About",
     "docs": "Docs",
     "newsletter": "Newsletter",
@@ -12,6 +13,7 @@
   "cta": {
     "applyBeta": "Apply for Beta Access",
     "partner": "Partner with Gofer",
+    "partnerWithUs": "Partner With Us",
     "viewDocs": "View Documentation",
     "contactUs": "Contact Us",
     "demoLogin": "Demo Login"
@@ -22,6 +24,7 @@
     "label": "Language"
   },
   "footer": {
+    "faq": "FAQ",
     "contact": "Contact",
     "privacy": "Privacy",
     "contributorTerms": "Contributor Terms",

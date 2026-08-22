@@ -1,6 +1,7 @@
 {
   "nav": {
     "features": "Funciones",
+    "technology": "Tecnología",
     "about": "Nosotros",
     "docs": "Documentación",
     "newsletter": "Boletín",
@@ -12,6 +13,7 @@
   "cta": {
     "applyBeta": "Solicitar acceso beta",
     "partner": "Colabora con Gofer",
+    "partnerWithUs": "Colabora con Nosotros",
     "viewDocs": "Ver documentación",
     "contactUs": "Contáctanos",
     "demoLogin": "Acceso demo"
@@ -22,6 +24,7 @@
     "label": "Idioma"
   },
   "footer": {
+    "faq": "Preguntas Frecuentes",
     "contact": "Contacto",
     "privacy": "Privacidad",
     "contributorTerms": "Términos de colaboración",

@@ -8,6 +8,9 @@ const translations = {
     en: {
         // Nav
         nav_features:   'Features',
+        nav_technology: 'Technology',
+        btn_partner:    'Partner With Us',
+        footer_faq:     'FAQ',
         nav_about:      'About',
         nav_docs:       'Docs',
         nav_blog:       'Blog',
@@ -189,6 +192,9 @@ const translations = {
 
     es: {
         nav_features:   'Especificaciones',
+        nav_technology: 'Tecnología',
+        btn_partner:    'Asóciate con Nosotros',
+        footer_faq:     'Preguntas Frecuentes',
         nav_about:      'Sobre Nosotros',
         nav_docs:       'Documentación',
         nav_blog:       'Blog',

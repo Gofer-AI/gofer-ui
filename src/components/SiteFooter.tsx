@@ -15,6 +15,9 @@ export default function SiteFooter() {
       </div>
 
       <div className="flex flex-wrap gap-8 justify-center mb-9">
+        <a href="/faq" className="text-gray-400 hover:text-white text-[13px] font-semibold tracking-wide uppercase transition-colors">
+          {t('footer.faq')}
+        </a>
         <Link to="/contact" className="text-gray-400 hover:text-white text-[13px] font-semibold tracking-wide uppercase transition-colors">
           {t('footer.contact')}
         </Link>

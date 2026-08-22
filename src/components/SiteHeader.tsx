@@ -28,20 +28,26 @@ export default function SiteHeader() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-[22px]">
-            <Link to="/features" className={linkClass('/features')}>{t('nav.features')}</Link>
+          <div className="hidden md:flex flex-1 items-center justify-center gap-[26px]">
+            <Link to="/" className={linkClass('/')}>{t('nav.home')}</Link>
             <Link to="/about" className={linkClass('/about')}>{t('nav.about')}</Link>
-            <Link to="/documentation" className={linkClass('/documentation')}>{t('nav.docs')}</Link>
+            <Link to="/features" className={linkClass('/features')}>{t('nav.technology')}</Link>
             <a href="/newsletter" className="text-[13.5px] font-medium text-gray-400 hover:text-white transition-colors">{t('nav.newsletter')}</a>
             <a href="/blog" className="text-[13.5px] font-medium text-gray-400 hover:text-white transition-colors">{t('nav.blog')}</a>
-            <a href="/faq" className="text-[13.5px] font-medium text-gray-400 hover:text-white transition-colors">{t('nav.faq')}</a>
-            <LangSwitcher />
+          </div>
+
+          {/* Desktop Actions */}
+          <div className="hidden md:flex items-center gap-4">
             <Link
               to="/contact"
-              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-lg transition-colors"
+              className="inline-flex items-center gap-2 pl-5 pr-4 py-2 border border-blue-500/60 hover:bg-blue-600 hover:border-blue-600 text-white text-sm font-semibold rounded-full transition-colors"
             >
-              {t('cta.applyBeta')}
+              {t('cta.partnerWithUs')}
+              <svg className="w-4 h-4 text-blue-400 group-hover:text-white" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
             </Link>
+            <LangSwitcher />
           </div>
 
           {/* Mobile Navigation */}
@@ -92,13 +98,13 @@ export default function SiteHeader() {
 
             <div className="flex-1 px-6 py-8 space-y-2">
               <Link
-                to="/features"
+                to="/"
                 onClick={() => setMobileMenuOpen(false)}
                 className={`block px-4 py-3 text-lg rounded-lg transition-colors ${
-                  isActive('/features') ? 'text-white bg-blue-600/20 font-medium' : 'text-gray-300 hover:text-white hover:bg-gray-800/50'
+                  isActive('/') ? 'text-white bg-blue-600/20 font-medium' : 'text-gray-300 hover:text-white hover:bg-gray-800/50'
                 }`}
               >
-                {t('nav.features')}
+                {t('nav.home')}
               </Link>
               <Link
                 to="/about"
@@ -110,13 +116,13 @@ export default function SiteHeader() {
                 {t('nav.about')}
               </Link>
               <Link
-                to="/documentation"
+                to="/features"
                 onClick={() => setMobileMenuOpen(false)}
                 className={`block px-4 py-3 text-lg rounded-lg transition-colors ${
-                  isActive('/documentation') ? 'text-white bg-blue-600/20 font-medium' : 'text-gray-300 hover:text-white hover:bg-gray-800/50'
+                  isActive('/features') ? 'text-white bg-blue-600/20 font-medium' : 'text-gray-300 hover:text-white hover:bg-gray-800/50'
                 }`}
               >
-                {t('nav.docs')}
+                {t('nav.technology')}
               </Link>
               <a
                 href="/newsletter"
@@ -132,22 +138,6 @@ export default function SiteHeader() {
               >
                 {t('nav.blog')}
               </a>
-              <a
-                href="/faq"
-                onClick={() => setMobileMenuOpen(false)}
-                className="block px-4 py-3 text-lg rounded-lg transition-colors text-gray-300 hover:text-white hover:bg-gray-800/50"
-              >
-                {t('nav.faq')}
-              </a>
-              <Link
-                to="/contact"
-                onClick={() => setMobileMenuOpen(false)}
-                className={`block px-4 py-3 text-lg rounded-lg transition-colors ${
-                  isActive('/contact') ? 'text-white bg-blue-600/20 font-medium' : 'text-gray-300 hover:text-white hover:bg-gray-800/50'
-                }`}
-              >
-                {t('nav.contact')}
-              </Link>
             </div>
 
             <div className="px-6 py-6 border-t border-white/[0.07]">
@@ -156,7 +146,7 @@ export default function SiteHeader() {
                 onClick={() => setMobileMenuOpen(false)}
                 className="block w-full text-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors"
               >
-                {t('cta.applyBeta')}
+                {t('cta.partnerWithUs')}
               </Link>
             </div>
           </div>
