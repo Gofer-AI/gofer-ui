@@ -1,11 +1,25 @@
 import { useState, useEffect } from 'react';
-import { API_BASE_URL } from '../constants';
+import {
+  API_BASE_URL,
+  STATUS_CONFIG,
+  VIDEO_STATUS,
+  SSE_CONFIG,
+  SUCCESS_MESSAGES
+} from '../constants';
 
+/**
+ * Props for ProcessingStatus component
+ */
 interface ProcessingStatusProps {
+  /** Job ID to track processing status */
   jobId: string;
+  /** Callback function when processing completes */
   onComplete: (videoId: string) => void;
 }
 
+/**
+ * Job status data structure from SSE stream
+ */
 interface JobStatus {
   job_id: string;
   status: string;
@@ -15,19 +29,15 @@ interface JobStatus {
   error?: string;
 }
 
-// Status display configurations
-const statusConfig: Record<string, { label: string; color: string; icon: string }> = {
-  queued: { label: 'Queued', color: 'bg-gray-100 text-gray-800', icon: '' },
-  downloading: { label: 'Downloading', color: 'bg-blue-100 text-blue-800', icon: '' },
-  extracting_frames: { label: 'Extracting Frames', color: 'bg-purple-100 text-purple-800', icon: '' },
-  analyzing_frames: { label: 'Analyzing', color: 'bg-indigo-100 text-indigo-800', icon: '' },
-  transcribing_audio: { label: 'Transcribing Audio', color: 'bg-yellow-100 text-yellow-800', icon: '' },
-  generating_embeddings: { label: 'Generating Embeddings', color: 'bg-pink-100 text-pink-800', icon: '' },
-  indexing: { label: 'Indexing', color: 'bg-teal-100 text-teal-800', icon: '' },
-  completed: { label: 'Completed', color: 'bg-green-100 text-green-800', icon: '' },
-  failed: { label: 'Failed', color: 'bg-red-100 text-red-800', icon: '' },
-};
-
+/**
+ * ProcessingStatus Component
+ *
+ * Displays real-time video processing status using Server-Sent Events (SSE).
+ * Shows progress bar, status badges, and completion/error messages.
+ *
+ * @param jobId - The job ID to track processing status
+ * @param onComplete - Callback function called when processing completes successfully
+ */
 export default function ProcessingStatus({ jobId, onComplete }: ProcessingStatusProps) {
   const [status, setStatus] = useState<JobStatus | null>(null);
   const [isConnected, setIsConnected] = useState(false);
@@ -48,18 +58,18 @@ export default function ProcessingStatus({ jobId, onComplete }: ProcessingStatus
         setStatus(data);
 
         // If completed, notify parent and close connection
-        if (data.status === 'completed' && data.video_id) {
+        if (data.status === VIDEO_STATUS.COMPLETED && data.video_id) {
           onComplete(data.video_id);
           setTimeout(() => {
             eventSource.close();
-          }, 2000); // Keep the completed message visible for 2 seconds
+          }, SSE_CONFIG.COMPLETED_MESSAGE_DELAY);
         }
 
         // If failed, close connection after delay
-        if (data.status === 'failed') {
+        if (data.status === VIDEO_STATUS.FAILED) {
           setTimeout(() => {
             eventSource.close();
-          }, 5000); // Keep the error message visible for 5 seconds
+          }, SSE_CONFIG.ERROR_MESSAGE_DELAY);
         }
       } catch (error) {
         // Error parsing status update - silently ignore
@@ -89,7 +99,7 @@ export default function ProcessingStatus({ jobId, onComplete }: ProcessingStatus
     );
   }
 
-  const config = statusConfig[status.status] || statusConfig.queued;
+  const config = STATUS_CONFIG[status.status] || STATUS_CONFIG[VIDEO_STATUS.QUEUED];
 
   return (
     <div className="bg-white rounded-lg border border-gray-200 p-6 space-y-4">
@@ -145,10 +155,10 @@ export default function ProcessingStatus({ jobId, onComplete }: ProcessingStatus
       )}
 
       {/* Completion Message */}
-      {status.status === 'completed' && (
+      {status.status === VIDEO_STATUS.COMPLETED && (
         <div className="p-3 bg-green-50 border border-green-200 rounded-md">
           <p className="text-sm text-green-800">
-            Video processed successfully! You can now search for actions in this video.
+            {SUCCESS_MESSAGES.PROCESSING_COMPLETE}
           </p>
         </div>
       )}

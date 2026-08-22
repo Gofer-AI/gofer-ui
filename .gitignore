@@ -33,7 +33,16 @@ FireBase/
 *.json
 !tsconfig*.json
 !package*.json
+!vercel.json
+!src/i18n/*.json
 
 # Internal docs
 claude.md
 LABLAB_INTEGRATION.md
+
+# Draft / source working material (not part of the built site)
+WebsiteHTMLDraft/
+banner/
+footer/
+Gofer Policy terms and faq/
+*.docx

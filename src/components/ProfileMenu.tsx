@@ -2,10 +2,22 @@ import { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { logoutUser } from '../lib/auth';
 
+/**
+ * Props for ProfileMenu component
+ */
 interface ProfileMenuProps {
+  /** Username to display in the profile menu */
   username: string;
 }
 
+/**
+ * ProfileMenu Component
+ *
+ * Dropdown menu for user profile with avatar and logout functionality.
+ * Closes automatically when clicking outside the menu.
+ *
+ * @param username - Display name of the logged-in user
+ */
 export default function ProfileMenu({ username }: ProfileMenuProps) {
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -24,7 +36,7 @@ export default function ProfileMenu({ username }: ProfileMenuProps) {
 
   const handleLogout = () => {
     logoutUser();
-    navigate('/login');
+    navigate('/');
   };
 
   return (

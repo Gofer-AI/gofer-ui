@@ -154,3 +154,78 @@ export interface LabLabAnalysisResponse {
   };
   stored_in_vector_db?: boolean;
 }
+
+// ============================================================================
+// Waitlist Types
+// ============================================================================
+
+/**
+ * Waitlist request status
+ */
+export type WaitlistStatus = 'pending' | 'approved' | 'rejected';
+
+/**
+ * Waitlist request form data (user input)
+ */
+export interface WaitlistFormData {
+  full_name: string;
+  email: string;
+  organization: string;
+  role: string;
+  use_case: string;
+  linkedin_url?: string;
+  website?: string;
+}
+
+/**
+ * Complete waitlist request (stored in Firestore)
+ */
+export interface WaitlistRequest extends WaitlistFormData {
+  id: string;
+  status: WaitlistStatus;
+  submitted_at: Date;
+  reviewed_at?: Date;
+  reviewed_by?: string;
+  rejection_reason?: string;
+  generated_credentials?: {
+    username: string;
+    password: string;
+    access_code: string;
+  };
+}
+
+/**
+ * Contact form data (user input)
+ */
+export interface ContactFormData {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}
+
+/**
+ * Contact request status
+ */
+export type ContactStatus = 'new' | 'read' | 'responded' | 'archived';
+
+/**
+ * Complete contact request (stored in Firestore)
+ */
+export interface ContactRequest extends ContactFormData {
+  id: string;
+  status: ContactStatus;
+  submitted_at: Date;
+  read_at?: Date;
+  responded_at?: Date;
+  response_message?: string;
+}
+
+/**
+ * Waitlist submission response
+ */
+export interface WaitlistSubmissionResponse {
+  success: boolean;
+  message: string;
+  request_id?: string;
+}

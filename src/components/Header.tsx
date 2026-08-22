@@ -1,6 +1,12 @@
 import { useEffect, useState } from 'react';
 import { checkAPIStatus } from '../api/client';
 
+/**
+ * Header Component
+ *
+ * Displays application header with API status indicator.
+ * Polls backend health every 10 seconds to show real-time connectivity status.
+ */
 export default function Header() {
   const [isOnline, setIsOnline] = useState<boolean | null>(null);
 

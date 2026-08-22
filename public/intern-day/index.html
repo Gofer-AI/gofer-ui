@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>A Surprise For You — National Intern Day</title>
+<style>
+  :root{ --gold:#ffc46b; --ink:#f6f1ff; }
+  *{box-sizing:border-box;}
+  html,body{margin:0;height:100%;overflow:hidden;background:#05030f;}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Helvetica,Arial,sans-serif;
+    color:var(--ink); -webkit-font-smoothing:antialiased;
+  }
+  #scene{position:fixed;inset:0;display:block;}
+  #vignette{
+    position:fixed;inset:0;pointer-events:none;
+    background:radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 34%, rgba(0,0,0,.5) 76%, rgba(0,0,0,.85) 100%);
+    mix-blend-mode:multiply;
+  }
+  .ui{position:fixed;pointer-events:none;}
+
+  #eyebrow{
+    top:26px;left:0;right:0;text-align:center;
+    font-size:11px;letter-spacing:.42em;text-transform:uppercase;
+    color:rgba(246,241,255,.45); opacity:0;animation:fadeIn 1.6s ease .5s forwards;
+  }
+  #hint{
+    left:0;right:0;bottom:7vh;text-align:center;
+    font-size:13px;letter-spacing:.3em;text-transform:uppercase;
+    color:rgba(255,196,107,.85); opacity:0;animation:fadeIn 1.4s ease 2.2s forwards;
+    transition:opacity .5s ease;
+  }
+  #hint .pulse{display:inline-block;animation:breathe 2.4s ease-in-out infinite;}
+  #hint small{display:block;margin-top:10px;font-size:10px;letter-spacing:.18em;color:rgba(246,241,255,.35);}
+
+  #reveal{
+    left:0;right:0;top:8vh;text-align:center;
+    opacity:0;transform:translateY(14px);
+    transition:opacity 1.2s ease, transform 1.2s cubic-bezier(.2,.7,.2,1);
+  }
+  #reveal.show{opacity:1;transform:translateY(0);}
+  #reveal h1{
+    margin:0;font-size:clamp(23px,4.4vw,50px);font-weight:600;letter-spacing:-.01em;
+    background:linear-gradient(180deg,#fff 0%, #ffd79a 55%, #ff9f43 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 0 60px rgba(255,163,72,.22);
+  }
+  #reveal p{margin:12px auto 0;max-width:34ch;font-size:clamp(12px,1.5vw,15px);line-height:1.7;color:rgba(246,241,255,.6);}
+
+  #controls{top:20px;right:20px;display:flex;gap:10px;pointer-events:auto;opacity:0;animation:fadeIn 1.2s ease 1.4s forwards;}
+  button.chip{
+    pointer-events:auto;cursor:pointer;background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.14);color:rgba(246,241,255,.8);
+    padding:9px 15px;border-radius:999px;font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);transition:all .25s ease;font-family:inherit;
+  }
+  button.chip:hover{background:rgba(255,196,107,.14);border-color:rgba(255,196,107,.45);color:#ffd79a;}
+
+  #replay{left:0;right:0;bottom:6vh;text-align:center;opacity:0;transition:opacity .8s ease;}
+  #replay.show{opacity:1;}
+
+  @keyframes fadeIn{to{opacity:1;}}
+  @keyframes breathe{0%,100%{opacity:.5;transform:scale(.99);}50%{opacity:1;transform:scale(1.02);}}
+
+  #boot{
+    position:fixed;inset:0;display:grid;place-items:center;background:#05030f;z-index:9;
+    transition:opacity .9s ease;font-size:11px;letter-spacing:.4em;text-transform:uppercase;color:rgba(246,241,255,.3);
+  }
+  #boot.gone{opacity:0;pointer-events:none;}
+</style>
+</head>
+<body>
+
+<canvas id="scene"></canvas>
+<div id="vignette"></div>
+
+<div class="ui" id="eyebrow">July 30 &nbsp;·&nbsp; National Intern Day</div>
+
+<div class="ui" id="reveal">
+  <h1>Happy National Intern Day</h1>
+  <p>You showed up, asked the good questions, and made the team better. This one's on us.</p>
+</div>
+
+<div class="ui" id="hint">
+  <span class="pulse">Click the box</span>
+  <small>something is glowing inside</small>
+</div>
+
+<div class="ui" id="replay">
+  <button class="chip" id="replayBtn">Wrap it back up</button>
+</div>
+
+<div class="ui" id="controls">
+  <button class="chip" id="soundBtn" aria-pressed="false">Sound: Off</button>
+</div>
+
+<div id="boot">preparing your surprise</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  // =============================================================== renderer
+  var canvas   = document.getElementById('scene');
+  var renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.12;
+
+  var scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x05030f);
+  scene.fog = new THREE.FogExp2(0x05030f, 0.026);
+
+  var camera = new THREE.PerspectiveCamera(44, window.innerWidth / window.innerHeight, 0.1, 220);
+  var clock  = new THREE.Clock();
+
+  // camera rigs: looking DOWN into the box so the hollow interior reads
+  var camClosed = { pos: new THREE.Vector3(0, 4.5, 7.9), look: new THREE.Vector3(0, -0.15, 0) };
+  var camOpen   = { pos: new THREE.Vector3(0, 3.6, 8.8), look: new THREE.Vector3(0,  1.55, 0) };
+  var camPos  = camClosed.pos.clone();
+  var camLook = camClosed.look.clone();
+  camera.position.copy(camPos);
+
+  // =============================================================== textures
+  function softDot(inner, mid) {
+    var c = document.createElement('canvas'); c.width = c.height = 128;
+    var x = c.getContext('2d');
+    var g = x.createRadialGradient(64, 64, 0, 64, 64, 64);
+    g.addColorStop(0.00, inner);
+    g.addColorStop(0.30, mid);
+    g.addColorStop(1.00, 'rgba(255,255,255,0)');
+    x.fillStyle = g; x.fillRect(0, 0, 128, 128);
+    var t = new THREE.CanvasTexture(c); t.needsUpdate = true; return t;
+  }
+  var sparkTex = softDot('rgba(255,255,255,1)', 'rgba(255,205,130,.5)');
+  var glowTex  = softDot('rgba(255,214,160,.85)', 'rgba(255,150,60,.18)');
+
+  // =============================================================== lights
+  scene.add(new THREE.AmbientLight(0x4b3f7a, 0.5));
+
+  var keyLight = new THREE.PointLight(0xffb765, 2.1, 30, 2);
+  keyLight.position.set(1.6, 6.0, 4.0);
+  scene.add(keyLight);
+
+  var rimA = new THREE.PointLight(0x7d5bff, 1.6, 26, 2);
+  rimA.position.set(-6.5, 1.6, -3.5); scene.add(rimA);
+
+  var rimB = new THREE.PointLight(0x2ad8ff, 1.0, 24, 2);
+  rimB.position.set(6.5, 0.6, -2.5); scene.add(rimB);
+
+  // =============================================================== box metrics
+  var W = 2.6, D = 2.6;          // outer footprint
+  var BOT = -1.35, TOP = 0.22;   // wall bottom / rim height
+  var H = TOP - BOT;             // wall height
+  var T = 0.13;                  // wall thickness
+
+  var innerLight = new THREE.PointLight(0xffcf8f, 0.4, 12, 2);
+  innerLight.position.set(0, BOT + 0.45, 0);
+  scene.add(innerLight);
+
+  // =============================================================== starfield
+  (function stars() {
+    var n = 1500, pos = new Float32Array(n * 3), col = new Float32Array(n * 3);
+    var pal = [new THREE.Color(0xffffff), new THREE.Color(0xffd8a8), new THREE.Color(0x9fc4ff), new THREE.Color(0xd9b3ff)];
+    for (var i = 0; i < n; i++) {
+      var r = 36 + Math.random() * 48, th = Math.random() * Math.PI * 2, ph = Math.acos(2 * Math.random() - 1);
+      pos[i*3]   = r * Math.sin(ph) * Math.cos(th);
+      pos[i*3+1] = r * Math.cos(ph) * 0.62 + 5;
+      pos[i*3+2] = r * Math.sin(ph) * Math.sin(th);
+      var c = pal[(Math.random() * pal.length) | 0];
+      col[i*3] = c.r; col[i*3+1] = c.g; col[i*3+2] = c.b;
+    }
+    var g = new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    g.setAttribute('color', new THREE.BufferAttribute(col, 3));
+    scene.add(new THREE.Points(g, new THREE.PointsMaterial({
+      size: 0.4, map: sparkTex, vertexColors: true, transparent: true, opacity: 0.85,
+      depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true, fog: false
+    })));
+  })();
+
+  // =============================================================== floor puddle
+  (function floor() {
+    var c = document.createElement('canvas'); c.width = c.height = 512;
+    var x = c.getContext('2d');
+    var g = x.createRadialGradient(256, 256, 0, 256, 256, 256);
+    g.addColorStop(0, 'rgba(255,178,92,.5)');
+    g.addColorStop(0.33, 'rgba(126,74,255,.16)');
+    g.addColorStop(1, 'rgba(0,0,0,0)');
+    x.fillStyle = g; x.fillRect(0, 0, 512, 512);
+    var m = new THREE.Mesh(new THREE.PlaneGeometry(30, 30), new THREE.MeshBasicMaterial({
+      map: new THREE.CanvasTexture(c), transparent: true, blending: THREE.AdditiveBlending, depthWrite: false
+    }));
+    m.rotation.x = -Math.PI / 2; m.position.y = BOT - 0.02;
+    scene.add(m);
+  })();
+
+  // =============================================================== materials
+  var paperMat = new THREE.MeshStandardMaterial({ color: 0x171334, roughness: 0.44, metalness: 0.34 });
+  var lidMat   = new THREE.MeshStandardMaterial({ color: 0x211a4b, roughness: 0.40, metalness: 0.38 }); // lighter: reads as a separate lid
+  var skirtMat = new THREE.MeshStandardMaterial({ color: 0x100c26, roughness: 0.6,  metalness: 0.25 }); // dark lip = seam shadow
+  var goldMat  = new THREE.MeshStandardMaterial({ color: 0xffb347, roughness: 0.2, metalness: 0.9, emissive: 0x3a1e00 });
+  // interior lining — emissive so the hollow glows from within
+  var liningMat = new THREE.MeshStandardMaterial({
+    color: 0x2a1b52, roughness: 0.95, metalness: 0.0,
+    emissive: 0xff9b3d, emissiveIntensity: 0.28, side: THREE.DoubleSide
+  });
+
+  // =============================================================== the box (genuinely hollow, open top)
+  var boxRoot = new THREE.Group();  scene.add(boxRoot);
+  var boxBody = new THREE.Group();  boxRoot.add(boxBody);   // clickable shell
+  var lid     = new THREE.Group();  boxRoot.add(lid);
+
+  var midY = BOT + H / 2;
+
+  // floor slab
+  var slab = new THREE.Mesh(new THREE.BoxGeometry(W, T, D), paperMat);
+  slab.position.y = BOT + T / 2;
+  boxBody.add(slab);
+
+  // four walls
+  function wall(sx, sy, sz, px, pz) {
+    var m = new THREE.Mesh(new THREE.BoxGeometry(sx, sy, sz), paperMat);
+    m.position.set(px, midY, pz);
+    boxBody.add(m);
+    return m;
+  }
+  wall(W, H, T, 0,  D / 2 - T / 2);          // front (+z)
+  wall(W, H, T, 0, -D / 2 + T / 2);          // back  (-z)
+  wall(T, H, D - T * 2,  W / 2 - T / 2, 0);  // right
+  wall(T, H, D - T * 2, -W / 2 + T / 2, 0);  // left
+
+  // interior lining: 4 inset panels + a bright floor panel
+  var iw = W / 2 - T - 0.004, id = D / 2 - T - 0.004;
+  function liner(w, h, rotY, px, pz, ry) {
+    var m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), liningMat);
+    m.position.set(px, midY, pz);
+    m.rotation.y = ry;
+    boxBody.add(m);
+  }
+  liner(iw * 2, H, 0,  0,  id, Math.PI);   // inside of front wall
+  liner(iw * 2, H, 0,  0, -id, 0);         // inside of back wall
+  liner(id * 2, H, 0,  iw, 0, -Math.PI / 2);
+  liner(id * 2, H, 0, -iw, 0,  Math.PI / 2);
+  var innerFloor = new THREE.Mesh(new THREE.PlaneGeometry(iw * 2, id * 2), liningMat.clone());
+  innerFloor.rotation.x = -Math.PI / 2;
+  innerFloor.position.y = BOT + T + 0.006;
+  innerFloor.material.emissiveIntensity = 0.5;
+  boxBody.add(innerFloor);
+
+  // additive glow pooled in the bottom of the box
+  var pool = new THREE.Mesh(new THREE.PlaneGeometry(iw * 2, id * 2), new THREE.MeshBasicMaterial({
+    map: glowTex, transparent: true, opacity: 0.35, blending: THREE.AdditiveBlending, depthWrite: false
+  }));
+  pool.rotation.x = -Math.PI / 2;
+  pool.position.y = BOT + T + 0.05;
+  boxBody.add(pool);
+
+  // gold rim capping the open top — defines the opening
+  function rimBar(sx, sz, px, pz) {
+    var m = new THREE.Mesh(new THREE.BoxGeometry(sx, 0.075, sz), goldMat);
+    m.position.set(px, TOP - 0.03, pz);
+    boxBody.add(m);
+  }
+  rimBar(W + 0.03, T + 0.05, 0,  D / 2 - T / 2);
+  rimBar(W + 0.03, T + 0.05, 0, -D / 2 + T / 2);
+  rimBar(T + 0.05, D + 0.03,  W / 2 - T / 2, 0);
+  rimBar(T + 0.05, D + 0.03, -W / 2 + T / 2, 0);
+
+  // vertical gold ribbon down the outside of each wall
+  function outerBand(sx, sz, px, pz) {
+    var m = new THREE.Mesh(new THREE.BoxGeometry(sx, H, sz), goldMat);
+    m.position.set(px, midY, pz);
+    boxBody.add(m);
+  }
+  outerBand(0.36, 0.035, 0,  D / 2 + 0.017);
+  outerBand(0.36, 0.035, 0, -D / 2 - 0.017);
+  outerBand(0.035, 0.36,  W / 2 + 0.017, 0);
+  outerBand(0.035, 0.36, -W / 2 - 0.017, 0);
+
+  // light escaping the seam, just below where the lid's lip ends
+  var seamMat = new THREE.MeshBasicMaterial({
+    color: 0xffc07a, transparent: true, opacity: 0.5,
+    blending: THREE.AdditiveBlending, depthWrite: false
+  });
+  function seamBar(sx, sz, px, pz) {
+    var m = new THREE.Mesh(new THREE.BoxGeometry(sx, 0.055, sz), seamMat);
+    m.position.set(px, -0.105, pz);
+    boxBody.add(m);
+  }
+  seamBar(W + 0.06, 0.02, 0,  D / 2 + 0.025);
+  seamBar(W + 0.06, 0.02, 0, -D / 2 - 0.025);
+  seamBar(0.02, D + 0.06,  W / 2 + 0.025, 0);
+  seamBar(0.02, D + 0.06, -W / 2 - 0.025, 0);
+
+  // =============================================================== the lid
+  var LID_TOP_TH = 0.17, LID_SKIRT = 0.32;
+  var lidTop = new THREE.Mesh(new THREE.BoxGeometry(W + 0.26, LID_TOP_TH, D + 0.26), lidMat);
+  lidTop.position.y = LID_TOP_TH / 2;
+  lid.add(lidTop);
+
+  // skirt / lip hanging down over the rim — this is what makes it read as a lid
+  var skirtParts = [];
+  function skirt(sx, sz, px, pz) {
+    var m = new THREE.Mesh(new THREE.BoxGeometry(sx, LID_SKIRT, sz), skirtMat);
+    m.position.set(px, -LID_SKIRT / 2, pz);
+    lid.add(m); skirtParts.push(m);
+    return m;
+  }
+  skirt(W + 0.26, 0.08, 0,  (D + 0.26) / 2 - 0.04);
+  skirt(W + 0.26, 0.08, 0, -(D + 0.26) / 2 + 0.04);
+  skirt(0.08, D + 0.26,  (W + 0.26) / 2 - 0.04, 0);
+  skirt(0.08, D + 0.26, -(W + 0.26) / 2 + 0.04, 0);
+
+  // gold cross bands on the lid top
+  var lb1 = new THREE.Mesh(new THREE.BoxGeometry(0.36, LID_TOP_TH + 0.02, D + 0.28), goldMat);
+  lb1.position.y = LID_TOP_TH / 2; lid.add(lb1);
+  var lb2 = new THREE.Mesh(new THREE.BoxGeometry(W + 0.28, LID_TOP_TH + 0.02, 0.36), goldMat);
+  lb2.position.y = LID_TOP_TH / 2; lid.add(lb2);
+
+  // bow
+  var bow = new THREE.Group();
+  bow.position.y = LID_TOP_TH + 0.14;
+  lid.add(bow);
+  function loop(sign) {
+    var l = new THREE.Mesh(new THREE.TorusGeometry(0.31, 0.078, 14, 34), goldMat);
+    l.position.set(sign * 0.31, 0.02, 0);
+    l.rotation.set(Math.PI / 2, 0, sign * 0.55);
+    l.scale.set(1, 1, 0.55);
+    return l;
+  }
+  function tail(sign) {
+    var t = new THREE.Mesh(new THREE.BoxGeometry(0.15, 0.46, 0.05), goldMat);
+    t.position.set(sign * 0.17, -0.23, 0.02);
+    t.rotation.z = sign * 0.42;
+    return t;
+  }
+  bow.add(loop(1), loop(-1), tail(1), tail(-1));
+  bow.add(new THREE.Mesh(new THREE.SphereGeometry(0.135, 20, 16), goldMat));
+
+  var LID_Y = TOP + 0.01;          // bottom of top panel sits just above the rim
+  lid.position.y = LID_Y;
+
+  var lidMeshes = [lidTop, lb1, lb2].concat(skirtParts);
+  bow.traverse(function (o) { if (o.isMesh) lidMeshes.push(o); });
+  var lidOriginals = lidMeshes.map(function (m) { return m.material; });
+
+  // =============================================================== light beam
+  var beam = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.3, 2.4, 8.0, 40, 1, true),
+    new THREE.MeshBasicMaterial({ color: 0xffc27a, transparent: true, opacity: 0,
+      blending: THREE.AdditiveBlending, depthWrite: false, side: THREE.DoubleSide })
+  );
+  beam.position.y = TOP + 3.6;
+  scene.add(beam);
+
+  // =============================================================== gift card art
+  function cardFace() {
+    var c = document.createElement('canvas'); c.width = 1200; c.height = 760;
+    var x = c.getContext('2d');
+    var g = x.createLinearGradient(0, 0, 1200, 760);
+    g.addColorStop(0, '#20242c'); g.addColorStop(0.5, '#12151b'); g.addColorStop(1, '#242a34');
+    x.fillStyle = g; x.fillRect(0, 0, 1200, 760);
+
+    var s = x.createLinearGradient(0, 760, 1200, 0);
+    s.addColorStop(0, 'rgba(255,255,255,0)');
+    s.addColorStop(0.46, 'rgba(255,255,255,.07)');
+    s.addColorStop(0.54, 'rgba(255,255,255,0)');
+    x.fillStyle = s; x.fillRect(0, 0, 1200, 760);
+
+    var o = x.createRadialGradient(1140, 720, 20, 1140, 720, 620);
+    o.addColorStop(0, 'rgba(255,153,0,.3)'); o.addColorStop(1, 'rgba(255,153,0,0)');
+    x.fillStyle = o; x.fillRect(0, 0, 1200, 760);
+
+    x.strokeStyle = 'rgba(255,255,255,.13)'; x.lineWidth = 3; x.strokeRect(26, 26, 1148, 708);
+
+    x.fillStyle = '#ffffff';
+    x.font = '700 128px -apple-system, "Segoe UI", Helvetica, Arial, sans-serif';
+    x.textBaseline = 'alphabetic';
+    x.fillText('amazon', 92, 268);
+    var w = x.measureText('amazon').width;
+
+    x.strokeStyle = '#ff9900'; x.lineWidth = 17; x.lineCap = 'round';
+    x.beginPath(); x.moveTo(100, 300);
+    x.quadraticCurveTo(92 + w / 2, 372, 92 + w - 6, 296); x.stroke();
+    x.fillStyle = '#ff9900';
+    x.beginPath(); x.moveTo(92 + w + 8, 286); x.lineTo(92 + w - 34, 300); x.lineTo(92 + w + 4, 322);
+    x.closePath(); x.fill();
+
+    x.fillStyle = 'rgba(255,255,255,.52)';
+    x.font = '500 30px -apple-system, "Segoe UI", Helvetica, Arial, sans-serif';
+    x.fillText('G I F T   C A R D', 96, 420);
+
+    var ag = x.createLinearGradient(96, 470, 620, 640);
+    ag.addColorStop(0, '#ffffff'); ag.addColorStop(1, '#ffb04a');
+    x.fillStyle = ag;
+    x.font = '700 200px -apple-system, "Segoe UI", Helvetica, Arial, sans-serif';
+    x.fillText('$50', 88, 640);
+
+    x.textAlign = 'right';
+    x.fillStyle = 'rgba(255,255,255,.38)';
+    x.font = '500 26px -apple-system, "Segoe UI", Helvetica, Arial, sans-serif';
+    x.fillText('National Intern Day', 1108, 596);
+    x.fillStyle = 'rgba(255,153,0,.85)';
+    x.font = '600 26px -apple-system, "Segoe UI", Helvetica, Arial, sans-serif';
+    x.fillText('Thank you.', 1108, 640);
+
+    var t = new THREE.CanvasTexture(c);
+    t.anisotropy = renderer.capabilities.getMaxAnisotropy();
+    t.encoding = THREE.sRGBEncoding;
+    return t;
+  }
+
+  function cardBack() {
+    var c = document.createElement('canvas'); c.width = 1200; c.height = 760;
+    var x = c.getContext('2d');
+    var g = x.createLinearGradient(0, 0, 1200, 760);
+    g.addColorStop(0, '#171b21'); g.addColorStop(1, '#0e1116');
+    x.fillStyle = g; x.fillRect(0, 0, 1200, 760);
+    x.strokeStyle = 'rgba(255,255,255,.08)'; x.lineWidth = 3; x.strokeRect(26, 26, 1148, 708);
+    x.fillStyle = '#0a0c10'; x.fillRect(0, 120, 1200, 130);
+    x.fillStyle = 'rgba(255,255,255,.3)';
+    x.font = '500 28px -apple-system, "Segoe UI", Helvetica, Arial, sans-serif';
+    x.fillText('Redeemable toward millions of items.', 96, 400);
+    x.fillText('No expiration date. No fees.', 96, 452);
+    x.fillStyle = 'rgba(255,153,0,.7)';
+    x.font = '600 30px -apple-system, "Segoe UI", Helvetica, Arial, sans-serif';
+    x.fillText('amazon.com/redeem', 96, 560);
+    var t = new THREE.CanvasTexture(c);
+    t.anisotropy = renderer.capabilities.getMaxAnisotropy();
+    t.encoding = THREE.sRGBEncoding;
+    return t;
+  }
+
+  var edgeMat  = new THREE.MeshStandardMaterial({ color: 0x2b3038, roughness: 0.5, metalness: 0.6 });
+  var frontMat = new THREE.MeshStandardMaterial({ map: cardFace(), roughness: 0.28, metalness: 0.4, emissive: 0x1a1206 });
+  var backMat  = new THREE.MeshStandardMaterial({ map: cardBack(), roughness: 0.42, metalness: 0.34 });
+
+  var CARD_W = 3.5, CARD_H = CARD_W * 760 / 1200;
+  var cardRoot = new THREE.Group();
+  var cardMesh = new THREE.Mesh(new THREE.BoxGeometry(CARD_W, CARD_H, 0.07),
+                               [edgeMat, edgeMat, edgeMat, edgeMat, frontMat, backMat]);
+  cardRoot.add(cardMesh);
+
+  var halo = new THREE.Sprite(new THREE.SpriteMaterial({
+    map: glowTex, transparent: true, opacity: 0, blending: THREE.AdditiveBlending, depthWrite: false
+  }));
+  halo.scale.set(11, 11, 1); halo.position.z = -0.4;
+  cardRoot.add(halo);
+
+  var CARD_START = new THREE.Vector3(0, BOT + 0.5, 0);
+  var CARD_HOME  = new THREE.Vector3(0, 2.95, 0.5);
+  function resetCard() {
+    cardRoot.position.copy(CARD_START);
+    cardRoot.scale.setScalar(0.1);
+    cardRoot.rotation.set(0, 0, 0);
+    cardMesh.rotation.set(0, 0, 0);
+    halo.material.opacity = 0;
+    cardRoot.visible = false;
+  }
+  scene.add(cardRoot);
+  resetCard();
+
+  // =============================================================== sparkle streams
+  // Particles are born on the RIM PERIMETER of the open box, arc outward,
+  // and cascade down the outside walls — an overflowing fountain of light.
+  var HW = W / 2, HD = D / 2, PER = 2 * (W + D);
+
+  function rimPoint(out) {
+    var s = Math.random() * PER, x, z;
+    if (s < W)            { x = -HW + s;                z = -HD; }
+    else if (s < W + D)   { x =  HW;                    z = -HD + (s - W); }
+    else if (s < 2*W + D) { x =  HW - (s - W - D);      z =  HD; }
+    else                  { x = -HW;                    z =  HD - (s - 2*W - D); }
+    var j = 1 + Math.random() * 0.05;
+    out.x = x * j; out.z = z * j;
+    var L = Math.sqrt(out.x * out.x + out.z * out.z) || 1;
+    out.nx = out.x / L; out.nz = out.z / L;   // outward normal
+  }
+
+  function makeStream(count, size, palette, cfg) {
+    var pos  = new Float32Array(count * 3);
+    var col  = new Float32Array(count * 3);
+    var base = new Float32Array(count * 3);
+    var vel  = new Float32Array(count * 3);
+    var life = new Float32Array(count);
+    var span = new Float32Array(count);
+    var seed = new Float32Array(count);
+    var p = { x: 0, z: 0, nx: 0, nz: 0 };
+
+    function seedOne(i, mode) {
+      rimPoint(p);
+      var burst = mode === 'burst';
+      pos[i*3]   = p.x;
+      pos[i*3+1] = TOP + (burst ? Math.random() * 0.25 : -0.05 + Math.random() * 0.16);
+      pos[i*3+2] = p.z;
+
+      var out = (burst ? cfg.outBurst : cfg.out) * (0.5 + Math.random());
+      var up  = (burst ? cfg.upBurst  : cfg.up ) * (0.55 + Math.random() * 0.9);
+      vel[i*3]   = p.nx * out + (Math.random() - 0.5) * 0.25;
+      vel[i*3+1] = up;
+      vel[i*3+2] = p.nz * out + (Math.random() - 0.5) * 0.25;
+
+      span[i] = cfg.life * (0.6 + Math.random() * 0.8);
+      life[i] = mode === 'idle' ? Math.random() * span[i] : 0;
+      seed[i] = Math.random() * 100;
+
+      var c = palette[(Math.random() * palette.length) | 0];
+      base[i*3] = c.r; base[i*3+1] = c.g; base[i*3+2] = c.b;
+    }
+    for (var i = 0; i < count; i++) seedOne(i, 'idle');
+
+    var geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+    geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
+    var pts = new THREE.Points(geo, new THREE.PointsMaterial({
+      size: size, map: sparkTex, vertexColors: true, transparent: true, opacity: 1,
+      depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true
+    }));
+    scene.add(pts);
+
+    return {
+      points: pts,
+      reseed: function (mode) { for (var i = 0; i < count; i++) seedOne(i, mode); },
+      update: function (dt, t, gravity, brightness, respawnMode) {
+        for (var i = 0; i < count; i++) {
+          life[i] += dt;
+          if (life[i] > span[i]) seedOne(i, respawnMode);
+
+          vel[i*3]   *= (1 - cfg.drag * dt);
+          vel[i*3+2] *= (1 - cfg.drag * dt);
+          vel[i*3+1] += gravity * dt;
+
+          var sd = seed[i];
+          pos[i*3]   += vel[i*3]   * dt + Math.sin(t * 1.6 + sd) * 0.0026;
+          pos[i*3+1] += vel[i*3+1] * dt;
+          pos[i*3+2] += vel[i*3+2] * dt + Math.cos(t * 1.4 + sd) * 0.0026;
+
+          // die on the ground instead of sinking through it
+          if (pos[i*3+1] < BOT - 0.05) { vel[i*3+1] *= -0.22; pos[i*3+1] = BOT - 0.05; }
+
+          // per-particle fade (in/out over lifetime) + twinkle, via additive vertex colour
+          var u = life[i] / span[i];
+          var fade = Math.sin(Math.PI * Math.min(1, Math.max(0, u)));
+          var tw = 0.6 + 0.4 * Math.sin(t * 7.5 + sd * 12.0);
+          var k = fade * tw * brightness;
+          col[i*3]   = base[i*3]   * k;
+          col[i*3+1] = base[i*3+1] * k;
+          col[i*3+2] = base[i*3+2] * k;
+        }
+        geo.attributes.position.needsUpdate = true;
+        geo.attributes.color.needsUpdate = true;
+      }
+    };
+  }
+
+  var sparkPal = [new THREE.Color(0xffd79a), new THREE.Color(0xffffff), new THREE.Color(0xffc27a), new THREE.Color(0xc9a8ff)];
+  var emberPal = [new THREE.Color(0xff9f43), new THREE.Color(0xffb347), new THREE.Color(0xff7b3d)];
+
+  var fineSparks = makeStream(820, 0.115, sparkPal,
+    { out: 0.30, up: 1.15, outBurst: 2.0, upBurst: 4.6, life: 2.5, drag: 1.1 });
+  var embers = makeStream(190, 0.30, emberPal,
+    { out: 0.20, up: 0.75, outBurst: 1.4, upBurst: 3.4, life: 3.4, drag: 0.8 });
+
+  // =============================================================== confetti
+  var CONF = 520;
+  var cfPos = new Float32Array(CONF * 3), cfCol = new Float32Array(CONF * 3), cfVel = new Float32Array(CONF * 3);
+  var confPal = [new THREE.Color(0xff9900), new THREE.Color(0xffd79a), new THREE.Color(0x7d5bff),
+                 new THREE.Color(0x2ad8ff), new THREE.Color(0xff5f8f), new THREE.Color(0xffffff)];
+  var cfGeo = new THREE.BufferGeometry();
+  cfGeo.setAttribute('position', new THREE.BufferAttribute(cfPos, 3));
+  cfGeo.setAttribute('color', new THREE.BufferAttribute(cfCol, 3));
+  var confetti = new THREE.Points(cfGeo, new THREE.PointsMaterial({
+    size: 0.17, map: sparkTex, vertexColors: true, transparent: true, opacity: 0,
+    depthWrite: false, blending: THREE.AdditiveBlending, sizeAttenuation: true
+  }));
+  scene.add(confetti);
+
+  function fireConfetti() {
+    for (var i = 0; i < CONF; i++) {
+      var a = Math.random() * Math.PI * 2, r = Math.random() * 0.9;
+      cfPos[i*3] = Math.cos(a) * r; cfPos[i*3+1] = TOP + 0.2; cfPos[i*3+2] = Math.sin(a) * r;
+      var sp = 2.6 + Math.random() * 4.2, up = 4.6 + Math.random() * 5.6;
+      cfVel[i*3] = Math.cos(a) * sp; cfVel[i*3+1] = up; cfVel[i*3+2] = Math.sin(a) * sp;
+      var c = confPal[(Math.random() * confPal.length) | 0];
+      cfCol[i*3] = c.r; cfCol[i*3+1] = c.g; cfCol[i*3+2] = c.b;
+    }
+    cfGeo.attributes.color.needsUpdate = true;
+    confetti.material.opacity = 1;
+  }
+
+  // =============================================================== sound
+  var Audio_ = {
+    ctx: null, master: null, on: false, padStarted: false,
+    init: function () {
+      if (this.ctx) return;
+      var AC = window.AudioContext || window.webkitAudioContext;
+      if (!AC) return;
+      this.ctx = new AC();
+      this.master = this.ctx.createGain();
+      this.master.gain.value = 0;
+      this.master.connect(this.ctx.destination);
+    },
+    resume: function () { if (this.ctx && this.ctx.state === 'suspended') this.ctx.resume(); },
+    setOn: function (v) {
+      this.init(); if (!this.ctx) return;
+      this.resume(); this.on = v;
+      var t = this.ctx.currentTime;
+      this.master.gain.cancelScheduledValues(t);
+      this.master.gain.linearRampToValueAtTime(v ? 0.85 : 0, t + 0.35);
+      if (v) this.pad();
+    },
+    pad: function () {
+      if (this.padStarted || !this.ctx) return;
+      this.padStarted = true;
+      var ctx = this.ctx;
+      var g = ctx.createGain(); g.gain.value = 0.055; g.connect(this.master);
+      var lp = ctx.createBiquadFilter(); lp.type = 'lowpass'; lp.frequency.value = 620; lp.connect(g);
+      [110, 164.81, 220.5, 329.63].forEach(function (f, i) {
+        var o = ctx.createOscillator(); o.type = i % 2 ? 'triangle' : 'sine';
+        o.frequency.value = f; o.detune.value = (i - 1.5) * 6;
+        var og = ctx.createGain(); og.gain.value = 0.34 / (i + 1);
+        o.connect(og); og.connect(lp); o.start();
+      });
+      var lfo = ctx.createOscillator(); lfo.frequency.value = 0.07;
+      var lg = ctx.createGain(); lg.gain.value = 240;
+      lfo.connect(lg); lg.connect(lp.frequency); lfo.start();
+    },
+    whoosh: function () {
+      this.init(); if (!this.ctx) return; this.resume();
+      var ctx = this.ctx, dur = 1.1;
+      var buf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * dur), ctx.sampleRate);
+      var d = buf.getChannelData(0);
+      for (var i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * (1 - i / d.length);
+      var src = ctx.createBufferSource(); src.buffer = buf;
+      var bp = ctx.createBiquadFilter(); bp.type = 'bandpass'; bp.Q.value = 1.1;
+      bp.frequency.setValueAtTime(280, ctx.currentTime);
+      bp.frequency.exponentialRampToValueAtTime(3200, ctx.currentTime + 0.5);
+      bp.frequency.exponentialRampToValueAtTime(420, ctx.currentTime + dur);
+      var g = ctx.createGain();
+      g.gain.setValueAtTime(0.0001, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.5, ctx.currentTime + 0.09);
+      g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + dur);
+      src.connect(bp); bp.connect(g); g.connect(this.master); src.start();
+    },
+    chime: function () {
+      this.init(); if (!this.ctx) return; this.resume();
+      var ctx = this.ctx, t0 = ctx.currentTime + 0.16, master = this.master;
+      [523.25, 659.25, 783.99, 1046.5, 1318.5].forEach(function (f, i) {
+        var t = t0 + i * 0.11;
+        var o = ctx.createOscillator(); o.type = 'sine'; o.frequency.value = f;
+        var o2 = ctx.createOscillator(); o2.type = 'triangle'; o2.frequency.value = f * 2;
+        var g = ctx.createGain();
+        g.gain.setValueAtTime(0.0001, t);
+        g.gain.exponentialRampToValueAtTime(Math.max(0.05, 0.3 - i * 0.035), t + 0.02);
+        g.gain.exponentialRampToValueAtTime(0.0001, t + 2.4);
+        var g2 = ctx.createGain(); g2.gain.value = 0.16;
+        o.connect(g); o2.connect(g2); g2.connect(g); g.connect(master);
+        o.start(t); o2.start(t); o.stop(t + 2.5); o2.stop(t + 2.5);
+      });
+    }
+  };
+
+  var soundBtn = document.getElementById('soundBtn');
+  soundBtn.addEventListener('click', function () {
+    Audio_.setOn(!Audio_.on);
+    soundBtn.textContent = 'Sound: ' + (Audio_.on ? 'On' : 'Off');
+    soundBtn.setAttribute('aria-pressed', String(Audio_.on));
+  });
+
+  // =============================================================== interaction
+  var ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
+  var pointer = { x: 0, y: 0 };
+  var hovering = false;
+
+  var state = 'closed';                 // closed | opening | open
+  var openT = 0;
+  var lidVel = new THREE.Vector3(), lidSpin = new THREE.Vector3();
+
+  var revealEl = document.getElementById('reveal');
+  var hintEl   = document.getElementById('hint');
+  var replayEl = document.getElementById('replay');
+
+  function toNdc(e) {
+    var t = (e.touches && e.touches[0]) || e;
+    ndc.x = (t.clientX / window.innerWidth) * 2 - 1;
+    ndc.y = -(t.clientY / window.innerHeight) * 2 + 1;
+    pointer.x = ndc.x; pointer.y = ndc.y;
+  }
+  function hitBox() {
+    ray.setFromCamera(ndc, camera);
+    return ray.intersectObjects([boxBody, lid], true).length > 0;
+  }
+
+  window.addEventListener('pointermove', function (e) {
+    toNdc(e);
+    if (state === 'closed') {
+      hovering = hitBox();
+      document.body.style.cursor = hovering ? 'pointer' : 'default';
+    }
+  }, { passive: true });
+
+  window.addEventListener('pointerdown', function (e) {
+    toNdc(e); Audio_.init();
+    if (state !== 'closed' || !hitBox()) return;
+    openBox();
+  });
+
+  window.addEventListener('keydown', function (e) {
+    if ((e.key === 'Enter' || e.key === ' ') && state === 'closed') openBox();
+  });
+
+  function openBox() {
+    state = 'opening'; openT = 0;
+    document.body.style.cursor = 'default'; hovering = false;
+
+    lidVel.set((Math.random() - 0.5) * 1.3, 7.9, 1.5 + Math.random() * 0.6);
+    lidSpin.set(1.8 + Math.random(), 1.0, 2.3 + Math.random());
+
+    // clone lid materials so only the lid fades out
+    lidMeshes.forEach(function (m) {
+      m.material = m.material.clone();
+      m.material.transparent = true;
+    });
+    lid.visible = true;
+
+    cardRoot.visible = true;
+    fireConfetti();
+    fineSparks.reseed('burst');
+    embers.reseed('burst');
+
+    Audio_.whoosh(); Audio_.chime();
+
+    hintEl.style.opacity = '0';
+    setTimeout(function () { revealEl.classList.add('show'); }, 1000);
+    setTimeout(function () { replayEl.classList.add('show'); state = 'open'; }, 2300);
+  }
+
+  document.getElementById('replayBtn').addEventListener('click', function () {
+    state = 'closed'; openT = 0;
+    lid.position.set(0, LID_Y, 0);
+    lid.rotation.set(0, 0, 0);
+    lid.visible = true;
+    lidMeshes.forEach(function (m, i) { m.material = lidOriginals[i]; });
+    resetCard();
+    beam.material.opacity = 0;
+    confetti.material.opacity = 0;
+    innerFloor.material.emissiveIntensity = 0.5;
+    liningMat.emissiveIntensity = 0.28;
+    fineSparks.reseed('idle');
+    embers.reseed('idle');
+    revealEl.classList.remove('show');
+    replayEl.classList.remove('show');
+    hintEl.style.opacity = '1';
+  });
+
+  // =============================================================== easing
+  function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+  function easeOutBack(t) { var c = 1.45; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); }
+  function smoothstep(a, b, x) { var t = Math.min(1, Math.max(0, (x - a) / (b - a))); return t * t * (3 - 2 * t); }
+
+  // =============================================================== loop
+  var teaseTimer = 2.6;
+
+  function tick() {
+    var dt = Math.min(clock.getDelta(), 0.05);
+    var t  = clock.elapsedTime;
+    var opened = state !== 'closed';
+    var rig = opened ? camOpen : camClosed;
+
+    // camera: ease between rigs, plus pointer parallax
+    camPos.lerp(rig.pos, 0.03);
+    camLook.lerp(rig.look, 0.03);
+    camera.position.set(
+      camPos.x + pointer.x * 1.5,
+      camPos.y - pointer.y * 0.8,
+      camPos.z
+    );
+    camera.lookAt(camLook);
+
+    if (!opened) {
+      // ---- idle present
+      boxRoot.position.y = Math.sin(t * 1.05) * 0.085;
+      boxRoot.rotation.y = Math.sin(t * 0.3) * 0.34;
+      var hov = hovering ? 1.04 : 1;
+      boxRoot.scale.x += (hov - boxRoot.scale.x) * 0.12;
+      boxRoot.scale.y = boxRoot.scale.z = boxRoot.scale.x;
+
+      teaseTimer -= dt;
+      if (teaseTimer <= 0) {
+        if (teaseTimer > -0.5) {
+          var k = Math.sin(t * 44) * 0.045 * (1 + teaseTimer / 0.5);
+          boxRoot.rotation.z = k;
+          lid.position.y = LID_Y + Math.abs(k) * 2.2;   // lid visibly jumps
+        } else {
+          teaseTimer = 3.4 + Math.random() * 2;
+          boxRoot.rotation.z = 0; lid.position.y = LID_Y;
+        }
+      }
+      keyLight.intensity = 2.1 + Math.sin(t * 2.2) * 0.16;
+      innerLight.intensity = 0.45 + Math.sin(t * 4.6) * 0.2;
+      liningMat.emissiveIntensity = 0.26 + Math.sin(t * 3.1) * 0.07;
+      pool.material.opacity = 0.3 + Math.sin(t * 2.4) * 0.07;
+      seamMat.opacity = 0.42 + Math.sin(t * 2.9) * 0.22;
+
+      fineSparks.update(dt, t, 0.28, 0.55, 'idle');
+      embers.update(dt, t, 0.16, 0.5, 'idle');
+
+    } else {
+      // ---- opening / open
+      openT += dt;
+      boxRoot.rotation.z = 0;
+      boxRoot.rotation.y += (0 - boxRoot.rotation.y) * 0.04;
+      boxRoot.position.y = Math.sin(t * 1.05) * 0.045;
+
+      // lid tumbles away (stop integrating once it has faded out)
+      if (lid.visible) {
+        lidVel.y -= 12.5 * dt;
+        lid.position.x += lidVel.x * dt;
+        lid.position.y += lidVel.y * dt;
+        lid.position.z += lidVel.z * dt;
+        lid.rotation.x += lidSpin.x * dt;
+        lid.rotation.y += lidSpin.y * dt;
+        lid.rotation.z += lidSpin.z * dt;
+        var lidFade = 1 - smoothstep(0.55, 1.5, openT);
+        for (var li = 0; li < lidMeshes.length; li++) lidMeshes[li].material.opacity = lidFade;
+        lid.visible = lidFade > 0.01;
+      }
+
+      // interior blazes
+      var gl = smoothstep(0.1, 1.4, openT);
+      liningMat.emissiveIntensity = 0.26 + 1.1 * gl + Math.sin(t * 3.2) * 0.09;
+      innerFloor.material.emissiveIntensity = 0.5 + 1.5 * gl;
+      pool.material.opacity = 0.3 + 0.5 * gl;
+      seamMat.opacity = 0.42 + 0.5 * gl;
+      innerLight.intensity = 0.45 + 2.4 * gl + Math.sin(t * 3.4) * 0.22;
+      keyLight.intensity = 2.1 + gl * 0.6;
+
+      // card rises out of the box
+      var rise = easeOutBack(Math.min(1, openT / 1.5));
+      cardRoot.position.x = CARD_HOME.x * rise + Math.sin(t * 0.5) * 0.1;
+      cardRoot.position.y = CARD_START.y + (CARD_HOME.y - CARD_START.y) * rise + Math.sin(t * 1.05) * 0.11 * rise;
+      cardRoot.position.z = CARD_HOME.z * rise;
+      cardRoot.scale.setScalar(0.1 + 0.9 * Math.min(1, easeOutCubic(openT / 1.25)));
+
+      var spinP = Math.min(1, openT / 1.55);
+      cardMesh.rotation.y = easeOutCubic(spinP) * Math.PI * 4 + Math.sin(t * 0.62) * 0.3 * spinP;
+      cardMesh.rotation.x = Math.sin(t * 0.45) * 0.09;
+      cardMesh.rotation.z = Math.sin(t * 0.37) * 0.05;
+
+      halo.material.opacity = 0.3 * gl + Math.sin(t * 1.6) * 0.05 * gl;
+      halo.scale.setScalar(11 + Math.sin(t * 1.2) * 0.6);
+      beam.material.opacity = 0.15 * gl + Math.sin(t * 0.9) * 0.03 * gl;
+      beam.rotation.y += dt * 0.12;
+
+      // sustained fountain pouring over the rim and down the outside
+      var boost = Math.max(0, 1 - openT / 2.0);
+      fineSparks.update(dt, t, -1.5, 0.85 + 0.4 * boost, 'flow');
+      embers.update(dt, t, -0.95, 0.8 + 0.35 * boost, 'flow');
+    }
+
+    // ---- confetti
+    if (confetti.material.opacity > 0.01) {
+      var cPos = cfGeo.attributes.position.array;
+      for (var j = 0; j < CONF; j++) {
+        cfVel[j*3+1] -= 9.6 * dt;
+        cfVel[j*3] *= (1 - 0.7 * dt); cfVel[j*3+2] *= (1 - 0.7 * dt);
+        cPos[j*3]   += cfVel[j*3] * dt;
+        cPos[j*3+1] += cfVel[j*3+1] * dt;
+        cPos[j*3+2] += cfVel[j*3+2] * dt;
+      }
+      cfGeo.attributes.position.needsUpdate = true;
+      confetti.material.opacity = Math.max(0, confetti.material.opacity - dt * 0.3);
+    }
+
+    renderer.render(scene, camera);
+    requestAnimationFrame(tick);
+  }
+
+  window.addEventListener('resize', function () {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  clock.start();
+  tick();
+  setTimeout(function () { document.getElementById('boot').classList.add('gone'); }, 420);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1058 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Gofer AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#EEF1F5;
+  --bg-2:#E4E8EE;
+  --ink:#0B1220;
+  --ink-soft:#4A5568;
+  --card:#0B1120;
+  --card-2:#101828;
+  --panel:#182240;
+  --panel-2:#1E2A48;
+  --line:rgba(255,255,255,0.07);
+  --line-strong:rgba(255,255,255,0.13);
+  --muted:#7A86A0;
+  --text:#EAF0FF;
+  --text-2:#C0CCDF;
+  --blue:#2F6BFF;
+  --blue-600:#1E55E6;
+  --blue-400:#5C8BFF;
+  --blue-200:#AFC3FF;
+  --blue-glow:rgba(47,107,255,0.38);
+  --green:#22C58B;
+  --green-dim:rgba(34,197,139,0.15);
+  --amber:#F2B33A;
+  --amber-dim:rgba(242,179,58,0.15);
+  --bitcoin:#F7931A;
+  --bitcoin-dim:rgba(247,147,26,0.14);
+  --red:#F04A4A;
+  --purple:#9B6DFF;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{min-height:100vh}
+body{
+  font-family:'Inter',system-ui,-apple-system,sans-serif;
+  color:var(--ink);
+  background:linear-gradient(135deg,#EEF2F8 0%,#E2E8F2 100%);
+  -webkit-font-smoothing:antialiased;
+}
+.page{max-width:1520px;margin:0 auto;padding:48px 40px 80px}
+
+/* ── Header ── */
+.hdr{margin-bottom:12px}
+.brand{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.logo-wrap{
+  width:44px;height:44px;border-radius:50%;
+  display:grid;place-items:center;
+  box-shadow:0 8px 24px -6px var(--blue-glow);
+  overflow:hidden;flex-shrink:0;
+}
+.wordmark{font-size:22px;font-weight:800;letter-spacing:-0.02em;color:var(--ink)}
+.wordmark span{color:var(--blue)}
+.page-title{font-size:34px;font-weight:900;letter-spacing:-0.03em;color:var(--ink);margin-bottom:6px}
+.page-sub{font-size:15px;color:var(--ink-soft);max-width:600px;line-height:1.6}
+.tagline{
+  display:inline-flex;align-items:center;gap:8px;
+  margin-top:12px;
+  background:linear-gradient(90deg,rgba(47,107,255,0.08),rgba(247,147,26,0.06));
+  border:1px solid rgba(47,107,255,0.18);
+  border-radius:999px;padding:6px 16px;
+  font-size:11.5px;font-weight:700;letter-spacing:0.5px;
+  color:var(--blue-400);
+}
+
+/* ── Phone grid ── */
+.phones{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  gap:28px;
+  margin-top:44px;
+  align-items:start;
+  justify-items:center;
+}
+@media(max-width:1300px){.phones{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:900px){.phones{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){.phones{grid-template-columns:1fr}}
+
+.phone-col{display:flex;flex-direction:column;align-items:center;gap:16px;width:100%}
+.caption{text-align:center;font-size:12px;font-weight:600;color:var(--ink-soft);line-height:1.5}
+.caption b{color:var(--ink);display:block;font-size:13px;font-weight:800;margin-bottom:3px}
+
+/* ── Phone frame ── */
+.phone{
+  position:relative;
+  width:272px;height:590px;
+  background:#040810;
+  border-radius:46px;
+  padding:11px;
+  box-shadow:
+    0 0 0 1px rgba(255,255,255,0.1) inset,
+    0 40px 80px -20px rgba(4,8,20,0.4),
+    0 16px 32px -10px rgba(4,8,20,0.25);
+}
+.phone::before{
+  content:"";position:absolute;
+  left:-2px;top:126px;width:3px;height:54px;
+  background:#040810;border-radius:2px;
+}
+.phone::after{
+  content:"";position:absolute;
+  right:-2px;top:146px;width:3px;height:42px;
+  background:#040810;border-radius:2px;
+}
+.screen{
+  position:relative;width:100%;height:100%;
+  border-radius:36px;overflow:hidden;
+  background:var(--card);
+  color:var(--text);
+  display:flex;flex-direction:column;
+}
+.island{
+  position:absolute;top:8px;left:50%;transform:translateX(-50%);
+  width:84px;height:22px;background:#000;border-radius:14px;z-index:30;
+}
+.status{
+  height:36px;padding:0 18px;
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:11.5px;font-weight:700;color:var(--text);
+  position:relative;z-index:10;flex-shrink:0;
+}
+.status-icons{display:flex;gap:5px;align-items:center}
+
+/* ── Shared atoms ── */
+.pill{
+  display:inline-flex;align-items:center;gap:5px;
+  border-radius:999px;padding:4px 10px;
+  font-size:10px;font-weight:700;letter-spacing:0.3px;
+}
+.pill-blue{background:rgba(47,107,255,0.15);color:var(--blue-200);border:1px solid rgba(47,107,255,0.28)}
+.pill-green{background:var(--green-dim);color:#6EE7B7;border:1px solid rgba(34,197,139,0.28)}
+.pill-amber{background:var(--amber-dim);color:#FCD34D;border:1px solid rgba(242,179,58,0.28)}
+.pill-btc{background:var(--bitcoin-dim);color:#FCD34D;border:1px solid rgba(247,147,26,0.28)}
+.pill-red{background:rgba(240,74,74,0.12);color:#FCA5A5;border:1px solid rgba(240,74,74,0.25)}
+.dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0}
+
+.row{display:flex;align-items:center}
+.between{justify-content:space-between}
+.gap4{gap:4px} .gap6{gap:6px} .gap8{gap:8px} .gap10{gap:10px} .gap12{gap:12px}
+.col{display:flex;flex-direction:column}
+.flex1{flex:1}
+
+.tab-bar{
+  display:flex;background:rgba(6,10,22,0.97);
+  border-top:1px solid var(--line-strong);
+  padding:8px 0 14px;flex-shrink:0;
+}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer}
+.tab svg{display:block}
+.tab-label{font-size:9px;font-weight:700;color:var(--muted);letter-spacing:0.2px}
+.tab.active svg{color:var(--blue-400)}
+.tab.active .tab-label{color:#fff}
+.tab svg{color:var(--muted)}
+
+/* monogram icon used throughout screens */
+.mono-icon{
+  border-radius:10px;
+  display:grid;place-items:center;flex-shrink:0;
+  font-size:10px;font-weight:900;letter-spacing:0;
+  color:#fff;
+}
+
+/* ══════════════════════════════════════════
+   SCREEN 1 — HOME / DASHBOARD
+══════════════════════════════════════════ */
+.home-screen{background:var(--card)}
+.home-header{
+  padding:14px 16px 10px;
+  background:linear-gradient(180deg,rgba(20,30,60,0.85),transparent);
+}
+.avatar{
+  width:34px;height:34px;border-radius:50%;
+  background:linear-gradient(135deg,var(--blue),var(--purple));
+  display:grid;place-items:center;
+  font-size:13px;font-weight:800;color:#fff;
+  flex-shrink:0;
+}
+.home-greet{font-size:11px;color:var(--muted);font-weight:600}
+.home-name{font-size:15px;font-weight:800;color:var(--text)}
+
+.earnings-card{
+  margin:0 14px 12px;
+  background:linear-gradient(135deg,#1A2F70,#0F1E4A);
+  border:1px solid rgba(47,107,255,0.3);
+  border-radius:18px;padding:14px 16px;
+  position:relative;overflow:hidden;
+}
+.earnings-card::before{
+  content:"";position:absolute;
+  top:-40px;right:-40px;
+  width:120px;height:120px;
+  background:radial-gradient(circle,rgba(47,107,255,0.25),transparent 70%);
+}
+.ec-label{font-size:10px;font-weight:700;color:var(--blue-200);letter-spacing:0.8px;margin-bottom:4px}
+.ec-btc{font-size:22px;font-weight:900;color:#fff;letter-spacing:-0.02em;margin-bottom:2px}
+.ec-btc span{font-size:13px;font-weight:600;color:var(--blue-200);margin-left:4px}
+.ec-usd{font-size:11px;color:var(--blue-200);margin-bottom:12px}
+.ec-stats{display:flex;gap:10px}
+.ec-stat{
+  flex:1;background:rgba(0,0,0,0.2);border-radius:10px;
+  padding:8px 10px;
+}
+.ec-stat-val{font-size:15px;font-weight:800;color:#fff}
+.ec-stat-label{font-size:9px;color:var(--blue-200);font-weight:600;margin-top:1px}
+
+.section-title{
+  padding:0 16px;margin-bottom:8px;
+  font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;
+}
+.task-scroll{overflow-y:auto;padding:0 14px;flex:1}
+.task-card{
+  background:var(--panel);
+  border:1px solid var(--line-strong);
+  border-radius:14px;padding:11px 12px;
+  margin-bottom:8px;
+  display:flex;align-items:center;gap:10px;
+}
+.task-title{font-size:12px;font-weight:700;color:var(--text)}
+.task-meta{font-size:10px;color:var(--muted);margin-top:2px}
+.task-earn{text-align:right}
+.task-earn-val{font-size:12px;font-weight:800;color:var(--amber)}
+.task-earn-sub{font-size:9px;color:var(--muted)}
+
+.quick-actions{
+  display:flex;gap:8px;padding:0 14px;margin-bottom:12px;
+}
+.qa{
+  flex:1;background:var(--panel);border:1px solid var(--line-strong);
+  border-radius:13px;padding:10px 8px;
+  display:flex;flex-direction:column;align-items:center;gap:6px;
+  cursor:pointer;
+}
+.qa svg{color:var(--blue-400)}
+.qa-label{font-size:9px;font-weight:700;color:var(--text-2);text-align:center}
+
+/* ══════════════════════════════════════════
+   SCREEN 2 — RECORD TASK
+══════════════════════════════════════════ */
+.rec-screen{background:#060C1A}
+.rec-viewfinder{
+  flex:1;position:relative;overflow:hidden;
+  background:#0A0C10;
+}
+.rec-photo{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:cover;
+  object-position:center top;
+  display:block;
+}
+.rec-corner{position:absolute;width:20px;height:20px;border-color:rgba(255,255,255,0.9);border-style:solid;border-width:0;z-index:4}
+.rc-tl{top:20px;left:20px;border-top-width:2px;border-left-width:2px;border-radius:3px 0 0 0}
+.rc-tr{top:20px;right:20px;border-top-width:2px;border-right-width:2px;border-radius:0 3px 0 0}
+.rc-bl{bottom:20px;left:20px;border-bottom-width:2px;border-left-width:2px;border-radius:0 0 0 3px}
+.rc-br{bottom:20px;right:20px;border-bottom-width:2px;border-right-width:2px;border-radius:0 0 3px 0}
+.rec-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(0,0,0,0.35) 0%,transparent 35%,transparent 55%,rgba(0,0,0,0.65) 100%);
+  z-index:2;
+}
+.rec-task-badge{
+  position:absolute;top:18px;left:50%;transform:translateX(-50%);
+  white-space:nowrap;
+  background:rgba(11,17,32,0.82);
+  border:1px solid var(--line-strong);
+  border-radius:999px;padding:6px 14px;
+  display:flex;align-items:center;gap:6px;
+}
+.rec-live-dot{
+  width:7px;height:7px;border-radius:50%;background:var(--red);
+  box-shadow:0 0 6px var(--red);
+  animation:blink 1s infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.rec-task-name{font-size:11px;font-weight:700;color:var(--text)}
+.rec-timer{
+  position:absolute;bottom:130px;left:50%;transform:translateX(-50%);
+  font-size:28px;font-weight:900;color:#fff;letter-spacing:0.05em;
+  text-shadow:0 0 20px rgba(47,107,255,0.6);
+}
+.rec-hint{
+  position:absolute;bottom:90px;left:50%;transform:translateX(-50%);
+  white-space:nowrap;
+  font-size:10px;font-weight:600;color:var(--muted);
+}
+.rec-controls{
+  padding:12px 16px 16px;
+  background:var(--card);
+  border-top:1px solid var(--line);
+}
+.rec-progress{
+  height:3px;background:rgba(255,255,255,0.08);border-radius:999px;margin-bottom:10px;overflow:hidden;
+}
+.rec-progress-fill{height:100%;width:62%;background:var(--blue);border-radius:999px}
+.rec-btns{display:flex;gap:10px}
+.btn-stop{
+  flex:1;background:rgba(240,74,74,0.12);border:1px solid rgba(240,74,74,0.3);
+  border-radius:13px;padding:12px;
+  display:flex;align-items:center;justify-content:center;gap:7px;
+  font-size:12px;font-weight:700;color:#FCA5A5;
+}
+.btn-submit{
+  flex:2;background:var(--blue);border-radius:13px;padding:12px;
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  font-size:13px;font-weight:800;color:#fff;
+  box-shadow:0 6px 18px -4px var(--blue-glow);
+}
+.rec-earn-preview{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  margin-bottom:10px;
+  font-size:10px;color:var(--muted);font-weight:600;
+}
+.rec-earn-preview span{color:var(--amber);font-weight:800}
+
+/* ══════════════════════════════════════════
+   SCREEN 3 — PAYOUT CONFIRMATION
+══════════════════════════════════════════ */
+.pay-screen{background:var(--card)}
+.pay-header{
+  padding:14px 16px 12px;
+  display:flex;align-items:center;gap:10px;
+}
+.back-btn{
+  width:32px;height:32px;border-radius:50%;
+  background:rgba(255,255,255,0.06);border:1px solid var(--line-strong);
+  display:grid;place-items:center;color:var(--text);font-size:16px;flex-shrink:0;
+}
+.pay-title{font-size:15px;font-weight:800;color:var(--text)}
+
+.pay-check{
+  margin:0 16px 14px;
+  background:linear-gradient(135deg,rgba(34,197,139,0.12),rgba(34,197,139,0.04));
+  border:1px solid rgba(34,197,139,0.25);border-radius:18px;
+  padding:20px 16px;
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+}
+.check-circle{
+  width:52px;height:52px;border-radius:50%;
+  background:var(--green-dim);border:2px solid rgba(34,197,139,0.4);
+  display:grid;place-items:center;margin-bottom:10px;
+  font-size:22px;color:#6EE7B7;font-weight:700;
+}
+.pay-label{font-size:10px;font-weight:700;color:#6EE7B7;letter-spacing:0.8px;margin-bottom:4px}
+.pay-btc{font-size:26px;font-weight:900;color:#fff;letter-spacing:-0.02em}
+.pay-usd{font-size:11px;color:var(--muted);margin-top:3px}
+.pay-task-name{
+  margin-top:10px;font-size:12px;font-weight:700;color:var(--text);
+  background:rgba(0,0,0,0.2);border-radius:999px;padding:4px 14px;
+}
+
+.pay-details{padding:0 16px;flex:1;overflow-y:auto}
+.detail-row{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:10px 0;border-bottom:1px solid var(--line);
+}
+.detail-row:last-child{border-bottom:none}
+.dr-label{font-size:11px;color:var(--muted);font-weight:600}
+.dr-value{font-size:11px;font-weight:700;color:var(--text);text-align:right;max-width:160px}
+.dr-value.highlight{color:var(--blue-200)}
+.lab-badge{
+  display:flex;align-items:center;gap:6px;
+  background:rgba(47,107,255,0.1);border:1px solid rgba(47,107,255,0.2);
+  border-radius:8px;padding:4px 8px;
+}
+.lab-dot{width:6px;height:6px;border-radius:50%;background:var(--blue-400)}
+.lab-name{font-size:10px;font-weight:700;color:var(--blue-200)}
+
+.pay-footer{padding:12px 16px 16px}
+.btn-primary{
+  width:100%;background:var(--blue);border-radius:14px;padding:13px;
+  font-size:13px;font-weight:800;color:#fff;text-align:center;
+  box-shadow:0 6px 20px -4px var(--blue-glow);
+  margin-bottom:8px;
+}
+.btn-ghost{
+  width:100%;background:rgba(255,255,255,0.05);
+  border:1px solid var(--line-strong);
+  border-radius:14px;padding:12px;
+  font-size:12px;font-weight:700;color:var(--text-2);text-align:center;
+}
+
+/* ══════════════════════════════════════════
+   SCREEN 4 — EARNINGS LOG
+══════════════════════════════════════════ */
+.log-screen{background:var(--card)}
+.log-header{padding:14px 16px 10px}
+.log-title{font-size:17px;font-weight:900;color:var(--text);margin-bottom:4px}
+.log-sub{font-size:10px;color:var(--muted);font-weight:600}
+
+.log-summary{
+  margin:0 14px 12px;
+  display:flex;gap:8px;
+}
+.ls-card{
+  flex:1;background:var(--panel);border:1px solid var(--line-strong);
+  border-radius:14px;padding:10px 11px;
+}
+.ls-val{font-size:14px;font-weight:900;color:var(--text)}
+.ls-label{font-size:9px;color:var(--muted);font-weight:600;margin-top:2px}
+
+.filter-row{
+  display:flex;gap:6px;padding:0 14px;margin-bottom:10px;overflow-x:auto;
+}
+.filter-chip{
+  white-space:nowrap;
+  padding:5px 11px;border-radius:999px;
+  font-size:10px;font-weight:700;
+  background:rgba(255,255,255,0.05);
+  border:1px solid var(--line-strong);
+  color:var(--text-2);
+}
+.filter-chip.active{background:var(--blue);border-color:var(--blue);color:#fff}
+
+.log-list{flex:1;overflow-y:auto;padding:0 14px}
+.log-entry{
+  background:var(--panel);border:1px solid var(--line-strong);
+  border-radius:13px;padding:11px 12px;margin-bottom:8px;
+}
+.le-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:6px}
+.le-task{font-size:12px;font-weight:700;color:var(--text)}
+.le-time{font-size:9px;color:var(--muted);margin-top:2px}
+.le-btc{font-size:13px;font-weight:900;color:var(--amber);text-align:right}
+.le-usd{font-size:9px;color:var(--muted);text-align:right;margin-top:1px}
+.le-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+
+/* ══════════════════════════════════════════
+   SCREEN 5 — DATA CONTROLS
+══════════════════════════════════════════ */
+.ctrl-screen{background:var(--card)}
+.ctrl-header{padding:14px 16px 12px}
+.ctrl-title{font-size:17px;font-weight:900;color:var(--text);margin-bottom:3px}
+.ctrl-sub{font-size:10px;color:var(--muted);font-weight:600;line-height:1.5}
+
+.ctrl-notice{
+  margin:0 14px 12px;
+  background:rgba(47,107,255,0.08);border:1px solid rgba(47,107,255,0.2);
+  border-radius:13px;padding:10px 12px;
+  display:flex;gap:8px;align-items:flex-start;
+}
+.ctrl-notice-icon{flex-shrink:0;margin-top:1px;color:var(--blue-400)}
+.ctrl-notice-text{font-size:10px;color:var(--blue-200);line-height:1.5;font-weight:500}
+
+.ctrl-list{flex:1;overflow-y:auto;padding:0 14px}
+.ctrl-section-title{
+  font-size:9px;font-weight:700;color:var(--muted);letter-spacing:1px;
+  margin:10px 0 6px;
+}
+.ctrl-item{
+  background:var(--panel);border:1px solid var(--line-strong);
+  border-radius:13px;padding:11px 12px;margin-bottom:8px;
+}
+.ci-row{display:flex;align-items:center;gap:10px;justify-content:space-between}
+.ci-left{display:flex;align-items:center;gap:10px;flex:1}
+.ci-title{font-size:12px;font-weight:700;color:var(--text)}
+.ci-desc{font-size:10px;color:var(--muted);margin-top:2px;line-height:1.4}
+
+/* Toggle */
+.toggle{
+  width:42px;height:24px;border-radius:12px;
+  position:relative;flex-shrink:0;cursor:pointer;
+}
+.toggle-on{background:var(--blue)}
+.toggle-off{background:rgba(255,255,255,0.1);border:1px solid var(--line-strong)}
+.toggle-knob{
+  position:absolute;top:3px;
+  width:18px;height:18px;border-radius:50%;background:#fff;
+  box-shadow:0 1px 3px rgba(0,0,0,0.3);
+  transition:left 0.15s;
+}
+.toggle-on .toggle-knob{left:21px}
+.toggle-off .toggle-knob{left:3px}
+
+.ci-earn{
+  font-size:10px;font-weight:700;color:var(--amber);
+  margin-top:5px;padding-top:5px;border-top:1px solid var(--line);
+}
+
+.wallet-card{
+  margin:0 14px 12px;
+  background:linear-gradient(135deg,#1C2A10,#111C0A);
+  border:1px solid rgba(34,197,139,0.2);
+  border-radius:14px;padding:12px 14px;
+  display:flex;align-items:center;gap:10px;
+}
+.wc-symbol{font-size:18px;font-weight:800;color:var(--bitcoin)}
+.wc-label{font-size:10px;color:#6EE7B7;font-weight:700;letter-spacing:0.5px}
+.wc-addr{font-size:10px;color:var(--muted);margin-top:2px;font-family:monospace}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── Header ── -->
+  <div class="hdr">
+    <div class="brand">
+      <!-- Gofer AI aperture logo -->
+      <div class="logo-wrap">
+        <svg width="44" height="44" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <defs><clipPath id="glc"><circle cx="50" cy="50" r="48"/></clipPath></defs>
+          <circle cx="50" cy="50" r="50" fill="#2563EB"/>
+          <g clip-path="url(#glc)" fill="white" fill-opacity="0.92">
+            <polygon points="60,44 87,72 50,7"/>
+            <polygon points="50,38 87,29 13,29"/>
+            <polygon points="40,44 50,7 13,72"/>
+            <polygon points="40,56 13,29 50,93"/>
+            <polygon points="50,62 13,72 87,72"/>
+            <polygon points="60,56 50,93 87,29"/>
+          </g>
+          <circle cx="50" cy="50" r="14" fill="#2563EB"/>
+        </svg>
+      </div>
+      <span class="wordmark">Gofer <span>AI</span></span>
+    </div>
+    <div class="page-title">App Overview</div>
+    <div class="page-sub">Record everyday tasks. Earn micro-BTC. Your data, your terms.</div>
+    <div class="tagline">Train the future. One task at a time.</div>
+  </div>
+
+  <!-- ── Phone grid ── -->
+  <div class="phones">
+
+    <!-- ══ PHONE 1: HOME DASHBOARD ══ -->
+    <div class="phone-col">
+      <div class="phone">
+        <div class="island"></div>
+        <div class="screen home-screen">
+          <!-- Status bar -->
+          <div class="status">
+            <span>9:41</span>
+            <div class="status-icons">
+              <svg width="16" height="12" fill="white" opacity=".9"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="5" y="2" width="3" height="10" rx="1"/><rect x="10" y="0" width="3" height="12" rx="1"/></svg>
+              <svg width="15" height="12" fill="none" stroke="white" stroke-width="1.5" opacity=".9"><path d="M1 4.5C3.8 1.7 7.2 0 11 0s7.2 1.7 10 4.5" opacity=".3"/><path d="M3 7C5 4.8 7.9 3.5 11 3.5s6 1.3 8 3.5" opacity=".5"/><path d="M5.5 9.5C7 8 8.9 7 11 7s4 1 5.5 2.5" opacity=".8"/><circle cx="11" cy="12" r="1.5" fill="white"/></svg>
+              <svg width="25" height="12" fill="none"><rect x="0" y="1" width="22" height="10" rx="3" stroke="white" stroke-width="1.2" opacity=".6"/><rect x="1.5" y="2.5" width="17" height="7" rx="2" fill="white" opacity=".9"/><path d="M23.5 4.5v3a1.5 1.5 0 000-3z" fill="white" opacity=".5"/></svg>
+            </div>
+          </div>
+
+          <!-- Header -->
+          <div class="home-header">
+            <div class="row between gap8" style="margin-bottom:10px">
+              <div>
+                <div class="home-greet">Good morning</div>
+                <div class="home-name">Chidi</div>
+              </div>
+              <div class="avatar">C</div>
+            </div>
+          </div>
+
+          <!-- Earnings card -->
+          <div class="earnings-card">
+            <div class="ec-label">TOTAL EARNED</div>
+            <div class="ec-btc">0.00000847 <span>BTC</span></div>
+            <div class="ec-usd">≈ $0.52 USD · Updated just now</div>
+            <div class="ec-stats">
+              <div class="ec-stat">
+                <div class="ec-stat-val">14</div>
+                <div class="ec-stat-label">Tasks Done</div>
+              </div>
+              <div class="ec-stat">
+                <div class="ec-stat-val">3</div>
+                <div class="ec-stat-label">Active Labs</div>
+              </div>
+              <div class="ec-stat">
+                <div class="ec-stat-val">7×</div>
+                <div class="ec-stat-label">Licensed</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="section-title">QUICK ACTIONS</div>
+          <div class="quick-actions">
+            <div class="qa">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              <div class="qa-label">Record</div>
+            </div>
+            <div class="qa">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              <div class="qa-label">Earnings</div>
+            </div>
+            <div class="qa">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <div class="qa-label">My Data</div>
+            </div>
+          </div>
+
+          <!-- Recent tasks -->
+          <div class="section-title">RECENT TASKS</div>
+          <div class="task-scroll">
+            <div class="task-card">
+              <div class="mono-icon" style="width:38px;height:38px;background:rgba(247,147,26,0.14);color:var(--amber)">LA</div>
+              <div class="flex1">
+                <div class="task-title">Sort &amp; fold socks</div>
+                <div class="task-meta">Today · MIT Robotics Lab</div>
+              </div>
+              <div class="task-earn">
+                <div class="task-earn-val">+0.0000001 ₿</div>
+                <div class="task-earn-sub">Licensed</div>
+              </div>
+            </div>
+            <div class="task-card">
+              <div class="mono-icon" style="width:38px;height:38px;background:rgba(34,197,139,0.12);color:var(--green)">KT</div>
+              <div class="flex1">
+                <div class="task-title">Make morning coffee</div>
+                <div class="task-meta">Yesterday · Stanford AI</div>
+              </div>
+              <div class="task-earn">
+                <div class="task-earn-val">+0.0000001 ₿</div>
+                <div class="task-earn-sub">Licensed</div>
+              </div>
+            </div>
+            <div class="task-card">
+              <div class="mono-icon" style="width:38px;height:38px;background:rgba(47,107,255,0.12);color:var(--blue-400)">EG</div>
+              <div class="flex1">
+                <div class="task-title">Cook scrambled eggs</div>
+                <div class="task-meta">2d ago · Pending review</div>
+              </div>
+              <div class="task-earn">
+                <div class="task-earn-val" style="color:var(--muted)">Pending</div>
+                <div class="task-earn-sub">In review</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab bar -->
+          <div class="tab-bar">
+            <div class="tab active">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              <div class="tab-label" style="color:#fff">Home</div>
+            </div>
+            <div class="tab">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/></svg>
+              <div class="tab-label">Record</div>
+            </div>
+            <div class="tab">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+              <div class="tab-label">Earnings</div>
+            </div>
+            <div class="tab">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+              <div class="tab-label">My Data</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="caption"><b>01 — Dashboard</b>Earnings overview &amp; recent tasks</div>
+    </div>
+
+    <!-- ══ PHONE 2: RECORD TASK ══ -->
+    <div class="phone-col">
+      <div class="phone">
+        <div class="island"></div>
+        <div class="screen rec-screen">
+          <div class="status" style="position:relative;z-index:20">
+            <span>9:43</span>
+            <div class="row gap6">
+              <div class="pill pill-red"><div class="dot" style="background:#FCA5A5;animation:blink 1s infinite"></div>REC</div>
+            </div>
+          </div>
+
+          <!-- Viewfinder -->
+          <div class="rec-viewfinder">
+            <!-- Real laundry photo — save your image as laundry-record.jpg next to this HTML -->
+            <img class="rec-photo" src="laundry-record.jpg" alt="Recording" onerror="this.style.display='none'" />
+            <div class="rec-overlay"></div>
+            <div class="rec-corner rc-tl"></div>
+            <div class="rec-corner rc-tr"></div>
+            <div class="rec-corner rc-bl"></div>
+            <div class="rec-corner rc-br"></div>
+
+            <!-- REC badge top-center -->
+            <div class="rec-task-badge" style="z-index:5">
+              <div class="rec-live-dot"></div>
+              <span class="rec-task-name">Folding Laundry</span>
+            </div>
+
+            <!-- AI detection chips -->
+            <div style="position:absolute;top:52px;left:12px;display:flex;flex-direction:column;gap:4px;z-index:5">
+              <div class="pill pill-blue"><div class="dot"></div>Hands · 0.97</div>
+              <div class="pill pill-green"><div class="dot" style="background:#6EE7B7"></div>Cloth · 0.91</div>
+            </div>
+
+            <!-- Timer -->
+            <div class="rec-timer" style="z-index:5">01:24</div>
+            <div class="rec-hint" style="z-index:5;color:rgba(255,255,255,0.75)">Natural motion · keep going</div>
+          </div>
+
+          <!-- Controls -->
+          <div class="rec-controls">
+            <div class="rec-earn-preview">
+              Earning: <span>+0.00000001 BTC</span> on submit
+            </div>
+            <div class="rec-progress">
+              <div class="rec-progress-fill"></div>
+            </div>
+            <div class="rec-btns">
+              <div class="btn-stop">
+                <svg width="12" height="12" viewBox="0 0 12 12"><rect width="12" height="12" rx="2" fill="currentColor"/></svg>
+                Stop
+              </div>
+              <div class="btn-submit">
+                ↑ Stop + Submit
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="caption"><b>02 — Record Task</b>Live capture with AI detection overlay</div>
+    </div>
+
+    <!-- ══ PHONE 3: PAYOUT CONFIRMATION ══ -->
+    <div class="phone-col">
+      <div class="phone">
+        <div class="island"></div>
+        <div class="screen pay-screen">
+          <div class="status">
+            <span>9:51</span>
+            <div class="status-icons">
+              <svg width="25" height="12" fill="none"><rect x="0" y="1" width="22" height="10" rx="3" stroke="white" stroke-width="1.2" opacity=".6"/><rect x="1.5" y="2.5" width="17" height="7" rx="2" fill="white" opacity=".9"/><path d="M23.5 4.5v3a1.5 1.5 0 000-3z" fill="white" opacity=".5"/></svg>
+            </div>
+          </div>
+
+          <div class="pay-header">
+            <div class="back-btn">‹</div>
+            <div class="pay-title">Payout Confirmed</div>
+          </div>
+
+          <!-- Success card -->
+          <div class="pay-check">
+            <div class="check-circle">✓</div>
+            <div class="pay-label">TASK LICENSED &amp; PAID</div>
+            <div class="pay-btc">0.00000001 BTC</div>
+            <div class="pay-usd">≈ $0.00000062 USD</div>
+            <div class="pay-task-name">Sort &amp; fold socks</div>
+          </div>
+
+          <!-- Details -->
+          <div class="pay-details">
+            <div class="detail-row">
+              <div class="dr-label">Licensed to</div>
+              <div class="lab-badge">
+                <div class="lab-dot"></div>
+                <div class="lab-name">MIT Robotics Lab</div>
+              </div>
+            </div>
+            <div class="detail-row">
+              <div class="dr-label">Used for</div>
+              <div class="dr-value highlight">Dexterous manipulation training</div>
+            </div>
+            <div class="detail-row">
+              <div class="dr-label">Task duration</div>
+              <div class="dr-value">1 min 24 sec</div>
+            </div>
+            <div class="detail-row">
+              <div class="dr-label">Quality score</div>
+              <div class="dr-value">
+                <div class="pill pill-green">94 / 100</div>
+              </div>
+            </div>
+            <div class="detail-row">
+              <div class="dr-label">Timestamp</div>
+              <div class="dr-value">Apr 29, 2026 · 9:51 AM</div>
+            </div>
+            <div class="detail-row">
+              <div class="dr-label">TX Hash</div>
+              <div class="dr-value" style="font-family:monospace;font-size:9px;color:var(--muted)">bc1q...x7f2</div>
+            </div>
+            <div class="detail-row">
+              <div class="dr-label">Times licensed</div>
+              <div class="dr-value">
+                <div class="pill pill-btc">₿ ×3 so far</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pay-footer">
+            <div class="btn-primary">Record Another Task →</div>
+            <div class="btn-ghost">View Earnings Log</div>
+          </div>
+        </div>
+      </div>
+      <div class="caption"><b>03 — Payout</b>Transparent confirmation per license</div>
+    </div>
+
+    <!-- ══ PHONE 4: EARNINGS LOG ══ -->
+    <div class="phone-col">
+      <div class="phone">
+        <div class="island"></div>
+        <div class="screen log-screen">
+          <div class="status">
+            <span>9:54</span>
+            <div class="status-icons">
+              <svg width="25" height="12" fill="none"><rect x="0" y="1" width="22" height="10" rx="3" stroke="white" stroke-width="1.2" opacity=".6"/><rect x="1.5" y="2.5" width="17" height="7" rx="2" fill="white" opacity=".9"/><path d="M23.5 4.5v3a1.5 1.5 0 000-3z" fill="white" opacity=".5"/></svg>
+            </div>
+          </div>
+
+          <div class="log-header">
+            <div class="log-title">Earnings Log</div>
+            <div class="log-sub">Every payout · every lab · full transparency</div>
+          </div>
+
+          <!-- Summary pills -->
+          <div class="log-summary">
+            <div class="ls-card">
+              <div class="ls-val" style="color:var(--amber)">0.0000847 ₿</div>
+              <div class="ls-label">Total Earned</div>
+            </div>
+            <div class="ls-card">
+              <div class="ls-val">14</div>
+              <div class="ls-label">Licensed</div>
+            </div>
+            <div class="ls-card">
+              <div class="ls-val" style="color:var(--green)">3</div>
+              <div class="ls-label">Active Labs</div>
+            </div>
+          </div>
+
+          <!-- Filters -->
+          <div class="filter-row">
+            <div class="filter-chip active">All</div>
+            <div class="filter-chip">This Week</div>
+            <div class="filter-chip">MIT Lab</div>
+            <div class="filter-chip">Stanford</div>
+          </div>
+
+          <!-- Log entries -->
+          <div class="log-list">
+            <div class="log-entry">
+              <div class="le-top">
+                <div class="row gap8">
+                  <div class="mono-icon" style="width:34px;height:34px;border-radius:10px;background:rgba(247,147,26,0.12);color:var(--amber)">LA</div>
+                  <div>
+                    <div class="le-task">Sort &amp; fold socks</div>
+                    <div class="le-time">Today, 9:51 AM</div>
+                  </div>
+                </div>
+                <div>
+                  <div class="le-btc">+0.00000001 ₿</div>
+                  <div class="le-usd">≈ $0.0000006</div>
+                </div>
+              </div>
+              <div class="le-meta">
+                <div class="pill pill-blue" style="font-size:9px">MIT Robotics Lab</div>
+                <div class="pill pill-green" style="font-size:9px">Manipulation</div>
+              </div>
+            </div>
+
+            <div class="log-entry">
+              <div class="le-top">
+                <div class="row gap8">
+                  <div class="mono-icon" style="width:34px;height:34px;border-radius:10px;background:rgba(34,197,139,0.1);color:var(--green)">KT</div>
+                  <div>
+                    <div class="le-task">Make morning coffee</div>
+                    <div class="le-time">Yesterday, 8:12 AM</div>
+                  </div>
+                </div>
+                <div>
+                  <div class="le-btc">+0.00000001 ₿</div>
+                  <div class="le-usd">≈ $0.0000006</div>
+                </div>
+              </div>
+              <div class="le-meta">
+                <div class="pill pill-blue" style="font-size:9px">Stanford AI Lab</div>
+                <div class="pill pill-amber" style="font-size:9px">Kitchen tasks</div>
+              </div>
+            </div>
+
+            <div class="log-entry">
+              <div class="le-top">
+                <div class="row gap8">
+                  <div class="mono-icon" style="width:34px;height:34px;border-radius:10px;background:rgba(155,109,255,0.12);color:var(--purple)">WM</div>
+                  <div>
+                    <div class="le-task">Load washing machine</div>
+                    <div class="le-time">Apr 27, 7:44 PM</div>
+                  </div>
+                </div>
+                <div>
+                  <div class="le-btc">+0.00000001 ₿</div>
+                  <div class="le-usd">≈ $0.0000006</div>
+                </div>
+              </div>
+              <div class="le-meta">
+                <div class="pill pill-blue" style="font-size:9px">CMU Robotics</div>
+                <div class="pill pill-green" style="font-size:9px">Bimanual</div>
+              </div>
+            </div>
+
+            <div class="log-entry">
+              <div class="le-top">
+                <div class="row gap8">
+                  <div class="mono-icon" style="width:34px;height:34px;border-radius:10px;background:rgba(47,107,255,0.12);color:var(--blue-400)">EG</div>
+                  <div>
+                    <div class="le-task">Cook scrambled eggs</div>
+                    <div class="le-time">Apr 26, 7:20 AM</div>
+                  </div>
+                </div>
+                <div>
+                  <div class="le-btc" style="color:var(--muted)">Pending</div>
+                  <div class="le-usd">In review</div>
+                </div>
+              </div>
+              <div class="le-meta">
+                <div class="pill pill-amber" style="font-size:9px">
+                  <div class="dot" style="background:#FCD34D;width:5px;height:5px"></div>
+                  Under Review
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="caption"><b>04 — Earnings Log</b>Full audit trail per task &amp; lab</div>
+    </div>
+
+    <!-- ══ PHONE 5: DATA CONTROLS ══ -->
+    <div class="phone-col">
+      <div class="phone">
+        <div class="island"></div>
+        <div class="screen ctrl-screen">
+          <div class="status">
+            <span>9:58</span>
+            <div class="status-icons">
+              <svg width="25" height="12" fill="none"><rect x="0" y="1" width="22" height="10" rx="3" stroke="white" stroke-width="1.2" opacity=".6"/><rect x="1.5" y="2.5" width="17" height="7" rx="2" fill="white" opacity=".9"/><path d="M23.5 4.5v3a1.5 1.5 0 000-3z" fill="white" opacity=".5"/></svg>
+            </div>
+          </div>
+
+          <div class="ctrl-header">
+            <div class="ctrl-title">My Data Controls</div>
+            <div class="ctrl-sub">You own your data. Choose exactly who uses it and why.</div>
+          </div>
+
+          <!-- Wallet -->
+          <div class="wallet-card">
+            <div class="wc-symbol">₿</div>
+            <div>
+              <div class="wc-label">PAYOUT WALLET</div>
+              <div class="wc-addr">bc1q...a4x7f2k9</div>
+            </div>
+            <div class="pill pill-green" style="margin-left:auto;font-size:9px">Connected</div>
+          </div>
+
+          <div class="ctrl-notice">
+            <svg class="ctrl-notice-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16" stroke-width="3"/></svg>
+            <div class="ctrl-notice-text">You earn every time your data is licensed. Toggle off any category to stop new licenses — existing ones are unaffected.</div>
+          </div>
+
+          <div class="ctrl-list">
+            <div class="ctrl-section-title">DATA USAGE PERMISSIONS</div>
+
+            <div class="ctrl-item">
+              <div class="ci-row">
+                <div class="ci-left">
+                  <div class="mono-icon" style="width:34px;height:34px;border-radius:10px;background:rgba(247,147,26,0.12);color:var(--amber)">RT</div>
+                  <div>
+                    <div class="ci-title">Robot Training</div>
+                    <div class="ci-desc">Dexterous manipulation &amp; motion primitives</div>
+                  </div>
+                </div>
+                <div class="toggle toggle-on"><div class="toggle-knob"></div></div>
+              </div>
+              <div class="ci-earn">₿ +0.00000001 per license · 7 licenses issued</div>
+            </div>
+
+            <div class="ctrl-item">
+              <div class="ci-row">
+                <div class="ci-left">
+                  <div class="mono-icon" style="width:34px;height:34px;border-radius:10px;background:rgba(34,197,139,0.1);color:var(--green)">AI</div>
+                  <div>
+                    <div class="ci-title">AI Research</div>
+                    <div class="ci-desc">Academic &amp; non-profit use only</div>
+                  </div>
+                </div>
+                <div class="toggle toggle-on"><div class="toggle-knob"></div></div>
+              </div>
+              <div class="ci-earn">₿ +0.00000001 per license · 4 licenses issued</div>
+            </div>
+
+            <div class="ctrl-item">
+              <div class="ci-row">
+                <div class="ci-left">
+                  <div class="mono-icon" style="width:34px;height:34px;border-radius:10px;background:rgba(155,109,255,0.12);color:var(--purple)">CO</div>
+                  <div>
+                    <div class="ci-title">Commercial Use</div>
+                    <div class="ci-desc">Product companies &amp; enterprise</div>
+                  </div>
+                </div>
+                <div class="toggle toggle-off"><div class="toggle-knob"></div></div>
+              </div>
+              <div class="ci-earn" style="color:var(--muted)">Currently disabled</div>
+            </div>
+
+            <div class="ctrl-section-title" style="margin-top:14px">PRIVACY</div>
+
+            <div class="ctrl-item">
+              <div class="ci-row">
+                <div class="ci-left">
+                  <div class="mono-icon" style="width:34px;height:34px;border-radius:10px;background:rgba(47,107,255,0.1);color:var(--blue-400)">ID</div>
+                  <div>
+                    <div class="ci-title">Face &amp; Identity</div>
+                    <div class="ci-desc">Auto-blur face before any upload</div>
+                  </div>
+                </div>
+                <div class="toggle toggle-on"><div class="toggle-knob"></div></div>
+              </div>
+            </div>
+
+            <div class="ctrl-item">
+              <div class="ci-row">
+                <div class="ci-left">
+                  <div class="mono-icon" style="width:34px;height:34px;border-radius:10px;background:rgba(240,74,74,0.1);color:#FCA5A5">DL</div>
+                  <div>
+                    <div class="ci-title">Delete All My Data</div>
+                    <div class="ci-desc">Remove from all active licenses</div>
+                  </div>
+                </div>
+                <div class="pill pill-red" style="font-size:9px">Request</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+      <div class="caption"><b>05 — Data Controls</b>Opt-in toggles, wallet &amp; privacy</div>
+    </div>
+
+  </div><!-- /phones -->
+
+  <!-- footer -->
+  <div style="text-align:center;margin-top:52px;padding-top:28px;border-top:1px solid rgba(0,0,0,0.07)">
+    <div style="display:inline-flex;align-items:center;gap:10px;margin-bottom:8px">
+      <svg width="24" height="24" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+        <defs><clipPath id="flc"><circle cx="50" cy="50" r="48"/></clipPath></defs>
+        <circle cx="50" cy="50" r="50" fill="#2563EB"/>
+        <g clip-path="url(#flc)" fill="white" fill-opacity="0.92">
+          <polygon points="60,44 87,72 50,7"/>
+          <polygon points="50,38 87,29 13,29"/>
+          <polygon points="40,44 50,7 13,72"/>
+          <polygon points="40,56 13,29 50,93"/>
+          <polygon points="50,62 13,72 87,72"/>
+          <polygon points="60,56 50,93 87,29"/>
+        </g>
+        <circle cx="50" cy="50" r="14" fill="#2563EB"/>
+      </svg>
+      <div style="font-size:20px;font-weight:900;letter-spacing:-0.02em;color:var(--ink)">
+        Gofer <span style="color:var(--blue)">AI</span>
+      </div>
+    </div>
+    <div style="font-size:13px;color:var(--ink-soft)">Train the future. One task at a time.</div>
+  </div>
+
+</div>
+</body>
+</html>

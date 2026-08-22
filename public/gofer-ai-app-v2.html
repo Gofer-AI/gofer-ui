@@ -1,0 +1,640 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<title>Gofer AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --card:#0B1120;--panel:#182240;--panel2:#1E2A48;
+  --line:rgba(255,255,255,0.07);--lines:rgba(255,255,255,0.13);
+  --muted:#7A86A0;--text:#EAF0FF;--text2:#C0CCDF;
+  --blue:#2F6BFF;--blue4:#5C8BFF;--blue2:#AFC3FF;
+  --glow:rgba(47,107,255,0.35);
+  --green:#22C58B;--gdim:rgba(34,197,139,0.14);
+  --amber:#F2B33A;--adim:rgba(242,179,58,0.14);
+  --btc:#F7931A;--bdim:rgba(247,147,26,0.13);
+  --red:#F04A4A;--purple:#9B6DFF;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overscroll-behavior:none}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  background:radial-gradient(ellipse 140% 80% at 50% 10%,#0E1B40,#04060E 62%);
+  min-height:100vh;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:36px 20px 52px;gap:24px;
+}
+
+/* ── Page brand (desktop) ── */
+.pg-brand{display:flex;flex-direction:column;align-items:center;gap:7px;text-align:center}
+.brand-row{display:flex;align-items:center;gap:10px}
+.brand-name{font-size:22px;font-weight:900;letter-spacing:-0.03em;color:#fff}
+.brand-name span{color:var(--blue4)}
+.brand-sub{font-size:12px;font-weight:600;color:rgba(255,255,255,0.28);letter-spacing:0.2px}
+
+/* ── Phone shell ── */
+.shell{
+  position:relative;
+  width:375px;
+  background:#07090F;
+  border-radius:54px;
+  padding:13px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.11),
+    0 0 0 1px rgba(0,0,0,0.7),
+    0 60px 120px -20px rgba(0,0,0,0.95),
+    0 0 70px -8px rgba(47,107,255,0.14);
+}
+.shell::before{content:'';position:absolute;left:-3px;top:118px;width:3px;height:62px;background:#05070C;border-radius:2px 0 0 2px;box-shadow:0 30px 0 #05070C}
+.shell::after{content:'';position:absolute;right:-3px;top:144px;width:3px;height:54px;background:#05070C;border-radius:0 2px 2px 0}
+
+/* ── Screen area ── */
+.screen-area{
+  position:relative;
+  border-radius:42px;
+  overflow:hidden;
+  background:var(--card);
+  height:790px;
+}
+.island{
+  position:absolute;top:9px;left:50%;transform:translateX(-50%);
+  width:92px;height:24px;background:#000;border-radius:16px;z-index:100;pointer-events:none;
+}
+
+/* ── Screens ── */
+.screen{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  color:var(--text);background:var(--card);
+  opacity:0;transform:translateX(20px);pointer-events:none;
+  will-change:opacity,transform;
+  transition:opacity .26s cubic-bezier(.4,0,.2,1),transform .26s cubic-bezier(.4,0,.2,1);
+}
+.screen.active{opacity:1;transform:translateX(0);pointer-events:auto}
+.screen.exit{opacity:0;transform:translateX(-20px);pointer-events:none}
+
+/* ── Status bar ── */
+.status{
+  height:40px;padding:0 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  font-size:12px;font-weight:700;color:var(--text);
+  flex-shrink:0;position:relative;z-index:10;
+}
+.si{display:flex;gap:5px;align-items:center}
+
+/* ── Tab bar ── */
+.tab-bar{
+  display:flex;background:rgba(4,7,16,0.97);
+  border-top:1px solid var(--lines);
+  padding:8px 0 18px;flex-shrink:0;
+}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer}
+.tab svg{color:var(--muted);display:block}
+.tab-lbl{font-size:9.5px;font-weight:700;color:var(--muted);letter-spacing:.1px}
+.tab.on svg{color:var(--blue4)}
+.tab.on .tab-lbl{color:#fff}
+
+/* ── Shared atoms ── */
+.pill{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:4px 10px;font-size:10px;font-weight:700}
+.p-blue{background:rgba(47,107,255,.15);color:var(--blue2);border:1px solid rgba(47,107,255,.28)}
+.p-green{background:var(--gdim);color:#6EE7B7;border:1px solid rgba(34,197,139,.28)}
+.p-amber{background:var(--adim);color:#FCD34D;border:1px solid rgba(242,179,58,.28)}
+.p-btc{background:var(--bdim);color:#FCD34D;border:1px solid rgba(247,147,26,.28)}
+.p-red{background:rgba(240,74,74,.12);color:#FCA5A5;border:1px solid rgba(240,74,74,.25)}
+.dot{width:6px;height:6px;border-radius:50%;background:currentColor;flex-shrink:0}
+.row{display:flex;align-items:center}
+.between{justify-content:space-between}
+.g6{gap:6px}.g8{gap:8px}.g10{gap:10px}
+.f1{flex:1}
+.mi{border-radius:11px;display:grid;place-items:center;flex-shrink:0;font-size:10px;font-weight:900;color:#fff}
+.sh{padding:0 18px;margin-bottom:8px;font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px}
+
+/* ── Nav dots ── */
+.nav-dots{display:flex;gap:7px;align-items:center;justify-content:center}
+.ndot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.18);transition:all .24s ease;cursor:pointer}
+.ndot.on{width:22px;border-radius:4px;background:var(--blue4)}
+
+/* ── Page footer ── */
+.pg-foot{display:flex;flex-direction:column;align-items:center;gap:10px}
+.pg-tag{font-size:11.5px;font-weight:600;color:rgba(255,255,255,.22);letter-spacing:.3px}
+
+/* ════════════════════════════════
+   SCREEN 0 — HOME
+════════════════════════════════ */
+.home-hdr{padding:14px 18px 10px;background:linear-gradient(180deg,rgba(16,26,58,.9),transparent)}
+.avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--purple));display:grid;place-items:center;font-size:13px;font-weight:800;color:#fff;flex-shrink:0}
+.greet{font-size:11px;color:var(--muted);font-weight:600}
+.uname{font-size:16px;font-weight:800;color:var(--text)}
+
+.earn-card{
+  margin:0 16px 14px;
+  background:linear-gradient(135deg,#1A2F70,#0F1E4A);
+  border:1px solid rgba(47,107,255,.3);
+  border-radius:20px;padding:16px;
+  position:relative;overflow:hidden;
+}
+.earn-card::before{content:'';position:absolute;top:-44px;right:-44px;width:130px;height:130px;background:radial-gradient(circle,rgba(47,107,255,.22),transparent 70%);pointer-events:none}
+.ec-lbl{font-size:10px;font-weight:700;color:var(--blue2);letter-spacing:.8px;margin-bottom:4px}
+.ec-btc{font-size:24px;font-weight:900;color:#fff;letter-spacing:-.02em;margin-bottom:2px}
+.ec-btc span{font-size:13px;font-weight:600;color:var(--blue2);margin-left:4px}
+.ec-usd{font-size:11px;color:var(--blue2);margin-bottom:14px}
+.ec-row{display:flex;gap:10px}
+.ec-s{flex:1;background:rgba(0,0,0,.2);border-radius:11px;padding:8px 10px}
+.ec-sv{font-size:16px;font-weight:800;color:#fff}
+.ec-sl{font-size:9px;color:var(--blue2);font-weight:600;margin-top:1px}
+
+.qa-row{display:flex;gap:8px;padding:0 16px;margin-bottom:14px}
+.qa{flex:1;background:var(--panel);border:1px solid var(--lines);border-radius:14px;padding:12px 8px;display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;transition:background .14s,border-color .14s}
+.qa:active{background:rgba(47,107,255,.14);border-color:rgba(47,107,255,.3)}
+.qa svg{color:var(--blue4)}
+.qa-lbl{font-size:9.5px;font-weight:700;color:var(--text2);text-align:center}
+
+.task-list{flex:1;overflow-y:auto;padding:0 16px}
+.tc{background:var(--panel);border:1px solid var(--lines);border-radius:14px;padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:10px;cursor:pointer;transition:border-color .14s}
+.tc:active{border-color:rgba(47,107,255,.4)}
+.tn{font-size:12px;font-weight:700;color:var(--text)}
+.tm{font-size:10px;color:var(--muted);margin-top:2px}
+.te{text-align:right;flex-shrink:0}
+.tev{font-size:12px;font-weight:800;color:var(--amber)}
+.tes{font-size:9px;color:var(--muted)}
+
+/* ════════════════════════════════
+   SCREEN 1 — RECORD
+════════════════════════════════ */
+.s-rec{background:#060910}
+.vf{flex:1;position:relative;overflow:hidden;background:linear-gradient(180deg,#08101E,#050B16)}
+.vf-grid{position:absolute;inset:0;background:repeating-linear-gradient(0deg,rgba(47,107,255,.035) 0 1px,transparent 1px 64px),repeating-linear-gradient(90deg,rgba(47,107,255,.035) 0 1px,transparent 1px 64px)}
+.vf-ov{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,9,15,.55) 0%,transparent 38%,transparent 62%,rgba(6,9,15,.82) 100%)}
+.vfc{position:absolute;width:22px;height:22px;border-color:var(--blue4);border-style:solid;border-width:0}
+.rc-tl{top:18px;left:18px;border-top-width:2px;border-left-width:2px;border-radius:4px 0 0 0}
+.rc-tr{top:18px;right:18px;border-top-width:2px;border-right-width:2px;border-radius:0 4px 0 0}
+.rc-bl{bottom:18px;left:18px;border-bottom-width:2px;border-left-width:2px;border-radius:0 0 0 4px}
+.rc-br{bottom:18px;right:18px;border-bottom-width:2px;border-right-width:2px;border-radius:0 0 4px 0}
+.sil{position:absolute;bottom:22px;left:50%;transform:translateX(-50%);width:96px;height:172px;background:linear-gradient(180deg,#1a2440,#111b32);border-radius:48px 48px 22px 22px;opacity:.46}
+.sil-h{position:absolute;bottom:190px;left:50%;transform:translateX(-50%);width:44px;height:44px;background:#1a2440;border-radius:50%;opacity:.46}
+.rec-badge{position:absolute;top:18px;left:50%;transform:translateX(-50%);white-space:nowrap;background:rgba(7,11,20,.84);border:1px solid var(--lines);border-radius:999px;padding:6px 16px;display:flex;align-items:center;gap:7px}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.22}}
+.live{width:7px;height:7px;border-radius:50%;background:var(--red);box-shadow:0 0 8px var(--red);animation:blink 1s infinite}
+.badge-nm{font-size:11px;font-weight:700;color:var(--text)}
+.ai-chips{position:absolute;top:58px;left:16px;display:flex;flex-direction:column;gap:5px}
+.rec-time{position:absolute;bottom:128px;left:50%;transform:translateX(-50%);font-size:34px;font-weight:900;color:#fff;letter-spacing:.06em;text-shadow:0 0 26px rgba(47,107,255,.5)}
+.rec-hint{position:absolute;bottom:90px;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:10px;font-weight:600;color:var(--muted)}
+.rec-ctrl{padding:14px 16px 18px;background:var(--card);border-top:1px solid var(--line)}
+.earn-prev{display:flex;align-items:center;justify-content:center;gap:6px;margin-bottom:12px;font-size:10px;color:var(--muted);font-weight:600}
+.earn-prev strong{color:var(--amber)}
+.rec-bar{height:3px;background:rgba(255,255,255,.07);border-radius:999px;margin-bottom:12px;overflow:hidden}
+.rec-fill{height:100%;width:62%;background:var(--blue);border-radius:999px}
+.rec-btns{display:flex;gap:10px}
+.btn-stop{flex:1;background:rgba(240,74,74,.1);border:1px solid rgba(240,74,74,.28);border-radius:14px;padding:13px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:12px;font-weight:700;color:#FCA5A5;cursor:pointer;transition:background .14s}
+.btn-stop:active{background:rgba(240,74,74,.18)}
+.btn-sub{flex:2;background:var(--blue);border-radius:14px;padding:13px;display:flex;align-items:center;justify-content:center;gap:7px;font-size:13px;font-weight:800;color:#fff;box-shadow:0 6px 22px -4px var(--glow);cursor:pointer;transition:background .14s,box-shadow .14s}
+.btn-sub:active{background:#1E55E6;box-shadow:0 2px 8px -2px var(--glow)}
+
+/* ════════════════════════════════
+   SCREEN 2 — PAYOUT
+════════════════════════════════ */
+.pay-hdr{padding:14px 18px 12px;display:flex;align-items:center;gap:12px}
+.back{width:34px;height:34px;border-radius:50%;background:rgba(255,255,255,.06);border:1px solid var(--lines);display:grid;place-items:center;color:var(--text);font-size:18px;flex-shrink:0;cursor:pointer}
+.back:active{background:rgba(255,255,255,.12)}
+.pay-ttl{font-size:16px;font-weight:800;color:var(--text)}
+.pay-success{margin:0 16px 14px;background:linear-gradient(135deg,rgba(34,197,139,.1),rgba(34,197,139,.04));border:1px solid rgba(34,197,139,.23);border-radius:20px;padding:22px 16px;display:flex;flex-direction:column;align-items:center;text-align:center}
+.check-ring{width:58px;height:58px;border-radius:50%;background:var(--gdim);border:2px solid rgba(34,197,139,.36);display:grid;place-items:center;margin-bottom:12px;font-size:24px;color:#6EE7B7;font-weight:700}
+.ps-lbl{font-size:10px;font-weight:700;color:#6EE7B7;letter-spacing:.8px;margin-bottom:4px}
+.ps-amt{font-size:28px;font-weight:900;color:#fff;letter-spacing:-.02em}
+.ps-usd{font-size:11px;color:var(--muted);margin-top:3px}
+.ps-task{margin-top:10px;font-size:12px;font-weight:700;color:var(--text);background:rgba(0,0,0,.2);border-radius:999px;padding:4px 14px}
+.pay-rows{padding:0 18px;flex:1;overflow-y:auto}
+.pr{display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--line)}
+.pr:last-child{border-bottom:none}
+.pr-l{font-size:11px;color:var(--muted);font-weight:600}
+.pr-v{font-size:11px;font-weight:700;color:var(--text);text-align:right;max-width:160px}
+.pr-v.hl{color:var(--blue2)}
+.lab-b{display:flex;align-items:center;gap:6px;background:rgba(47,107,255,.1);border:1px solid rgba(47,107,255,.2);border-radius:8px;padding:4px 9px}
+.lab-d{width:6px;height:6px;border-radius:50%;background:var(--blue4)}
+.lab-n{font-size:10px;font-weight:700;color:var(--blue2)}
+.pay-foot{padding:12px 16px 18px;display:flex;flex-direction:column;gap:8px}
+.btn-pri{width:100%;background:var(--blue);border-radius:16px;padding:14px;font-size:13px;font-weight:800;color:#fff;text-align:center;box-shadow:0 6px 22px -4px var(--glow);cursor:pointer;transition:background .14s}
+.btn-pri:active{background:#1E55E6}
+.btn-gh{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--lines);border-radius:16px;padding:13px;font-size:12px;font-weight:700;color:var(--text2);text-align:center;cursor:pointer;transition:background .14s}
+.btn-gh:active{background:rgba(255,255,255,.1)}
+
+/* ════════════════════════════════
+   SCREEN 3 — EARNINGS
+════════════════════════════════ */
+.log-hdr{padding:14px 18px 10px}
+.log-ttl{font-size:18px;font-weight:900;color:var(--text);margin-bottom:3px}
+.log-sub{font-size:10px;color:var(--muted);font-weight:600}
+.log-stats{display:flex;gap:8px;padding:0 16px;margin-bottom:12px}
+.lsc{flex:1;background:var(--panel);border:1px solid var(--lines);border-radius:14px;padding:10px 12px}
+.lsv{font-size:15px;font-weight:900;color:var(--text)}
+.lsl{font-size:9px;color:var(--muted);font-weight:600;margin-top:2px}
+.filters{display:flex;gap:6px;padding:0 16px;margin-bottom:10px;overflow-x:auto}
+.chip{white-space:nowrap;padding:5px 12px;border-radius:999px;font-size:10px;font-weight:700;background:rgba(255,255,255,.05);border:1px solid var(--lines);color:var(--text2);cursor:pointer}
+.chip.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.log-list{flex:1;overflow-y:auto;padding:0 16px}
+.le{background:var(--panel);border:1px solid var(--lines);border-radius:14px;padding:12px;margin-bottom:8px}
+.le-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:7px}
+.le-n{font-size:12px;font-weight:700;color:var(--text)}
+.le-t{font-size:9px;color:var(--muted);margin-top:2px}
+.le-b{font-size:13px;font-weight:900;color:var(--amber);text-align:right}
+.le-u{font-size:9px;color:var(--muted);text-align:right;margin-top:1px}
+.le-tags{display:flex;gap:6px;flex-wrap:wrap}
+
+/* ════════════════════════════════
+   SCREEN 4 — DATA CONTROLS
+════════════════════════════════ */
+.ctrl-hdr{padding:14px 18px 12px}
+.ctrl-ttl{font-size:18px;font-weight:900;color:var(--text);margin-bottom:3px}
+.ctrl-sub{font-size:10px;color:var(--muted);font-weight:600;line-height:1.5}
+.wallet{margin:0 16px 12px;background:linear-gradient(135deg,#1C2A10,#111C0A);border:1px solid rgba(34,197,139,.22);border-radius:16px;padding:13px 15px;display:flex;align-items:center;gap:11px}
+.wc-ic{font-size:18px;font-weight:800;color:var(--btc);flex-shrink:0}
+.wc-l{font-size:10px;color:#6EE7B7;font-weight:700;letter-spacing:.5px}
+.wc-a{font-size:10px;color:var(--muted);margin-top:2px;font-family:monospace}
+.notice{margin:0 16px 12px;background:rgba(47,107,255,.07);border:1px solid rgba(47,107,255,.18);border-radius:13px;padding:10px 12px;display:flex;gap:9px;align-items:flex-start}
+.n-ic{flex-shrink:0;margin-top:1px;color:var(--blue4)}
+.n-txt{font-size:10px;color:var(--blue2);line-height:1.55;font-weight:500}
+.ctrl-list{flex:1;overflow-y:auto;padding:0 16px}
+.cs{font-size:9px;font-weight:700;color:var(--muted);letter-spacing:1px;margin:10px 0 7px}
+.ci{background:var(--panel);border:1px solid var(--lines);border-radius:14px;padding:12px;margin-bottom:8px}
+.ci-row{display:flex;align-items:center;gap:10px;justify-content:space-between}
+.ci-l{display:flex;align-items:center;gap:10px;flex:1;min-width:0}
+.ci-t{font-size:12px;font-weight:700;color:var(--text)}
+.ci-d{font-size:10px;color:var(--muted);margin-top:2px;line-height:1.4}
+.ci-e{font-size:10px;font-weight:700;color:var(--amber);margin-top:6px;padding-top:6px;border-top:1px solid var(--line)}
+.tog{width:44px;height:26px;border-radius:13px;position:relative;flex-shrink:0;cursor:pointer}
+.tog-on{background:var(--blue)}
+.tog-off{background:rgba(255,255,255,.09);border:1px solid var(--lines)}
+.tog-k{position:absolute;top:4px;width:18px;height:18px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.35);transition:left .15s cubic-bezier(.4,0,.2,1)}
+.tog-on .tog-k{left:22px}
+.tog-off .tog-k{left:4px}
+
+/* ── Mobile: full screen ── */
+@media(max-width:420px){
+  body{padding:0;background:var(--card);justify-content:flex-start;gap:0}
+  .pg-brand,.pg-foot{display:none}
+  .shell{width:100%;border-radius:0;padding:0;box-shadow:none;background:transparent}
+  .shell::before,.shell::after{display:none}
+  .screen-area{border-radius:0;height:100dvh!important}
+  .island{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- Page brand -->
+<div class="pg-brand">
+  <div class="brand-row">
+    <svg width="30" height="30" viewBox="0 0 100 100">
+      <defs><clipPath id="lc"><circle cx="50" cy="50" r="48"/></clipPath></defs>
+      <circle cx="50" cy="50" r="50" fill="#2563EB"/>
+      <g clip-path="url(#lc)" fill="white" fill-opacity=".92">
+        <polygon points="60,44 87,72 50,7"/><polygon points="50,38 87,29 13,29"/>
+        <polygon points="40,44 50,7 13,72"/><polygon points="40,56 13,29 50,93"/>
+        <polygon points="50,62 13,72 87,72"/><polygon points="60,56 50,93 87,29"/>
+      </g>
+      <circle cx="50" cy="50" r="14" fill="#2563EB"/>
+    </svg>
+    <div class="brand-name">Gofer <span>AI</span></div>
+  </div>
+  <div class="brand-sub">Record tasks · Earn crypto · Your data, your terms</div>
+</div>
+
+<!-- Phone shell -->
+<div class="shell">
+  <div class="island"></div>
+  <div class="screen-area" id="sa">
+
+    <!-- ══ S0: HOME ══ -->
+    <div class="screen active" id="s0">
+      <div class="status">
+        <span>9:41</span>
+        <div class="si">
+          <svg width="16" height="12" fill="white" opacity=".9"><rect x="0" y="3" width="3" height="9" rx="1"/><rect x="5" y="2" width="3" height="10" rx="1"/><rect x="10" y="0" width="3" height="12" rx="1"/></svg>
+          <svg width="15" height="12" fill="none" stroke="white" stroke-width="1.5" opacity=".9"><path d="M1 4.5C3.8 1.7 7.2 0 11 0s7.2 1.7 10 4.5" opacity=".3"/><path d="M3 7C5 4.8 7.9 3.5 11 3.5s6 1.3 8 3.5" opacity=".5"/><path d="M5.5 9.5C7 8 8.9 7 11 7s4 1 5.5 2.5" opacity=".8"/><circle cx="11" cy="12" r="1.5" fill="white"/></svg>
+          <svg width="25" height="12" fill="none"><rect x="0" y="1" width="22" height="10" rx="3" stroke="white" stroke-width="1.2" opacity=".6"/><rect x="1.5" y="2.5" width="17" height="7" rx="2" fill="white" opacity=".9"/><path d="M23.5 4.5v3a1.5 1.5 0 000-3z" fill="white" opacity=".5"/></svg>
+        </div>
+      </div>
+      <div class="home-hdr">
+        <div class="row between g8">
+          <div><div class="greet">Good morning</div><div class="uname">Chidi</div></div>
+          <div class="avatar">C</div>
+        </div>
+      </div>
+      <div class="earn-card">
+        <div class="ec-lbl">TOTAL EARNED</div>
+        <div class="ec-btc">0.00000847 <span>BTC</span></div>
+        <div class="ec-usd">≈ $0.52 USD · Updated just now</div>
+        <div class="ec-row">
+          <div class="ec-s"><div class="ec-sv">14</div><div class="ec-sl">Tasks Done</div></div>
+          <div class="ec-s"><div class="ec-sv">3</div><div class="ec-sl">Active Labs</div></div>
+          <div class="ec-s"><div class="ec-sv">7×</div><div class="ec-sl">Licensed</div></div>
+        </div>
+      </div>
+      <div class="sh">QUICK ACTIONS</div>
+      <div class="qa-row">
+        <div class="qa" onclick="goTo(1)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+          <div class="qa-lbl">Record</div>
+        </div>
+        <div class="qa" onclick="goTo(3)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          <div class="qa-lbl">Earnings</div>
+        </div>
+        <div class="qa" onclick="goTo(4)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <div class="qa-lbl">My Data</div>
+        </div>
+      </div>
+      <div class="sh">RECENT TASKS</div>
+      <div class="task-list">
+        <div class="tc" onclick="goTo(3)">
+          <div class="mi" style="width:40px;height:40px;background:rgba(247,147,26,.13);color:var(--amber)">LA</div>
+          <div class="f1"><div class="tn">Sort &amp; fold socks</div><div class="tm">Today · MIT Robotics Lab</div></div>
+          <div class="te"><div class="tev">+0.0000001 ₿</div><div class="tes">Licensed</div></div>
+        </div>
+        <div class="tc" onclick="goTo(3)">
+          <div class="mi" style="width:40px;height:40px;background:rgba(34,197,139,.12);color:var(--green)">KT</div>
+          <div class="f1"><div class="tn">Make morning coffee</div><div class="tm">Yesterday · Stanford AI</div></div>
+          <div class="te"><div class="tev">+0.0000001 ₿</div><div class="tes">Licensed</div></div>
+        </div>
+        <div class="tc">
+          <div class="mi" style="width:40px;height:40px;background:rgba(47,107,255,.12);color:var(--blue4)">EG</div>
+          <div class="f1"><div class="tn">Cook scrambled eggs</div><div class="tm">2d ago · Pending review</div></div>
+          <div class="te"><div class="tev" style="color:var(--muted)">Pending</div><div class="tes">In review</div></div>
+        </div>
+        <div class="tc" onclick="goTo(1)">
+          <div class="mi" style="width:40px;height:40px;background:rgba(155,109,255,.12);color:var(--purple)">WM</div>
+          <div class="f1"><div class="tn">Load washing machine</div><div class="tm">Suggested task</div></div>
+          <div class="te"><div class="tev" style="color:var(--blue4)">Record</div><div class="tes">+₿ earn</div></div>
+        </div>
+      </div>
+      <div class="tab-bar">
+        <div class="tab on" onclick="goTo(0)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+          <div class="tab-lbl" style="color:#fff">Home</div>
+        </div>
+        <div class="tab" onclick="goTo(1)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/></svg>
+          <div class="tab-lbl">Record</div>
+        </div>
+        <div class="tab" onclick="goTo(3)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          <div class="tab-lbl">Earnings</div>
+        </div>
+        <div class="tab" onclick="goTo(4)">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          <div class="tab-lbl">My Data</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ S1: RECORD ══ -->
+    <div class="screen s-rec" id="s1">
+      <div class="status" style="z-index:20">
+        <span>9:43</span>
+        <div class="pill p-red g6"><div class="dot" style="background:#FCA5A5;animation:blink 1s infinite"></div>REC</div>
+      </div>
+      <div class="vf">
+        <div class="vf-grid"></div>
+        <div class="vf-ov"></div>
+        <div class="sil"></div><div class="sil-h"></div>
+        <div class="vfc rc-tl"></div><div class="vfc rc-tr"></div>
+        <div class="vfc rc-bl"></div><div class="vfc rc-br"></div>
+        <div class="rec-badge"><div class="live"></div><span class="badge-nm">Folding Laundry</span></div>
+        <div class="ai-chips">
+          <div class="pill p-blue"><div class="dot"></div>Hands · 0.97</div>
+          <div class="pill p-green"><div class="dot" style="background:#6EE7B7"></div>Cloth · 0.91</div>
+        </div>
+        <div class="rec-time">01:24</div>
+        <div class="rec-hint">Natural motion · keep going</div>
+      </div>
+      <div class="rec-ctrl">
+        <div class="earn-prev">Earning: <strong>+0.00000001 BTC</strong> on submit</div>
+        <div class="rec-bar"><div class="rec-fill"></div></div>
+        <div class="rec-btns">
+          <div class="btn-stop" onclick="goTo(0)">
+            <svg width="12" height="12" viewBox="0 0 12 12"><rect width="12" height="12" rx="2" fill="currentColor"/></svg>
+            Stop
+          </div>
+          <div class="btn-sub" onclick="goTo(2)">&#8593; Stop + Submit</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ S2: PAYOUT ══ -->
+    <div class="screen" id="s2">
+      <div class="status">
+        <span>9:51</span>
+        <div class="si"><svg width="25" height="12" fill="none"><rect x="0" y="1" width="22" height="10" rx="3" stroke="white" stroke-width="1.2" opacity=".6"/><rect x="1.5" y="2.5" width="17" height="7" rx="2" fill="white" opacity=".9"/><path d="M23.5 4.5v3a1.5 1.5 0 000-3z" fill="white" opacity=".5"/></svg></div>
+      </div>
+      <div class="pay-hdr">
+        <div class="back" onclick="goTo(0)">&#8249;</div>
+        <div class="pay-ttl">Payout Confirmed</div>
+      </div>
+      <div class="pay-success">
+        <div class="check-ring">✓</div>
+        <div class="ps-lbl">TASK LICENSED &amp; PAID</div>
+        <div class="ps-amt">0.00000001 BTC</div>
+        <div class="ps-usd">≈ $0.00000062 USD</div>
+        <div class="ps-task">Sort &amp; fold socks</div>
+      </div>
+      <div class="pay-rows">
+        <div class="pr"><div class="pr-l">Licensed to</div><div class="lab-b"><div class="lab-d"></div><div class="lab-n">MIT Robotics Lab</div></div></div>
+        <div class="pr"><div class="pr-l">Used for</div><div class="pr-v hl">Dexterous manipulation training</div></div>
+        <div class="pr"><div class="pr-l">Task duration</div><div class="pr-v">1 min 24 sec</div></div>
+        <div class="pr"><div class="pr-l">Quality score</div><div class="pr-v"><div class="pill p-green">94 / 100</div></div></div>
+        <div class="pr"><div class="pr-l">Timestamp</div><div class="pr-v">Apr 29, 2026 · 9:51 AM</div></div>
+        <div class="pr"><div class="pr-l">TX Hash</div><div class="pr-v" style="font-family:monospace;font-size:9px;color:var(--muted)">bc1q...x7f2</div></div>
+        <div class="pr"><div class="pr-l">Times licensed</div><div class="pr-v"><div class="pill p-btc">₿ ×3 so far</div></div></div>
+      </div>
+      <div class="pay-foot">
+        <div class="btn-pri" onclick="goTo(1)">Record Another Task &#8594;</div>
+        <div class="btn-gh" onclick="goTo(3)">View Earnings Log</div>
+      </div>
+    </div>
+
+    <!-- ══ S3: EARNINGS ══ -->
+    <div class="screen" id="s3">
+      <div class="status">
+        <span>9:54</span>
+        <div class="si"><svg width="25" height="12" fill="none"><rect x="0" y="1" width="22" height="10" rx="3" stroke="white" stroke-width="1.2" opacity=".6"/><rect x="1.5" y="2.5" width="17" height="7" rx="2" fill="white" opacity=".9"/><path d="M23.5 4.5v3a1.5 1.5 0 000-3z" fill="white" opacity=".5"/></svg></div>
+      </div>
+      <div class="log-hdr">
+        <div class="log-ttl">Earnings Log</div>
+        <div class="log-sub">Every payout · every lab · full transparency</div>
+      </div>
+      <div class="log-stats">
+        <div class="lsc"><div class="lsv" style="color:var(--amber)">0.0000847 ₿</div><div class="lsl">Total Earned</div></div>
+        <div class="lsc"><div class="lsv">14</div><div class="lsl">Licensed</div></div>
+        <div class="lsc"><div class="lsv" style="color:var(--green)">3</div><div class="lsl">Active Labs</div></div>
+      </div>
+      <div class="filters">
+        <div class="chip on">All</div>
+        <div class="chip">This Week</div>
+        <div class="chip">MIT Lab</div>
+        <div class="chip">Stanford</div>
+      </div>
+      <div class="log-list">
+        <div class="le">
+          <div class="le-top">
+            <div class="row g8"><div class="mi" style="width:34px;height:34px;border-radius:10px;background:rgba(247,147,26,.12);color:var(--amber)">LA</div><div><div class="le-n">Sort &amp; fold socks</div><div class="le-t">Today, 9:51 AM</div></div></div>
+            <div><div class="le-b">+0.00000001 ₿</div><div class="le-u">≈ $0.0000006</div></div>
+          </div>
+          <div class="le-tags"><div class="pill p-blue" style="font-size:9px">MIT Robotics Lab</div><div class="pill p-green" style="font-size:9px">Manipulation</div></div>
+        </div>
+        <div class="le">
+          <div class="le-top">
+            <div class="row g8"><div class="mi" style="width:34px;height:34px;border-radius:10px;background:rgba(34,197,139,.1);color:var(--green)">KT</div><div><div class="le-n">Make morning coffee</div><div class="le-t">Yesterday, 8:12 AM</div></div></div>
+            <div><div class="le-b">+0.00000001 ₿</div><div class="le-u">≈ $0.0000006</div></div>
+          </div>
+          <div class="le-tags"><div class="pill p-blue" style="font-size:9px">Stanford AI Lab</div><div class="pill p-amber" style="font-size:9px">Kitchen tasks</div></div>
+        </div>
+        <div class="le">
+          <div class="le-top">
+            <div class="row g8"><div class="mi" style="width:34px;height:34px;border-radius:10px;background:rgba(155,109,255,.12);color:var(--purple)">WM</div><div><div class="le-n">Load washing machine</div><div class="le-t">Apr 27, 7:44 PM</div></div></div>
+            <div><div class="le-b">+0.00000001 ₿</div><div class="le-u">≈ $0.0000006</div></div>
+          </div>
+          <div class="le-tags"><div class="pill p-blue" style="font-size:9px">CMU Robotics</div><div class="pill p-green" style="font-size:9px">Bimanual</div></div>
+        </div>
+        <div class="le">
+          <div class="le-top">
+            <div class="row g8"><div class="mi" style="width:34px;height:34px;border-radius:10px;background:rgba(47,107,255,.12);color:var(--blue4)">EG</div><div><div class="le-n">Cook scrambled eggs</div><div class="le-t">Apr 26, 7:20 AM</div></div></div>
+            <div><div class="le-b" style="color:var(--muted)">Pending</div><div class="le-u">In review</div></div>
+          </div>
+          <div class="le-tags"><div class="pill p-amber" style="font-size:9px"><div class="dot" style="background:#FCD34D;width:5px;height:5px"></div>Under Review</div></div>
+        </div>
+      </div>
+      <div class="tab-bar">
+        <div class="tab" onclick="goTo(0)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><div class="tab-lbl">Home</div></div>
+        <div class="tab" onclick="goTo(1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/></svg><div class="tab-lbl">Record</div></div>
+        <div class="tab on" onclick="goTo(3)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg><div class="tab-lbl" style="color:#fff">Earnings</div></div>
+        <div class="tab" onclick="goTo(4)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><div class="tab-lbl">My Data</div></div>
+      </div>
+    </div>
+
+    <!-- ══ S4: DATA CONTROLS ══ -->
+    <div class="screen" id="s4">
+      <div class="status">
+        <span>9:58</span>
+        <div class="si"><svg width="25" height="12" fill="none"><rect x="0" y="1" width="22" height="10" rx="3" stroke="white" stroke-width="1.2" opacity=".6"/><rect x="1.5" y="2.5" width="17" height="7" rx="2" fill="white" opacity=".9"/><path d="M23.5 4.5v3a1.5 1.5 0 000-3z" fill="white" opacity=".5"/></svg></div>
+      </div>
+      <div class="ctrl-hdr">
+        <div class="ctrl-ttl">My Data Controls</div>
+        <div class="ctrl-sub">You own your data. Choose exactly who uses it and why.</div>
+      </div>
+      <div class="wallet">
+        <div class="wc-ic">₿</div>
+        <div><div class="wc-l">PAYOUT WALLET</div><div class="wc-a">bc1q...a4x7f2k9</div></div>
+        <div class="pill p-green" style="margin-left:auto;font-size:9px">Connected</div>
+      </div>
+      <div class="notice">
+        <svg class="n-ic" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16" stroke-width="3"/></svg>
+        <div class="n-txt">You earn every time your data is licensed. Toggle off any category to stop new licenses — existing ones are unaffected.</div>
+      </div>
+      <div class="ctrl-list">
+        <div class="cs">DATA USAGE PERMISSIONS</div>
+        <div class="ci">
+          <div class="ci-row">
+            <div class="ci-l"><div class="mi" style="width:34px;height:34px;border-radius:10px;background:rgba(247,147,26,.12);color:var(--amber)">RT</div><div><div class="ci-t">Robot Training</div><div class="ci-d">Dexterous manipulation &amp; motion primitives</div></div></div>
+            <div class="tog tog-on"><div class="tog-k"></div></div>
+          </div>
+          <div class="ci-e">₿ +0.00000001 per license · 7 licenses issued</div>
+        </div>
+        <div class="ci">
+          <div class="ci-row">
+            <div class="ci-l"><div class="mi" style="width:34px;height:34px;border-radius:10px;background:rgba(34,197,139,.1);color:var(--green)">AI</div><div><div class="ci-t">AI Research</div><div class="ci-d">Academic &amp; non-profit use only</div></div></div>
+            <div class="tog tog-on"><div class="tog-k"></div></div>
+          </div>
+          <div class="ci-e">₿ +0.00000001 per license · 4 licenses issued</div>
+        </div>
+        <div class="ci">
+          <div class="ci-row">
+            <div class="ci-l"><div class="mi" style="width:34px;height:34px;border-radius:10px;background:rgba(155,109,255,.12);color:var(--purple)">CO</div><div><div class="ci-t">Commercial Use</div><div class="ci-d">Product companies &amp; enterprise</div></div></div>
+            <div class="tog tog-off"><div class="tog-k"></div></div>
+          </div>
+          <div class="ci-e" style="color:var(--muted)">Currently disabled</div>
+        </div>
+        <div class="cs" style="margin-top:14px">PRIVACY</div>
+        <div class="ci">
+          <div class="ci-row">
+            <div class="ci-l"><div class="mi" style="width:34px;height:34px;border-radius:10px;background:rgba(47,107,255,.1);color:var(--blue4)">ID</div><div><div class="ci-t">Face &amp; Identity</div><div class="ci-d">Auto-blur face before any upload</div></div></div>
+            <div class="tog tog-on"><div class="tog-k"></div></div>
+          </div>
+        </div>
+        <div class="ci">
+          <div class="ci-row">
+            <div class="ci-l"><div class="mi" style="width:34px;height:34px;border-radius:10px;background:rgba(240,74,74,.1);color:#FCA5A5">DL</div><div><div class="ci-t">Delete All My Data</div><div class="ci-d">Remove from all active licenses</div></div></div>
+            <div class="pill p-red" style="font-size:9px">Request</div>
+          </div>
+        </div>
+      </div>
+      <div class="tab-bar">
+        <div class="tab" onclick="goTo(0)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg><div class="tab-lbl">Home</div></div>
+        <div class="tab" onclick="goTo(1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4" fill="currentColor" stroke="none"/></svg><div class="tab-lbl">Record</div></div>
+        <div class="tab" onclick="goTo(3)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg><div class="tab-lbl">Earnings</div></div>
+        <div class="tab on" onclick="goTo(4)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><div class="tab-lbl" style="color:#fff">My Data</div></div>
+      </div>
+    </div>
+
+  </div><!-- /screen-area -->
+</div><!-- /shell -->
+
+<!-- Nav dots + footer -->
+<div class="pg-foot">
+  <div class="nav-dots" id="dots">
+    <div class="ndot on" onclick="goTo(0)"></div>
+    <div class="ndot" onclick="goTo(1)"></div>
+    <div class="ndot" onclick="goTo(2)"></div>
+    <div class="ndot" onclick="goTo(3)"></div>
+    <div class="ndot" onclick="goTo(4)"></div>
+  </div>
+  <div class="pg-tag">Train the future. One task at a time.</div>
+</div>
+
+<script>
+let cur = 0;
+const screens = document.querySelectorAll('.screen');
+const dots = document.querySelectorAll('.ndot');
+
+function goTo(n) {
+  if (n === cur) return;
+  const prev = cur;
+  cur = n;
+
+  // Exit current
+  screens[prev].classList.remove('active');
+  screens[prev].classList.add('exit');
+  setTimeout(() => screens[prev].classList.remove('exit'), 300);
+
+  // Enter new
+  // Direction hint: entering from right or left
+  const dir = n > prev ? 1 : -1;
+  screens[n].style.transform = `translateX(${dir * 20}px)`;
+  screens[n].style.transition = 'none';
+  screens[n].classList.add('active');
+  // Force reflow
+  screens[n].offsetHeight;
+  screens[n].style.transition = '';
+  screens[n].style.transform = '';
+
+  // Dots
+  dots.forEach((d, i) => d.classList.toggle('on', i === n));
+}
+
+// Set screen area height dynamically on mobile
+function setHeight() {
+  const sa = document.getElementById('sa');
+  if (window.innerWidth <= 420) {
+    sa.style.height = window.innerHeight + 'px';
+  } else {
+    sa.style.height = '';
+  }
+}
+setHeight();
+window.addEventListener('resize', setHeight);
+</script>
+</body>
+</html>
