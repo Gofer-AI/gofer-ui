@@ -258,6 +258,185 @@ body {
     border-bottom-color: var(--page-accent);
 }
 
+/* ── Blog Hero (full-bleed banner) ────────────────── */
+.blog-hero {
+    position: relative;
+    width: 100vw;
+    left: 50%; right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    margin-bottom: 25px;
+    overflow: hidden;
+    background:
+        radial-gradient(120% 140% at 82% 0%, rgba(37, 99, 235, 0.10) 0%, transparent 55%),
+        linear-gradient(180deg, #070b16 0%, #060913 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* Photo pinned to the right, faded into the dark on the left */
+.blog-hero-media {
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 56%;
+    z-index: 1;
+}
+.blog-hero-media img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+.blog-hero-media::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        #060913 0%,
+        rgba(6, 9, 19, 0.85) 18%,
+        rgba(6, 9, 19, 0.35) 42%,
+        rgba(6, 9, 19, 0.10) 70%,
+        rgba(6, 9, 19, 0.0) 100%
+    );
+    pointer-events: none;
+}
+/* Graceful state when the photo file is missing */
+.blog-hero-media.is-empty {
+    background:
+        radial-gradient(90% 120% at 70% 20%, rgba(37, 99, 235, 0.22) 0%, transparent 60%),
+        linear-gradient(135deg, #0c1424 0%, #070b16 100%);
+}
+
+/* Decorative diagonal accent at the far right edge */
+.blog-hero::before {
+    content: '';
+    position: absolute;
+    top: -10%; right: -4%;
+    width: 220px; height: 130%;
+    background: linear-gradient(115deg, transparent 40%, rgba(59, 130, 246, 0.28) 50%, transparent 60%);
+    transform: rotate(8deg);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.blog-hero-inner {
+    position: relative;
+    z-index: 3;
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 78px 28px 70px 44px;
+}
+.blog-hero-text { max-width: 560px; }
+
+.hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    color: var(--text-muted);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    margin-bottom: 22px;
+}
+.hero-eyebrow::after {
+    content: '';
+    width: 84px; height: 2px;
+    background: linear-gradient(90deg, var(--brand-blue), transparent);
+    border-radius: 2px;
+}
+
+.hero-title {
+    margin: 0 0 22px 0;
+    color: var(--text-main);
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: -1.5px;
+    font-size: clamp(38px, 5.4vw, 74px);
+}
+.hero-title span { display: block; }
+.hero-title .hero-title-accent {
+    background: linear-gradient(90deg, #3b82f6 0%, #2563eb 60%, #4B68FF 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+}
+
+.hero-lead {
+    color: var(--text-muted);
+    font-size: clamp(15px, 1.4vw, 19px);
+    line-height: 1.65;
+    margin: 0 0 32px 0;
+    max-width: 500px;
+}
+
+.hero-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--text-main);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 15px;
+    padding: 14px 30px;
+    border-radius: 30px;
+    border: 1.5px solid rgba(75, 104, 255, 0.55);
+    background: rgba(75, 104, 255, 0.06);
+    transition: border-color 0.25s ease, background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+}
+.hero-cta svg { width: 18px; height: 18px; transition: transform 0.25s ease; }
+.hero-cta:hover {
+    border-color: var(--brand-blue);
+    background: rgba(75, 104, 255, 0.14);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(37, 99, 235, 0.28);
+}
+.hero-cta:hover svg { transform: translateX(4px); }
+
+/* Feature strip below the hero */
+.blog-hero-features {
+    position: relative;
+    z-index: 3;
+    border-top: 1px solid rgba(255, 255, 255, 0.07);
+    background: rgba(6, 9, 19, 0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+.hero-features-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 26px 28px 26px 44px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+}
+.hero-feature {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 4px 26px;
+    border-left: 1px solid rgba(255, 255, 255, 0.07);
+}
+.hero-feature:first-child { border-left: none; padding-left: 0; }
+.hero-feature-icon {
+    width: 26px; height: 26px;
+    color: var(--brand-blue);
+    flex: 0 0 26px;
+}
+.hero-feature-text { display: flex; flex-direction: column; gap: 3px; }
+.hero-feature-text strong {
+    color: var(--text-main);
+    font-size: 14.5px;
+    font-weight: 700;
+    line-height: 1.25;
+}
+.hero-feature-text span {
+    color: var(--text-muted);
+    font-size: 12.5px;
+    line-height: 1.35;
+}
+
 /* ── Layout Container ─────────────────────────────── */
 .container {
     max-width: 1180px;
@@ -1046,6 +1225,12 @@ body {
 /* ──────────────────────────────────────────────────────
    RESPONSIVE
    ────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+    .blog-hero-media { width: 46%; }
+    .hero-features-inner { grid-template-columns: repeat(2, 1fr); row-gap: 22px; }
+    .hero-feature:nth-child(3) { border-left: none; padding-left: 0; }
+}
+
 @media (max-width: 800px) {
     .newsletter-card {
         grid-template-columns: 1fr;
@@ -1058,4 +1243,25 @@ body {
     .top-header-links { gap: 14px; }
     .jump-widget { display: none; }
     .intern-header { flex-direction: column; }
+
+    /* Hero stacks: photo becomes a banner above the text */
+    .blog-hero::before { display: none; }
+    .blog-hero-media {
+        position: relative;
+        width: 100%;
+        height: 240px;
+    }
+    .blog-hero-media::after {
+        background: linear-gradient(0deg, #060913 0%, rgba(6, 9, 19, 0.15) 55%, rgba(6, 9, 19, 0.0) 100%);
+    }
+    .blog-hero-inner { padding: 28px 24px 40px; }
+    .blog-hero-text { max-width: none; }
+    .hero-lead { max-width: none; }
+    .hero-features-inner { padding: 22px 24px; row-gap: 20px; column-gap: 18px; }
+}
+
+@media (max-width: 500px) {
+    .hero-features-inner { grid-template-columns: 1fr; }
+    .hero-feature { border-left: none !important; padding-left: 0 !important; }
+    .hero-cta { width: 100%; justify-content: center; }
 }

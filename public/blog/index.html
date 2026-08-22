@@ -41,185 +41,65 @@
         </div>
     </nav>
 
-    <!-- Jump to Topic Widget -->
-    <aside class="jump-widget" id="jump-widget">
-        <div class="jump-widget-collapsed">
-            <span class="jump-arrow">→</span>
-            <span class="jump-text" data-i18n="jump_to_topic">Jump to Topic</span>
-            <span class="jump-arrow">→</span>
-        </div>
-        <div class="jump-widget-expanded">
-            <h4 class="jump-title" data-i18n="jump_to_topic">Jump to Topic</h4>
-            <div class="year-dropdown">
-                <div class="year-header">
-                    <span data-i18n="topic_robotics">Robotics</span>
-                    <span class="year-arrow">▼</span>
-                </div>
-                <div class="months-menu">
-                    <a href="#topic-robotics" class="month-link"><span data-i18n="topic_robotics">Robotics</span> <span class="month-arrow">▸</span></a>
-                    <a href="#topic-ai" class="month-link"><span data-i18n="topic_ai">Artificial Intelligence</span> <span class="month-arrow">▸</span></a>
-                    <a href="#topic-company" class="month-link"><span data-i18n="topic_company">Company News</span> <span class="month-arrow">▸</span></a>
-                    <a href="#topic-culture" class="month-link"><span data-i18n="topic_culture">Culture &amp; Team</span> <span class="month-arrow">▸</span></a>
-                    <a href="/blog/history" class="month-link" style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 6px; padding-top: 10px; color: var(--page-accent); font-weight: 600;"><span data-i18n="nav_blog_history">Blog History</span> <span class="month-arrow">▸</span></a>
-                </div>
-            </div>
-        </div>
-    </aside>
-
     <canvas id="particle-canvas"></canvas>
     <a href="/" class="waitlist-float" aria-label="Join Waitlist">
         <img src="/blog/goferailogoblue.png" alt="Gofer AI">
         <span data-i18n="btn_join_waitlist">Join Waitlist</span>
     </a>
 
-    <div class="fluid-header-container">
-        <video class="bg-video" autoplay muted loop playsinline preload="metadata">
-            <source src="/blog/blogbackgroundvideo.mp4" type="video/mp4">
-        </video>
-        <header class="seamless-header">
-            <img class="header-logo" src="/blog/gofer-logo-square.png" alt="Gofer AI Logo">
-            <h1 class="header-title">Gofer <span class="brand-ai">AI</span> <span class="header-dim" data-i18n="header_blog">Blog</span></h1>
-            <ul class="nav-links">
-                <li><a href="/" data-i18n="nav_gofer_home">Home</a></li>
-                <li><a href="/blog" class="active" data-i18n="nav_recent_posts">Recent Posts</a></li>
-                <li><a href="/blog/history" data-i18n="nav_blog_history">Blog History</a></li>
-            </ul>
-        </header>
-    </div>
-
-    <div class="container">
-        <div id="full-blog" class="page">
-
-            <!-- ── TOPIC: ROBOTICS ──────────────────────────── -->
-            <div class="topic-section-divider reveal" id="topic-robotics">
-                <a href="/blog/history#topic-robotics" style="text-decoration: none; color: inherit;"><h2 class="topic-divider-title" data-i18n="topic_robotics">Robotics</h2></a>
-                <div class="topic-divider-line"></div>
-            </div>
-
-            <div class="blog-grid">
-                <!-- Card: Hackathon Toolkit (Left) -->
-                <div class="blog-card reveal">
-                    <img class="blog-card-image" src="/blog/mar.png" alt="Hackathon Toolkit">
-                    <div class="blog-card-body">
-                        <span class="kicker" data-i18n="blog_howto_kicker">Founder Interview</span>
-                        <h2 class="main-title" data-i18n="blog_howto_title">How To Win A Hackathon: Our Toolkit &amp; How AWS Kiro Made Our Vision Possible</h2>
-                        <span class="date-subtitle" data-i18n="blog_howto_date">March 2026</span>
-                        <p data-i18n="blog_howto_desc">A conversation with Developer Advocate Engineer Saurabh Dahal on how Gofer AI leveraged AWS Kiro to dominate a robotics hackathon.</p>
-                        <a class="btn" href="/blog/howto-post" data-i18n="btn_read_more">Read More →</a>
-                    </div>
-                </div>
-
-                <!-- Card: Hackathon Origin (Right) -->
-                <div class="blog-card reveal">
-                    <img class="blog-card-image" src="/blog/feb.jpg" alt="Gofer AI Origin Story">
-                    <div class="blog-card-body">
-                        <span class="kicker" data-i18n="blog_origin_kicker">Origin Story</span>
-                        <h2 class="main-title" data-i18n="blog_origin_title">Gofer AI: From Hackathon-Winning Project To Robotics Start-Up</h2>
-                        <span class="date-subtitle" data-i18n="blog_origin_date">February 2026</span>
-                        <p data-i18n="blog_origin_desc">How we took 2nd Place at the LabLab hackathon and forged the core robotics data vision that drives Gofer AI today.</p>
-                        <a class="btn" href="/blog/origin-post" data-i18n="btn_read_more">Read More →</a>
-                    </div>
-                </div>
-            </div>
-            <div style="text-align: right; margin: -10px 0 35px 0;">
-                <a href="/blog/history#topic-robotics" class="back-link" style="margin-top: 0;" data-i18n="btn_read_more_blogs">Read More Blogs →</a>
-            </div>
-
-            <!-- ── TOPIC: ARTIFICIAL INTELLIGENCE ─────────── -->
-            <div class="topic-section-divider reveal" id="topic-ai">
-                <a href="/blog/history#topic-ai" style="text-decoration: none; color: inherit;"><h2 class="topic-divider-title" data-i18n="topic_ai">Artificial Intelligence</h2></a>
-                <div class="topic-divider-line"></div>
-            </div>
-
-            <div class="blog-grid">
-                <!-- Card: Beta Release (Left) -->
-                <div class="blog-card reveal">
-                    <img class="blog-card-image" src="/blog/aug.png" alt="Beta Launch">
-                    <div class="blog-card-body">
-                        <span class="kicker" data-i18n="blog_beta_kicker">Product Launch</span>
-                        <h2 class="main-title" data-i18n="blog_beta_title">Coming Soon: The Gofer AI Beta for Organizations</h2>
-                        <span class="date-subtitle" data-i18n="blog_beta_date">Coming Soon</span>
-                        <p data-i18n="blog_beta_desc">After months of intensive engineering and collaboration with our partners, Gofer AI Beta is opening its doors. Join us as we enter the next era of spatial AI data.</p>
-                        <a class="btn" href="/blog/betarelease-post" data-i18n="btn_read_more">Read More →</a>
-                    </div>
-                </div>
-
-                <!-- Card: NVIDIA HQ (Right) -->
-                <div class="blog-card reveal">
-                    <img class="blog-card-image" src="/blog/jun.jpg" alt="NVIDIA HQ Visit">
-                    <div class="blog-card-body">
-                        <span class="kicker" data-i18n="blog_nvidia_kicker">Partnerships</span>
-                        <h2 class="main-title" data-i18n="blog_nvidia_title">Inside Gofer AI's Strategic NVIDIA HQ Visit</h2>
-                        <span class="date-subtitle" data-i18n="blog_nvidia_date">June 2026</span>
-                        <p data-i18n="blog_nvidia_desc">Our team's high-level immersion at NVIDIA HQ in Santa Clara, collaborating with the NVIDIA Inception for Startups team.</p>
-                        <a class="btn" href="/blog/nvidia-post" data-i18n="btn_read_more">Read More →</a>
-                    </div>
-                </div>
-            </div>
-            <div style="text-align: right; margin: -10px 0 35px 0;">
-                <a href="/blog/history#topic-ai" class="back-link" style="margin-top: 0;" data-i18n="btn_read_more_blogs">Read More Blogs →</a>
-            </div>
-
-            <!-- ── TOPIC: COMPANY NEWS ─────────────────────── -->
-            <div class="topic-section-divider reveal" id="topic-company">
-                <a href="/blog/history#topic-company" style="text-decoration: none; color: inherit;"><h2 class="topic-divider-title" data-i18n="topic_company">Company News</h2></a>
-                <div class="topic-divider-line"></div>
-            </div>
-
-            <div class="blog-grid">
-                <!-- Card: Stanford / Partnerships (Left) -->
-                <div class="blog-card reveal">
-                    <img class="blog-card-image" src="/blog/may.jpg" alt="Stanford Demo Day">
-                    <div class="blog-card-body">
-                        <span class="kicker" data-i18n="blog_stanford_kicker">Milestones</span>
-                        <h2 class="main-title" data-i18n="blog_stanford_title">Stanford Stage, Google &amp; NVIDIA Partnerships, &amp; First Open Source Release</h2>
-                        <span class="date-subtitle" data-i18n="blog_stanford_date">May 2026</span>
-                        <p data-i18n="blog_stanford_desc">A landmark month featuring our Stanford Breakthrough Demo Day pitch, program acceptances, and our first open-source release.</p>
-                        <a class="btn" href="/blog/stanford-post" data-i18n="btn_read_more">Read More →</a>
-                    </div>
-                </div>
-
-                <!-- Card: Incorporation (Right) -->
-                <div class="blog-card reveal">
-                    <img class="blog-card-image" src="/blog/apr.jpg" alt="Incorporation">
-                    <div class="blog-card-body">
-                        <span class="kicker" data-i18n="blog_inc_kicker">Company</span>
-                        <h2 class="main-title" data-i18n="blog_inc_title">Making It Official: Gofer AI Incorporates &amp; Secures Stanford Accelerator Spot</h2>
-                        <span class="date-subtitle" data-i18n="blog_inc_date">April 2026</span>
-                        <p data-i18n="blog_inc_desc">Gofer AI officially incorporates as a company and earns a spot in the prestigious Stanford Breakthrough Accelerator.</p>
-                        <a class="btn" href="/blog/incorporation-post" data-i18n="btn_read_more">Read More →</a>
-                    </div>
-                </div>
-            </div>
-            <div style="text-align: right; margin: -10px 0 35px 0;">
-                <a href="/blog/history#topic-company" class="back-link" style="margin-top: 0;" data-i18n="btn_read_more_blogs">Read More Blogs →</a>
-            </div>
-
-            <!-- ── TOPIC: CULTURE & TEAM ───────────────────── -->
-            <div class="topic-section-divider reveal" id="topic-culture">
-                <a href="/blog/history#topic-culture" style="text-decoration: none; color: inherit;"><h2 class="topic-divider-title" data-i18n="topic_culture">Culture &amp; Team</h2></a>
-                <div class="topic-divider-line"></div>
-            </div>
-
-            <div class="blog-grid">
-                <!-- Card: Summer Cohort (Left) -->
-                <div class="blog-card reveal">
-                    <img class="blog-card-image" src="/blog/jul.png" style="object-position: center top;" alt="2026 Summer Cohort">
-                    <div class="blog-card-body">
-                        <span class="kicker" data-i18n="blog_cohort_kicker">Team Spotlight</span>
-                        <h2 class="main-title" data-i18n="blog_cohort_title">Meet the Visionaries: Inside Gofer AI's 2026 Summer Cohort</h2>
-                        <span class="date-subtitle" data-i18n="blog_cohort_date">July 2026</span>
-                        <p data-i18n="blog_cohort_desc">Meet Gabrielle, Joseph, and Tayo — three extraordinary interns shaping the future of spatial computing and robotics data at Gofer AI.</p>
-                        <a class="btn" href="/blog/cohort-post" data-i18n="btn_read_more">Read More →</a>
-                    </div>
-                </div>
-            </div>
-            <div style="text-align: right; margin: -10px 0 35px 0;">
-                <a href="/blog/history#topic-culture" class="back-link" style="margin-top: 0;" data-i18n="btn_read_more_blogs">Read More Blogs →</a>
-            </div>
-
+    <section class="blog-hero">
+        <div class="blog-hero-media">
+            <img src="/blog/healthcare-robotics.jpg"
+                 alt="A robotic feeding-assistant arm at a patient's bedside"
+                 onerror="this.closest('.blog-hero-media').classList.add('is-empty'); this.remove();">
         </div>
-    </div>
+        <div class="blog-hero-inner">
+            <div class="blog-hero-text">
+                <span class="hero-eyebrow" data-i18n="hero_eyebrow">Blog</span>
+                <h1 class="hero-title">
+                    <span data-i18n="hero_title_1">The Future of</span>
+                    <span class="hero-title-accent" data-i18n="hero_title_2">Healthcare Robotics</span>
+                </h1>
+                <p class="hero-lead" data-i18n="hero_lead">From hospital care to everyday support, robotics and AI are helping people live healthier, safer, and more independent lives. Here's what's next.</p>
+                <a class="hero-cta" href="/blog/healthcare-robotics-post">
+                    <span data-i18n="hero_cta">Read the Latest Posts</span>
+                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </a>
+            </div>
+        </div>
+        <div class="blog-hero-features">
+            <div class="hero-features-inner">
+                <div class="hero-feature">
+                    <svg class="hero-feature-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 8.5v5M9.5 11h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+                    <div class="hero-feature-text">
+                        <strong data-i18n="hero_f1_title">Better Patient Care</strong>
+                        <span data-i18n="hero_f1_desc">More support. More independence.</span>
+                    </div>
+                </div>
+                <div class="hero-feature">
+                    <svg class="hero-feature-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 21h9M9.5 21v-4M6 17h7l2.5-4.5M13 12.5l-3-1.5 1.5-3 4 1.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16.5" cy="6" r="2" stroke="currentColor" stroke-width="1.7"/></svg>
+                    <div class="hero-feature-text">
+                        <strong data-i18n="hero_f2_title">Smarter Assistive Robots</strong>
+                        <span data-i18n="hero_f2_desc">Built on real-world data.</span>
+                    </div>
+                </div>
+                <div class="hero-feature">
+                    <svg class="hero-feature-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="9" cy="8" r="2.6" stroke="currentColor" stroke-width="1.7"/><circle cx="16.5" cy="9" r="2" stroke="currentColor" stroke-width="1.7"/><path d="M4 19c0-2.8 2.2-4.6 5-4.6s5 1.8 5 4.6M14.5 19c0-1.9.8-3.3 2.4-3.9 1.9-.7 3.6.7 3.6 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+                    <div class="hero-feature-text">
+                        <strong data-i18n="hero_f3_title">Healthier Communities</strong>
+                        <span data-i18n="hero_f3_desc">Technology that includes everyone.</span>
+                    </div>
+                </div>
+                <div class="hero-feature">
+                    <svg class="hero-feature-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M9 12h6M12.5 9l3 3-3 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    <div class="hero-feature-text">
+                        <strong data-i18n="hero_f4_title">A More Independent Future</strong>
+                        <span data-i18n="hero_f4_desc">Powered by people and AI.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <footer class="site-footer">
         <div class="footer-top">

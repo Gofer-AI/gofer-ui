@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Where Assistive Robots Can Make Care More Human - Gofer AI</title>
+    <meta name="description" content="Assistive robots are moving into everyday care. A grounded look at what is working, where the data matters, and how to build it with privacy first.">
+    <link rel="stylesheet" href="/blog/style.css">
+</head>
+<body data-page-type="blog">
+    <div id="page-curtain"></div>
+    <nav class="top-header-bar">
+        <div class="top-header-container">
+            <a href="/" class="top-header-brand">
+                <img src="/blog/gofer-logo-square.png" alt="Gofer AI Logo">
+                <span>Gofer <span class="brand-ai">AI</span></span>
+            </a>
+                        <div class="top-header-links">
+                <a href="/features" data-i18n="nav_features">Features</a>
+                <a href="/about" data-i18n="nav_about">About</a>
+                <a href="/documentation" data-i18n="nav_docs">Docs</a>
+                <a href="/newsletter" data-i18n="nav_newsletter">Newsletter</a>
+                <a href="/blog" data-i18n="nav_blog">Blog</a>
+                <a href="/faq" data-i18n="nav_faq">FAQ</a>
+                <div class="lang-dropdown" id="lang-dropdown">
+                    <button class="lang-trigger" id="lang-trigger" type="button" aria-haspopup="true" aria-expanded="false">
+                        <img src="/blog/enflag.png" id="lang-current-flag" alt="Language flag">
+                        <span id="lang-current-label">EN</span>
+                        <span class="lang-arrow">&#9662;</span>
+                    </button>
+                    <div class="lang-menu" role="menu">
+                        <button class="lang-option" type="button" onclick="setLanguage('en')"><img src="/blog/enflag.png" alt="English flag"> EN</button>
+                        <button class="lang-option" type="button" onclick="setLanguage('es')"><img src="/blog/esflag.svg" alt="Bandera de Espana"> ES</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+    <canvas id="particle-canvas"></canvas>
+    <a href="/" class="waitlist-float" aria-label="Join Waitlist">
+        <img src="/blog/goferailogoblue.png" alt="Gofer AI">
+        <span>Join Waitlist</span>
+    </a>
+    <div class="fluid-header-container">
+        <video class="bg-video" autoplay muted loop playsinline preload="metadata">
+            <source src="/blog/blogbackgroundvideo.mp4" type="video/mp4">
+        </video>
+        <header class="seamless-header">
+            <img class="header-logo" src="/blog/gofer-logo-square.png" alt="Gofer AI Logo">
+            <h1 class="header-title">Gofer <span class="brand-ai">AI</span> <span class="header-dim">Blog</span></h1>
+            <ul class="nav-links">
+                <li><a href="/">Home</a></li>
+                <li><a href="/blog">All Posts</a></li>
+            </ul>
+        </header>
+    </div>
+    <div class="container">
+        <div class="page">
+            <div class="article-content reveal">
+                <div class="article-header-banner">
+                    <span class="kicker" data-i18n="hc_kicker">Robotics &amp; Care</span>
+                    <h1 class="main-title" data-i18n="hc_title">Where Assistive Robots Can Make Care More Human</h1>
+                    <span class="date-subtitle" data-i18n="hc_date">August 2026</span>
+                </div>
+                <div class="article-body-content">
+                    <img src="/blog/healthcare-robotics.jpg" alt="A robotic feeding-assistant arm at a patient's bedside" style="width:100%; border-radius:12px; max-height:500px; object-fit:cover; margin-bottom:10px; display:block;">
+                    <p class="photo-credit" data-i18n="hc_credit" style="font-size:12px; color:#8a94a7; margin:0 0 25px;">Photo: <a href="https://www.opb.org/article/2025/03/31/think-out-loud-robotic-feeding-assistant-robotics-motot-impairments-food-disabilities-caregivers/" style="color:var(--brand-blue);font-weight:600;" target="_blank" rel="noopener">OPB</a></p>
+                    <p data-i18n="hc_lead">Robots are turning up in places we once thought were too personal for machines: at the bedside, at the kitchen table, in the daily routines of people who need a hand. The interesting question isn't whether they can do the work. It's whether they can do it in a way that makes care feel more human, not less.</p>
+                    <h4 data-i18n="hc_h_need">The need is growing</h4>
+                    <p data-i18n="hc_p_need1">The math is hard to ignore. The World Health Organization estimates that more than 2.5 billion people already rely on an assistive product, and that number is heading toward 3.5 billion by 2050. Among people over 60, roughly two in three will need some kind of support. At the same time, there simply aren't enough caregivers to go around, and the ones we have are stretched thin.</p>
+                    <p data-i18n="hc_p_need2">Assistive robots won't close that gap on their own. But they can take pressure off the routine, physical parts of care, so people can spend their time on the parts that actually require a person.</p>
+                    <h4 data-i18n="hc_h_working">What's already working</h4>
+                    <p data-i18n="hc_p_working1">This isn't science fiction anymore. In New York, the state office for the aging has placed ElliQ, a tabletop companion robot, in the homes of hundreds of older adults to help with isolation and daily check-ins. PARO, a robotic seal used in dementia care, has appeared in real clinical pilots. ReWalk's exoskeleton has cleared regulators and helps people with spinal cord injuries stand and walk. Research robots like Stretch have been tested in people's homes for everyday tasks.</p>
+                    <p data-i18n="hc_p_working2">None of these replace a nurse or a family member. They handle one slice of the day, and they do it consistently.</p>
+                    <h4 data-i18n="hc_h_limits">The promise, and the limits</h4>
+                    <p data-i18n="hc_p_limits">The upside is real: more independence for the person, less strain on the caregiver, and a bit more dignity in tasks that can be hard to ask for help with. But the evidence is still mixed. Some tools help a lot in one setting and barely move the needle in another. Honest pilots measure that difference instead of assuming it.</p>
+                    <h4 data-i18n="hc_h_data">Where the data actually matters</h4>
+                    <p data-i18n="hc_p_data">For physical AI, not all of these tasks are equal. Companionship and monitoring generate a lot of signal but carry the highest privacy risk, because they happen around a person all day. Mobility and transfer, like helping someone stand, sit, or move, are where good demonstration data is most valuable and hardest to collect safely. Everyday tasks like preparing food or handling objects sit in between: useful to learn from, and easier to capture without putting anyone on camera.</p>
+                    <h4 data-i18n="hc_h_privacy">Privacy comes first</h4>
+                    <p data-i18n="hc_p_privacy">Health settings raise the bar. HIPAA and basic decency point the same way: collect less, protect what you keep, and separate anything sensitive from the task itself. The simplest rule we follow is this: record the task, not the patient's identity. A robot can learn how to steady a spoon or fold a blanket without ever needing to know whose kitchen it's in.</p>
+                    <h4 data-i18n="hc_h_now">What partners can do now</h4>
+                    <p data-i18n="hc_p_now_intro">If you run a care organization and want to help build this responsibly, a few things matter more than the rest:</p>
+                    <ul>
+                        <li data-i18n="hc_now1">Start outside direct patient care, in kitchens, storerooms, and back-of-house tasks.</li>
+                        <li data-i18n="hc_now2">Capture the whole task, not just the highlight, so the data reflects how work really happens.</li>
+                        <li data-i18n="hc_now3">Treat your organization as the pilot unit, with one team and one clear workflow.</li>
+                        <li data-i18n="hc_now4">Run a short ethics and privacy checklist before anything is recorded.</li>
+                        <li data-i18n="hc_now5">Measure one quick win, then decide whether to expand.</li>
+                    </ul>
+                    <h4 data-i18n="hc_h_outlook">The road ahead</h4>
+                    <p data-i18n="hc_p_outlook">In the near term, expect assistive robots in the low-stakes, repetitive corners of care. Over the next few years, mobility and transfer support will mature as the data and the safety case catch up. Further out, the goal isn't a robot that replaces human care. It's one that quietly handles the parts that wear people down, so the human parts get more time.</p>
+                    <h4 data-i18n="hc_h_sources">Sources</h4>
+                    <p data-i18n="hc_p_sources">The figures and examples here draw on public reporting and research from the World Health Organization, the New York State Office for the Aging, the U.S. Department of Health and Human Services, and peer-reviewed studies on assistive robotics.</p>
+                    <p style="margin-top:30px;" data-i18n="hc_cta">Gofer AI works with organizations to turn approved, everyday tasks into high-quality training data for robots, carefully, and with privacy built in. If that sounds like a fit for your team, <a href="/contact" style="color:var(--brand-blue);font-weight:600;">we'd like to hear from you</a>.</p>
+                    <a href="/blog" class="back-link" data-i18n="hc_back">&larr; Back to Blog</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <footer class="site-footer">
+        <div class="footer-top">
+            <img src="/blog/gofer-logo-square.png" alt="Gofer AI Logo">
+            <div class="footer-brand">Gofer <span class="brand-ai">AI</span></div>
+            <div class="footer-links">
+                <a href="/contact">Contact</a>
+                <a href="/privacy-policy">Privacy</a>
+                <a href="/contributor-terms">Contributor Terms</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="copyright">&copy; Gofer AI 2026</div>
+            <div class="social-links">
+                <a href="https://www.linkedin.com/company/gofer-ai" aria-label="LinkedIn">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                </a>
+                <a href="https://github.com/goferaispace" aria-label="GitHub">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+    <script src="/blog/script.js"></script>
+</body>
+</html>
