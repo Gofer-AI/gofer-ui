@@ -1,11 +1,12 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Gofer AI - Blog</title>
-    <meta name="description" content="The Gofer AI Blog — insights on robotics, artificial intelligence, company milestones, and the team behind Gofer AI.">
+    <title>Assistive Robotics for Aging and Disability | Gofer AI</title>
+    <meta name="description" content="How assistive robots are supporting mobility, rehabilitation, social connection and everyday independence&mdash;and why real-world human demonstrations matter.">
     <link rel="stylesheet" href="/blog/style.css">
+    <link rel="stylesheet" href="/blog/assistive-robotics.css">
 </head>
 <body data-page-type="blog">
     <div id="page-curtain"></div>
@@ -15,7 +16,7 @@
                 <img src="/blog/gofer-logo-square.png" alt="Gofer AI Logo">
                 <span>Gofer <span class="brand-ai">AI</span></span>
             </a>
-                        <div class="top-header-links">
+            <div class="top-header-links">
                 <a href="/" data-i18n="nav_gofer_home">Home</a>
                 <a href="/about" data-i18n="nav_about">About</a>
                 <a href="/features" data-i18n="nav_technology">Technology</a>
@@ -28,14 +29,14 @@
                     <button class="lang-trigger" id="lang-trigger" type="button" aria-haspopup="true" aria-expanded="false">
                         <img src="/blog/enflag.png" id="lang-current-flag" alt="Language flag">
                         <span id="lang-current-label">EN</span>
-                        <span class="lang-arrow">▾</span>
+                        <span class="lang-arrow">&#9662;</span>
                     </button>
                     <div class="lang-menu" role="menu">
                         <button class="lang-option" type="button" role="menuitem" onclick="setLanguage('en')">
                             <img src="/blog/enflag.png" alt="English flag"> EN
                         </button>
                         <button class="lang-option" type="button" role="menuitem" onclick="setLanguage('es')">
-                            <img src="/blog/esflag.svg" alt="Bandera de España"> ES
+                            <img src="/blog/esflag.svg" alt="Bandera de Espana"> ES
                         </button>
                     </div>
                 </div>
@@ -43,61 +44,413 @@
         </div>
     </nav>
 
-    <canvas id="particle-canvas"></canvas>
+    <main class="assistive-article-wrap">
+<article class="gofer-assistive-blog" lang="en">
+  <header class="gof-hero">
+    <div>
+      <span class="gof-kicker">Gofer AI | AI for Good</span>
+      <h1>Assistive Robotics for Aging and Disability: From Novelty to Everyday Support</h1>
+      <p>How real-world robots are helping people move, communicate, rehabilitate, and live more independently—and why better human demonstrations matter.</p>
+      <p class="gof-byline"><strong>By The Gofer AI Team</strong> · August 20, 2026 · 12–15 min read</p>
+    </div>
+    <figure>
+      <img src="/blog/assistive-robotics-hero.png" alt="A person using a wheelchair interacts with a compact assistive robot in a home." loading="eager">
+      <figcaption>Conceptual illustration generated for Gofer AI. It depicts the kind of everyday human-robot interaction assistive robotics aims to support.</figcaption>
+    </figure>
+  </header>
 
-    <section class="blog-hero">
-        <div class="blog-hero-media">
-            <img src="/blog/healthcare-robotics.jpg"
-                 alt="A robotic feeding-assistant arm at a patient's bedside"
-                 onerror="this.closest('.blog-hero-media').classList.add('is-empty'); this.remove();">
-        </div>
-        <div class="blog-hero-inner">
-            <div class="blog-hero-text">
-                <span class="hero-eyebrow" data-i18n="hero_eyebrow">Blog</span>
-                <h1 class="hero-title">
-                    <span data-i18n="hero_title_1">The Future of</span>
-                    <span class="hero-title-accent" data-i18n="hero_title_2">Healthcare Robotics</span>
-                </h1>
-                <p class="hero-lead" data-i18n="hero_lead">From hospital care to everyday support, robotics and AI are helping people live healthier, safer, and more independent lives. Here's what's next.</p>
-                <a class="hero-cta" href="/blog/healthcare-robotics-post">
-                    <span data-i18n="hero_cta">Read the Latest Posts</span>
-                    <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </a>
-            </div>
-        </div>
-        <div class="blog-hero-features">
-            <div class="hero-features-inner">
-                <div class="hero-feature">
-                    <svg class="hero-feature-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6l7-3z" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M12 8.5v5M9.5 11h5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-                    <div class="hero-feature-text">
-                        <strong data-i18n="hero_f1_title">Better Patient Care</strong>
-                        <span data-i18n="hero_f1_desc">More support. More independence.</span>
-                    </div>
-                </div>
-                <div class="hero-feature">
-                    <svg class="hero-feature-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M5 21h9M9.5 21v-4M6 17h7l2.5-4.5M13 12.5l-3-1.5 1.5-3 4 1.8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16.5" cy="6" r="2" stroke="currentColor" stroke-width="1.7"/></svg>
-                    <div class="hero-feature-text">
-                        <strong data-i18n="hero_f2_title">Smarter Assistive Robots</strong>
-                        <span data-i18n="hero_f2_desc">Built on real-world data.</span>
-                    </div>
-                </div>
-                <div class="hero-feature">
-                    <svg class="hero-feature-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="9" cy="8" r="2.6" stroke="currentColor" stroke-width="1.7"/><circle cx="16.5" cy="9" r="2" stroke="currentColor" stroke-width="1.7"/><path d="M4 19c0-2.8 2.2-4.6 5-4.6s5 1.8 5 4.6M14.5 19c0-1.9.8-3.3 2.4-3.9 1.9-.7 3.6.7 3.6 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
-                    <div class="hero-feature-text">
-                        <strong data-i18n="hero_f3_title">Healthier Communities</strong>
-                        <span data-i18n="hero_f3_desc">Technology that includes everyone.</span>
-                    </div>
-                </div>
-                <div class="hero-feature">
-                    <svg class="hero-feature-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1.7"/><path d="M9 12h6M12.5 9l3 3-3 3" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                    <div class="hero-feature-text">
-                        <strong data-i18n="hero_f4_title">A More Independent Future</strong>
-                        <span data-i18n="hero_f4_desc">Powered by people and AI.</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+  <section class="gof-callout">
+    <h2 style="margin-top:0">The short version</h2>
+    <p>Assistive robotics is becoming less about spectacular demonstrations and more about useful, focused help: mobility assistance, rehabilitation, social engagement, object retrieval, manipulation, logistics, and other everyday tasks. The strongest near-term opportunity is not necessarily a humanoid robot replacing a caregiver. It is a growing collection of specialized systems that can work with people while people remain in control.</p>
+    <p>For Gofer AI, this creates a practical connection. Robots that operate around people need to understand the physical world as it really is—not as a perfectly staged laboratory. Consent-based demonstrations of ordinary tasks can provide valuable examples of how people reach, grasp, carry, fold, open, sort, place, clean, organize, and navigate through varied environments.</p>
+  </section>
+
+  <h2>Why assistive robotics matters now</h2>
+  <p>Assistive technology is already a major part of everyday life. The World Health Organization and UNICEF estimate that more than 2.5 billion people worldwide need one or more assistive products. With population aging and the growing prevalence of noncommunicable diseases, that need is projected to exceed 3.5 billion people by 2050. Access is also deeply unequal: WHO reports that in some settings access can be as low as 3% of need. <a href="https://www.who.int/publications/i/item/9789240049451" target="_blank" rel="noopener">WHO &amp; UNICEF, Global Report on Assistive Technology</a></p>
+
+  <div class="gof-stat-grid">
+    <div class="gof-stat"><strong>2.5B+</strong><span>people currently need one or more assistive products.</span></div>
+    <div class="gof-stat"><strong>3.5B+</strong><span>people could need assistive technology by 2050.</span></div>
+    <div class="gof-stat"><strong>16,700</strong><span>medical robots were sold in the IFR supplier sample in 2024, up 91% year over year.</span></div>
+  </div>
+
+  <p>Those numbers do not mean that robots will solve the access problem by themselves. Cost, availability, training, infrastructure, safety, regulation, and fit with people's actual lives all matter. They do show why practical assistive technologies deserve attention—and why making them genuinely useful requires understanding the environments and routines in which they will operate.</p>
+
+  <h2>Assistive robotics is not one kind of robot</h2>
+  <p>The phrase “assistive robotics” covers a wide range of systems with very different purposes and levels of maturity. Some are designed to help a person stand or walk. Others provide social engagement or therapeutic interaction. Still others are mobile manipulators that can help retrieve or move objects. A fourth group supports logistics and repetitive physical work around care environments.</p>
+
+  <div class="gof-table-wrap">
+    <table>
+      <thead><tr><th>System</th><th>Primary role</th><th>Where it is being used</th><th>Maturity / evidence</th></tr></thead>
+      <tbody>
+        <tr><td><strong>ReWalk 7</strong></td><td>Powered walking assistance for eligible people with spinal cord injury.</td><td>Home, community, rehabilitation.</td><td>Commercial medical device; Lifeward announced FDA 510(k) clearance in March 2025.</td></tr>
+        <tr><td><strong>ElliQ</strong></td><td>Conversation, wellness prompts, activities and social engagement for older adults.</td><td>Homes and community aging programs.</td><td>Commercial deployment; New York State reported almost 900 units in its program as of 2024.</td></tr>
+        <tr><td><strong>Stretch / Stretch Assist</strong></td><td>Mobile manipulation and object assistance.</td><td>Home pilots, research and enterprise development.</td><td>Research / pilot use for individual assistive applications.</td></tr>
+        <tr><td><strong>PARO</strong></td><td>Therapeutic interaction and engagement, particularly in dementia care.</td><td>Long-term care, hospitals and community care.</td><td>Established specialized therapeutic robot; recent randomized evidence continues to evaluate outcomes.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>The International Federation of Robotics reported that sales of medical robots increased 91% to about 16,700 units in 2024 in its supplier sample, while rehabilitation and non-invasive therapy robots increased 106%. IFR explicitly cautions that its service-robot statistics are based on a supplier sample rather than an estimate of the entire market. That distinction matters when describing market growth. <a href="https://ifr.org/worldrobotics/report-2025" target="_blank" rel="noopener">International Federation of Robotics, World Robotics 2025</a></p>
+
+  <h2>What the real-world examples teach us</h2>
+
+  <h3>1. Mobility assistance can be technically impressive and still be hard to use</h3>
+  <p>In March 2025, Lifeward announced that the FDA had cleared the ReWalk 7, its seventh-generation personal exoskeleton, for people with spinal cord injury. That is a meaningful example of assistive robotics moving into commercial medical-device territory. <a href="https://ir.rewalk.com/news-releases/news-release-details/fda-issues-clearance-rewalk-7-exoskeleton" target="_blank" rel="noopener">Lifeward: FDA Issues Clearance for ReWalk 7</a></p>
+
+  <p>But commercial clearance should not be confused with proof that a technology works equally well for every person or situation. A 2024 randomized clinical trial across 15 U.S. Veterans Affairs medical centers studied home and community exoskeletal-assisted walking for veterans with spinal cord injury. The trial did not find statistically significant improvement in its primary quality-of-life outcomes. Actual use was also much lower than expected: participants traveled about 1.53 miles per month on average, and a required companion was unavailable in about 43.9% of recorded instances of non-use. Two exoskeleton-related foot fractures were reported. <a href="https://pubmed.ncbi.nlm.nih.gov/39230903/" target="_blank" rel="noopener">Spungen et al., JAMA Network Open, 2024</a></p>
+
+  <div class="gof-callout">
+    <strong>The lesson:</strong> A robot can work in a technical sense and still fail to fit naturally into everyday life. Convenience, support requirements, safety, affordability, training, and the user's actual environment can determine whether a device becomes genuinely helpful.
+  </div>
+
+  <h3>2. Home assistance has to be designed with the person, not just for the person</h3>
+  <p>A 2024 study published in <em>Ergonomics</em> embedded Hello Robot's Stretch mobile manipulator in the home of an older adult with motor impairments and his care partner for four weeks. An occupational therapist and robotics engineer participated in an immersive, participatory design process with the household. The researchers argue that involving end users and understanding the real home environment can reveal design requirements that would be difficult to identify from a laboratory alone. <a href="https://pubmed.ncbi.nlm.nih.gov/38351886/" target="_blank" rel="noopener">Olatunji et al., Ergonomics, 2024</a></p>
+
+  <p>This is a powerful idea for the broader robotics field: the physical world is full of details that are easy to miss when a task is demonstrated only under controlled conditions. Furniture moves. Objects are different sizes. Lighting changes. People approach tasks differently. A user may have limited reach, fatigue quickly, or prefer one method over another. A robot that learns only the “perfect” version of a task can struggle when reality looks different.</p>
+
+  <h3>3. Social and therapeutic robots are already reaching older adults</h3>
+  <p>New York State's Office for the Aging reported that its ElliQ initiative had made almost 900 units available through its network of aging-services providers as of 2024. The state's report describes participant-reported outcomes, including perceived usefulness and reduced loneliness. Those are program results and should not be treated as equivalent to an independent randomized clinical trial. <a href="https://aging.ny.gov/system/files/documents/2024/09/innovations-in-aging-report.pdf" target="_blank" rel="noopener">New York State Office for the Aging, Innovations in Aging Report</a></p>
+
+  <p>PARO provides another example. A 2026 cluster-randomized study across six group homes included 85 older adults with dementia and compared once-weekly with thrice-weekly self-directed PARO sessions for one month. The researchers found a statistically significant reduction in caregiver-burden scores in the thrice-weekly group, while the difference in behavioral and psychological symptoms of dementia did not reach statistical significance. <a href="https://doi.org/10.1002/alz.71163" target="_blank" rel="noopener">Inoue et al., Alzheimer's &amp; Dementia, 2026</a></p>
+
+  <p>The broader point is not that one robot is “the answer.” It is that assistive robotics is becoming a diverse field in which different systems can support different parts of daily life.</p>
+
+  <h2>Independence—not automation for its own sake</h2>
+  <p>The strongest argument for assistive robotics is not that machines can do more work. It is that people can have more choices.</p>
+  <p>A useful assistive robot might let someone retrieve an object without asking another person. It might make a difficult household task possible. It might help a therapist deliver repetitive rehabilitation exercises. It might reduce the physical burden of moving supplies in a care environment. It might provide social engagement. Or it might take on a repetitive back-of-house task so a caregiver can spend more time with a person.</p>
+  <p>This distinction matters. The goal should be to extend human capability, not to automate people out of the picture.</p>
+
+  <h2>The hidden challenge: teaching robots about the physical world</h2>
+  <p>Robots do not learn physical tasks simply because we can describe them in words. They need information about movement, objects, environments, timing, variation, and successful outcomes. A human can understand “pick up the shirt and fold it” almost instantly. A robot needs to connect that instruction to a sequence of physical actions while dealing with a shirt that may be wrinkled, partly hidden, on a different surface, or held in a different orientation.</p>
+
+  <p>This is where real-world demonstrations become important. Demonstrations can capture not only the final result but the path taken to get there: where the hands move, how objects are approached, how the person adapts to the environment, and what changes when something does not go exactly as planned.</p>
+
+  <div class="gof-callout">
+    <h3 style="margin-top:0">Why this matters to Gofer AI</h3>
+    <p>Gofer AI's focus is the data layer behind physical AI: transforming consented human demonstrations into useful, structured, high-quality data for robotics developers. The opportunity is not to record patients or turn sensitive care settings into training grounds. It is to learn from ordinary physical work in privacy-conscious environments and help developers build systems that understand how humans actually interact with the world.</p>
+  </div>
+
+  <h2>A safer starting point for real-world data</h2>
+  <p>Assistive environments can contain unusually sensitive information: faces, voices, health-related details, movement patterns, private documents, household layouts, and other information people may reasonably expect to remain private. A responsible data strategy therefore has to begin with the boundaries—not add them later.</p>
+
+  <p>For Gofer's current program materials, the guide supplied for this article emphasizes a conservative beta approach: adults only; no recording of real patients or clinical-care environments unless a separately authorized program is designed for that setting; and no minors, medical information, confidential documents, or people who have not consented to appear in recordings. Those are program-specific safeguards, not universal legal advice, and any deployment should be reviewed for the applicable laws, contracts, and institutional requirements.</p>
+
+  <p>There is still an enormous amount of useful physical activity outside direct patient care. Organizations can potentially demonstrate tasks such as:</p>
+  <ul>
+    <li>stocking supplies or shelves;</li>
+    <li>sorting donations or garments;</li>
+    <li>folding linens;</li>
+    <li>packing boxes;</li>
+    <li>organizing materials;</li>
+    <li>cleaning work areas;</li>
+    <li>handling containers and everyday objects; and</li>
+    <li>other repetitive, consent-safe back-of-house activities.</li>
+  </ul>
+
+  <p>These tasks may look ordinary—and that is precisely why they are valuable. Future assistive robots will have to operate in ordinary environments filled with ordinary objects.</p>
+
+  <h2>Human-centered design is also a data problem</h2>
+  <p>Participatory design research suggests that the best assistive systems emerge when the people who will use them are involved in development. The same principle applies to data. If a dataset represents only one type of person, one room, one object, one camera angle, or one “perfect” demonstration, the resulting system may not generalize well.</p>
+
+  <p>For physical AI, useful data should therefore aim for diversity in safe, appropriate ways: different object shapes, different layouts, different approaches to a task, different speeds, and realistic variations in how people complete the same goal.</p>
+
+  <div class="gof-principles">
+    <div class="gof-principle"><strong>Human-centered</strong><br>Design around people's goals, abilities, preferences, and dignity.</div>
+    <div class="gof-principle"><strong>Consent first</strong><br>Make participation voluntary and keep people informed about how recordings are used.</div>
+    <div class="gof-principle"><strong>Privacy by design</strong><br>Keep sensitive people, documents, environments, and information out of standard collection workflows.</div>
+    <div class="gof-principle"><strong>Representative data</strong><br>Capture safe variation instead of only perfectly staged demonstrations.</div>
+    <div class="gof-principle"><strong>Human oversight</strong><br>Robots should support human decisions and agency, especially in high-stakes settings.</div>
+    <div class="gof-principle"><strong>Quality over volume</strong><br>More recordings are not automatically better; useful data must be consistent, relevant, and validated.</div>
+  </div>
+
+  <h2>Safety and responsible AI are not optional</h2>
+  <p>Assistive robots operate unusually close to people. Some may physically support a person's body or interact with objects around them. That makes failures fundamentally different from a bad chatbot answer.</p>
+
+  <p>ISO 13482 establishes safety requirements for personal-care robots, including hazards associated with physical human-robot interaction. The standard is part of the broader safety landscape for robots that operate around people; specific medical and rehabilitation applications can also fall under separate regulatory and safety frameworks. <a href="https://www.iso.org/standard/53820.html" target="_blank" rel="noopener">ISO 13482</a></p>
+
+  <p>For AI systems, WHO's guidance on ethics and governance for AI in health emphasizes human autonomy, safety and public benefit, transparency and explainability, accountability, inclusiveness and equity, and sustainability. <a href="https://www.who.int/publications/i/item/9789240029200" target="_blank" rel="noopener">WHO, Ethics and Governance of Artificial Intelligence for Health</a></p>
+
+  <p>NIST's AI Risk Management Framework provides another useful reference point. Its trustworthiness characteristics include validity and reliability, safety, security and resilience, accountability and transparency, explainability and interpretability, privacy enhancement, and fairness with harmful bias managed. NIST organizes practical risk management around the functions Govern, Map, Measure, and Manage. <a href="https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10" target="_blank" rel="noopener">NIST AI RMF 1.0</a></p>
+
+  <h2>What could the next 10–15 years look like?</h2>
+  <p>It would be a mistake to present a precise timetable for robotics. Technology adoption depends on cost, safety, regulation, hardware reliability, data, user acceptance, and many other factors. But a useful way to think about the trajectory is in terms of increasing task breadth rather than a single dramatic “robot arrives” moment.</p>
+
+  <h3>Near term: roughly 1–3 years</h3>
+  <ul>
+    <li>Continued expansion of commercial exoskeleton and rehabilitation systems.</li>
+    <li>More social and companion-robot programs for aging populations.</li>
+    <li>Narrow logistics, fetching, cleaning, and object-handling applications.</li>
+    <li>Growth in real-world demonstration datasets for physical AI.</li>
+  </ul>
+
+  <h3>Mid term: roughly 3–7 years</h3>
+  <ul>
+    <li>Mobile manipulators handling broader sets of household and workplace tasks.</li>
+    <li>Greater personalization for individual mobility and accessibility needs.</li>
+    <li>More capable combinations of human teleoperation and autonomous behavior.</li>
+    <li>Stronger safety, evaluation, and certification practices for service robots.</li>
+  </ul>
+
+  <h3>Longer term: roughly 7–15 years</h3>
+  <ul>
+    <li>Assistive robots that can generalize across more homes, objects, and task variations.</li>
+    <li>Robots that can acquire new behaviors from human demonstrations.</li>
+    <li>More adaptive physical assistance tailored to individual users.</li>
+    <li>Potential integration of assistive robotics into broader aging-in-place infrastructure.</li>
+  </ul>
+
+  <p>These are illustrative scenarios, not promised release dates or forecasts from a particular manufacturer.</p>
+
+  <h2>What this means for organizations today</h2>
+  <p>An organization does not need to own a robot to participate in the robotics ecosystem. It may already perform the kinds of physical activities that future robots will need to understand.</p>
+
+  <p>A donation center has people picking up irregular objects, sorting garments, moving items, and placing them on shelves. A food bank has packing, inspection, container handling, and stocking. A community organization may perform laundry, cleaning, and material-organization tasks. Those activities are not “robotics demonstrations” in the traditional sense. They are examples of humans solving physical problems in real environments.</p>
+
+  <p>That is the opportunity Gofer AI sees: helping turn ordinary, consented demonstrations into a higher-quality data layer for developers building useful physical AI.</p>
+
+  <div class="gof-callout">
+    <h3 style="margin-top:0">A practical starting checklist</h3>
+    <ol>
+      <li><strong>Choose a narrow task.</strong> Start with something repetitive and easy to describe.</li>
+      <li><strong>Make participation voluntary.</strong> Everyone appearing in a recording should understand the program and consent under the applicable process.</li>
+      <li><strong>Keep sensitive environments out.</strong> Do not include patients, medical information, minors, confidential documents, or other protected information in a standard workflow.</li>
+      <li><strong>Capture real variation.</strong> Do not stage every demonstration to look identical.</li>
+      <li><strong>Document the context.</strong> Consistent task descriptions and environment metadata make demonstrations more useful.</li>
+      <li><strong>Review the data.</strong> Quality control should happen before information is treated as training-ready.</li>
+    </ol>
+  </div>
+
+  <h2>The bigger picture</h2>
+  <p>The most exciting future for assistive robotics may not be a machine that looks like a person. It may be a collection of quiet, practical systems that help people do the things they want to do: move around their homes, reach objects, stay connected, practice rehabilitation exercises, organize their surroundings, and spend less time asking someone else for help.</p>
+
+  <p>Getting there will require more than better motors and larger AI models. It will require thoughtful design, rigorous evaluation, strong safety practices, accessible products, responsible data collection, and a commitment to keeping people at the center.</p>
+
+  <p>For Gofer AI, that means focusing on a simple idea: <strong>robots need to learn from the real world if they are going to be useful in the real world.</strong> The everyday tasks people already perform can become part of that learning process—when participation is informed and voluntary, privacy is respected, and the resulting data is handled responsibly.</p>
+
+  <h2>Sources and further reading</h2>
+  <ol class="gof-sources">
+    <li>World Health Organization &amp; UNICEF. <em>Global Report on Assistive Technology</em> (2022). <a href="https://www.who.int/publications/i/item/9789240049451" target="_blank" rel="noopener">who.int</a></li>
+    <li>World Health Organization. <em>Assistive technology</em> fact sheet (2024, updated information). <a href="https://www.who.int/news-room/fact-sheets/detail/assistive-technology" target="_blank" rel="noopener">who.int</a></li>
+    <li>International Federation of Robotics. <em>World Robotics 2025 — Service Robots</em>. <a href="https://ifr.org/worldrobotics/report-2025" target="_blank" rel="noopener">ifr.org</a></li>
+    <li>Lifeward. <em>FDA Issues Clearance for ReWalk 7 Exoskeleton</em> (March 13, 2025). <a href="https://ir.rewalk.com/news-releases/news-release-details/fda-issues-clearance-rewalk-7-exoskeleton" target="_blank" rel="noopener">lifeward.com / investor relations</a></li>
+    <li>Spungen, A. M., et al. <em>Exoskeletal-Assisted Walking in Veterans With Paralysis: A Randomized Clinical Trial.</em> JAMA Network Open (2024). <a href="https://pubmed.ncbi.nlm.nih.gov/39230903/" target="_blank" rel="noopener">PubMed</a></li>
+    <li>Olatunji, S. A., et al. <em>Immersive participatory design of assistive robots to support older adults.</em> Ergonomics (2024). <a href="https://pubmed.ncbi.nlm.nih.gov/38351886/" target="_blank" rel="noopener">PubMed</a></li>
+    <li>New York State Office for the Aging. <em>Innovations in Aging Report</em> (2024), including its ElliQ program description. <a href="https://aging.ny.gov/system/files/documents/2024/09/innovations-in-aging-report.pdf" target="_blank" rel="noopener">aging.ny.gov</a></li>
+    <li>Inoue, et al. <em>A Randomized Trial Using PARO with Minimal Caregiver Involvement on Older Adults with Dementia in Group Homes.</em> Alzheimer's &amp; Dementia (2026). <a href="https://doi.org/10.1002/alz.71163" target="_blank" rel="noopener">DOI</a></li>
+    <li>ISO. <em>ISO 13482:2014 — Robots and robotic devices: Safety requirements for personal care robots.</em> <a href="https://www.iso.org/standard/53820.html" target="_blank" rel="noopener">iso.org</a></li>
+    <li>World Health Organization. <em>Ethics and governance of artificial intelligence for health</em> (2021). <a href="https://www.who.int/publications/i/item/9789240029200" target="_blank" rel="noopener">who.int</a></li>
+    <li>National Institute of Standards and Technology. <em>Artificial Intelligence Risk Management Framework (AI RMF 1.0)</em> (2023). <a href="https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10" target="_blank" rel="noopener">nist.gov</a></li>
+  </ol>
+
+  <p class="gof-disclaimer"><strong>Editorial note:</strong> This article is an original Gofer AI Team synthesis based on the supplied research guide and independently verified source pages. Product examples and research findings are described within the limits of the cited evidence. This article is informational and is not medical, legal, regulatory, or accessibility advice.</p>
+
+  <p class="gof-signoff">The Gofer AI Team · Go For It!</p>
+</article>
+
+<article class="gofer-assistive-blog" lang="es">
+  <header class="gof-hero">
+    <div>
+      <span class="gof-kicker">Gofer AI | IA para el bien</span>
+      <h1>Robótica de Asistencia para el Envejecimiento y la Discapacidad: De la Novedad al Apoyo Cotidiano</h1>
+      <p>Cómo los robots del mundo real pueden ayudar a las personas a moverse, comunicarse, rehabilitarse y vivir con mayor independencia, y por qué las demostraciones humanas reales son tan importantes.</p>
+      <p class="gof-byline"><strong>Por The Gofer AI Team</strong> · 20 de agosto de 2026 · 12–15 min de lectura</p>
+    </div>
+    <figure>
+      <img src="/blog/assistive-robotics-hero.png" alt="Una persona en silla de ruedas interactúa con un robot compacto de asistencia en un hogar." loading="eager">
+      <figcaption>Ilustración conceptual generada para Gofer AI. Representa el tipo de interacción cotidiana entre personas y robots que la robótica de asistencia busca apoyar.</figcaption>
+    </figure>
+  </header>
+
+  <section class="gof-callout">
+    <h2 style="margin-top:0">En pocas palabras</h2>
+    <p>La robótica de asistencia está dejando de enfocarse únicamente en demostraciones espectaculares y está avanzando hacia formas de ayuda concretas: asistencia para la movilidad, rehabilitación, interacción social, recuperación de objetos, manipulación, logística y otras tareas cotidianas. La oportunidad más cercana no necesariamente es un robot humanoide que reemplace a un cuidador. Es una colección creciente de sistemas especializados que pueden trabajar junto a las personas mientras ellas mantienen el control.</p>
+    <p>Para Gofer AI, esto crea una conexión práctica. Los robots que operan alrededor de personas necesitan entender el mundo físico tal como realmente es, no como aparece en un laboratorio perfectamente preparado. Las demostraciones humanas realizadas con consentimiento pueden aportar ejemplos valiosos de cómo las personas alcanzan, agarran, cargan, doblan, abren, clasifican, colocan, limpian, organizan y se desplazan en distintos entornos.</p>
+  </section>
+
+  <h2>Por qué la robótica de asistencia importa ahora</h2>
+  <p>La tecnología de asistencia ya forma parte de la vida cotidiana de millones de personas. La Organización Mundial de la Salud (OMS) y UNICEF estiman que más de 2,500 millones de personas en todo el mundo necesitan uno o más productos de asistencia. Debido al envejecimiento de la población y al aumento de las enfermedades no transmisibles, se proyecta que esa necesidad supere los 3,500 millones de personas para 2050. El acceso también es muy desigual: la OMS informa que, en algunos contextos, puede ser tan bajo como el 3% de la necesidad. <a href="https://www.who.int/publications/i/item/9789240049451" target="_blank" rel="noopener">OMS y UNICEF, Informe mundial sobre tecnología de asistencia</a></p>
+
+  <div class="gof-stat-grid">
+    <div class="gof-stat"><strong>2,500 M+</strong><span>personas necesitan actualmente uno o más productos de asistencia.</span></div>
+    <div class="gof-stat"><strong>3,500 M+</strong><span>personas podrían necesitar tecnología de asistencia para 2050.</span></div>
+    <div class="gof-stat"><strong>16,700</strong><span>robots médicos vendidos en 2024 dentro de la muestra de proveedores de la IFR, un aumento interanual del 91%.</span></div>
+  </div>
+
+  <p>Estas cifras no significan que los robots resolverán por sí solos el problema del acceso. El costo, la disponibilidad, la capacitación, la infraestructura, la seguridad, la regulación y la compatibilidad con la vida real de las personas también importan. Sí muestran por qué las tecnologías prácticas de asistencia merecen atención y por qué, para que sean verdaderamente útiles, necesitamos comprender los entornos y las rutinas donde se utilizarán.</p>
+
+  <h2>La robótica de asistencia no es un solo tipo de robot</h2>
+  <p>La expresión “robótica de asistencia” abarca sistemas muy distintos, con objetivos y niveles de madurez diferentes. Algunos ayudan a una persona a ponerse de pie o caminar. Otros ofrecen interacción social o apoyo terapéutico. También existen manipuladores móviles que pueden ayudar a recuperar o mover objetos. Y otros sistemas apoyan tareas logísticas y trabajos físicos repetitivos en entornos de cuidado.</p>
+
+  <div class="gof-table-wrap">
+    <table>
+      <thead><tr><th>Sistema</th><th>Función principal</th><th>Dónde se utiliza</th><th>Madurez / evidencia</th></tr></thead>
+      <tbody>
+        <tr><td><strong>ReWalk 7</strong></td><td>Asistencia motorizada para caminar en personas elegibles con lesión de la médula espinal.</td><td>Hogar, comunidad y rehabilitación.</td><td>Dispositivo médico comercial; Lifeward anunció la autorización 510(k) de la FDA en marzo de 2025.</td></tr>
+        <tr><td><strong>ElliQ</strong></td><td>Conversación, recordatorios de bienestar, actividades e interacción social para adultos mayores.</td><td>Hogares y programas comunitarios de envejecimiento.</td><td>Implementación comercial; el estado de Nueva York informó casi 900 unidades en su programa en 2024.</td></tr>
+        <tr><td><strong>Stretch / Stretch Assist</strong></td><td>Manipulación móvil y asistencia para interactuar con objetos.</td><td>Pilotos en hogares, investigación y desarrollo empresarial.</td><td>Uso de investigación / piloto para aplicaciones individuales de asistencia.</td></tr>
+        <tr><td><strong>PARO</strong></td><td>Interacción y acompañamiento terapéutico, especialmente en el cuidado de personas con demencia.</td><td>Cuidados de larga duración, hospitales y atención comunitaria.</td><td>Robot terapéutico especializado y establecido; investigaciones recientes continúan evaluando sus resultados.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>La Federación Internacional de Robótica (IFR) informó que las ventas de robots médicos aumentaron 91%, hasta aproximadamente 16,700 unidades en 2024 dentro de su muestra de proveedores, mientras que los robots de rehabilitación y terapia no invasiva aumentaron 106%. La propia IFR advierte que sus estadísticas de robots de servicio se basan en una muestra de proveedores y no representan una estimación de todo el mercado. Esa diferencia es importante al describir el crecimiento del sector. <a href="https://ifr.org/worldrobotics/report-2025" target="_blank" rel="noopener">Federación Internacional de Robótica, World Robotics 2025</a></p>
+
+  <h2>Lo que nos enseñan los ejemplos del mundo real</h2>
+
+  <h3>1. La asistencia para la movilidad puede ser impresionante técnicamente y aun así ser difícil de usar</h3>
+  <p>En marzo de 2025, Lifeward anunció que la FDA había autorizado el ReWalk 7, su exoesqueleto personal de séptima generación, para personas con lesión de la médula espinal. Es un ejemplo importante de cómo la robótica de asistencia está entrando en el ámbito de los dispositivos médicos comerciales. <a href="https://ir.rewalk.com/news-releases/news-release-details/fda-issues-clearance-rewalk-7-exoskeleton" target="_blank" rel="noopener">Lifeward: autorización de la FDA para ReWalk 7</a></p>
+
+  <p>Sin embargo, una autorización comercial no debe confundirse con una prueba de que una tecnología funciona de la misma manera para todas las personas o situaciones. Un ensayo clínico aleatorizado de 2024, realizado en 15 centros de Veterans Affairs en Estados Unidos, estudió el uso de exoesqueletos para caminar en el hogar y la comunidad por parte de veteranos con lesión de la médula espinal. El estudio no encontró una mejora estadísticamente significativa en sus principales resultados de calidad de vida. El uso real también fue menor de lo esperado: los participantes recorrieron aproximadamente 1.53 millas por mes en promedio, y un acompañante requerido no estuvo disponible en alrededor del 43.9% de los casos registrados de no uso. Se reportaron dos fracturas de pie relacionadas con el exoesqueleto. <a href="https://pubmed.ncbi.nlm.nih.gov/39230903/" target="_blank" rel="noopener">Spungen et al., JAMA Network Open, 2024</a></p>
+
+  <div class="gof-callout">
+    <strong>La lección:</strong> Un robot puede funcionar técnicamente y aun así no encajar bien en la vida cotidiana. La comodidad, los requisitos de apoyo, la seguridad, el precio, la capacitación y el entorno real de la persona pueden determinar si una tecnología termina siendo verdaderamente útil.
+  </div>
+
+  <h3>2. La asistencia en el hogar debe diseñarse con la persona, no solamente para la persona</h3>
+  <p>Un estudio publicado en <em>Ergonomics</em> en 2024 incorporó el manipulador móvil Stretch de Hello Robot al hogar de un adulto mayor con limitaciones motoras y de su acompañante durante cuatro semanas. Una terapeuta ocupacional y un ingeniero de robótica participaron en un proceso inmersivo de diseño participativo junto con el hogar. Los investigadores señalan que involucrar a los usuarios y comprender el entorno doméstico real puede revelar requisitos de diseño difíciles de identificar únicamente en un laboratorio. <a href="https://pubmed.ncbi.nlm.nih.gov/38351886/" target="_blank" rel="noopener">Olatunji et al., Ergonomics, 2024</a></p>
+
+  <p>Esta idea es poderosa para todo el campo de la robótica: el mundo físico está lleno de detalles que se pueden pasar por alto cuando una tarea se demuestra únicamente en condiciones controladas. Los muebles cambian de lugar. Los objetos tienen distintos tamaños. La iluminación varía. Las personas realizan las tareas de maneras diferentes. Una persona puede tener un alcance limitado, cansarse con rapidez o preferir un método determinado. Un robot que aprende solamente la versión “perfecta” de una tarea puede tener dificultades cuando la realidad se ve diferente.</p>
+
+  <h3>3. Los robots sociales y terapéuticos ya están llegando a adultos mayores</h3>
+  <p>La Oficina para el Envejecimiento del Estado de Nueva York informó que su iniciativa ElliQ había puesto casi 900 unidades a disposición de adultos mayores a través de su red de proveedores de servicios para personas mayores en 2024. El informe estatal describe resultados reportados por los participantes, entre ellos la percepción de utilidad y una reducción de la soledad. Estos son resultados del programa y no deben presentarse como equivalentes a un ensayo clínico aleatorizado independiente. <a href="https://aging.ny.gov/system/files/documents/2024/09/innovations-in-aging-report.pdf" target="_blank" rel="noopener">Oficina para el Envejecimiento del Estado de Nueva York, Innovations in Aging</a></p>
+
+  <p>PARO ofrece otro ejemplo. Un estudio aleatorizado por conglomerados de 2026 incluyó a 85 adultos mayores con demencia en seis residencias y comparó sesiones autodirigidas de PARO una vez por semana frente a tres veces por semana durante un mes. Los investigadores encontraron una reducción estadísticamente significativa en las puntuaciones de carga del cuidador en el grupo de tres sesiones semanales, mientras que la diferencia en los síntomas conductuales y psicológicos de la demencia no alcanzó significancia estadística. <a href="https://doi.org/10.1002/alz.71163" target="_blank" rel="noopener">Inoue et al., Alzheimer's &amp; Dementia, 2026</a></p>
+
+  <p>El punto general no es que un solo robot sea “la respuesta”. Es que la robótica de asistencia está convirtiéndose en un campo diverso donde distintos sistemas pueden apoyar distintas partes de la vida diaria.</p>
+
+  <h2>Independencia, no automatización por automatizar</h2>
+  <p>El argumento más fuerte a favor de la robótica de asistencia no es que las máquinas puedan hacer más trabajo. Es que las personas pueden tener más opciones.</p>
+  <p>Un robot de asistencia útil podría permitir que alguien recoja un objeto sin tener que pedir ayuda. Podría hacer posible una tarea doméstica difícil. Podría ayudar a un terapeuta a realizar ejercicios repetitivos de rehabilitación. Podría reducir la carga física de trasladar suministros en un entorno de cuidado. Podría ofrecer interacción social. O podría encargarse de una tarea repetitiva de apoyo para que un cuidador tenga más tiempo para estar con una persona.</p>
+  <p>La diferencia es importante. El objetivo debería ser ampliar las capacidades humanas, no eliminar a las personas de la ecuación.</p>
+
+  <h2>El desafío oculto: enseñar a los robots sobre el mundo físico</h2>
+  <p>Los robots no aprenden tareas físicas simplemente porque podamos describirlas con palabras. Necesitan información sobre movimientos, objetos, entornos, tiempos, variaciones y resultados exitosos. Una persona puede entender “recoge la camisa y dóblala” casi de inmediato. Un robot tiene que relacionar esa instrucción con una secuencia de acciones físicas mientras enfrenta una camisa que puede estar arrugada, parcialmente escondida, sobre otra superficie o colocada de otra manera.</p>
+
+  <p>Por eso las demostraciones del mundo real son importantes. Una demostración puede capturar no solo el resultado final, sino el camino para llegar a él: dónde se mueven las manos, cómo se acerca la persona a los objetos, cómo se adapta al entorno y qué cambia cuando algo no sale exactamente como estaba previsto.</p>
+
+  <div class="gof-callout">
+    <h3 style="margin-top:0">Por qué esto importa para Gofer AI</h3>
+    <p>Gofer AI se enfoca en la capa de datos detrás de la IA física: transformar demostraciones humanas realizadas con consentimiento en datos útiles, estructurados y de alta calidad para desarrolladores de robótica. La oportunidad no consiste en grabar pacientes ni convertir entornos sensibles de atención médica en campos de entrenamiento. Consiste en aprender de actividades físicas cotidianas en entornos donde la privacidad se pueda proteger y ayudar a los desarrolladores a crear sistemas que comprendan cómo las personas realmente interactúan con el mundo.</p>
+  </div>
+
+  <h2>Un punto de partida más seguro para los datos del mundo real</h2>
+  <p>Los entornos relacionados con la asistencia pueden contener información especialmente sensible: rostros, voces, datos relacionados con la salud, patrones de movimiento, documentos privados, distribución de viviendas y otra información que las personas esperan razonablemente que permanezca privada. Por eso una estrategia responsable de datos debe empezar por los límites, no agregarlos después.</p>
+
+  <p>Los materiales actuales del programa de Gofer utilizados como base para este artículo plantean un enfoque conservador para la etapa beta: solamente adultos; no grabar pacientes reales ni entornos de atención clínica a menos que exista un programa autorizado específicamente para ese contexto; y mantener fuera de las grabaciones a menores, información médica, documentos confidenciales y personas que no hayan dado su consentimiento. Estas son medidas específicas del programa y no constituyen asesoría legal universal. Cualquier implementación debe revisarse de acuerdo con las leyes, contratos y requisitos institucionales aplicables.</p>
+
+  <p>Aun así, existe una enorme cantidad de actividad física útil fuera de la atención directa a pacientes. Las organizaciones pueden potencialmente demostrar tareas como:</p>
+  <ul>
+    <li>abastecer suministros o estantes;</li>
+    <li>clasificar donaciones o prendas;</li>
+    <li>doblar ropa de cama;</li>
+    <li>empacar cajas;</li>
+    <li>organizar materiales;</li>
+    <li>limpiar áreas de trabajo;</li>
+    <li>manipular recipientes y objetos cotidianos; y</li>
+    <li>otras actividades repetitivas y seguras que se realicen con consentimiento en áreas de apoyo.</li>
+  </ul>
+
+  <p>Estas tareas pueden parecer comunes, y justamente por eso son valiosas. Los futuros robots de asistencia tendrán que funcionar en entornos comunes llenos de objetos comunes.</p>
+
+  <h2>El diseño centrado en las personas también es un problema de datos</h2>
+  <p>La investigación sobre diseño participativo sugiere que los mejores sistemas de asistencia surgen cuando las personas que los utilizarán participan en su desarrollo. El mismo principio se aplica a los datos. Si un conjunto de datos representa solamente un tipo de persona, una habitación, un objeto, un ángulo de cámara o una demostración “perfecta”, el sistema resultante puede no generalizar bien.</p>
+
+  <p>Por eso, para la IA física, los datos útiles deberían buscar una diversidad segura y apropiada: diferentes formas de objetos, distintas distribuciones de espacios, diferentes maneras de acercarse a una tarea, diferentes velocidades y variaciones realistas en cómo las personas alcanzan el mismo objetivo.</p>
+
+  <div class="gof-principles">
+    <div class="gof-principle"><strong>Centrado en las personas</strong><br>Diseñar alrededor de los objetivos, capacidades, preferencias y dignidad de las personas.</div>
+    <div class="gof-principle"><strong>Consentimiento primero</strong><br>La participación debe ser voluntaria y las personas deben entender cómo se utilizarán las grabaciones.</div>
+    <div class="gof-principle"><strong>Privacidad desde el diseño</strong><br>Mantener fuera de los flujos estándar a personas, documentos, entornos e información sensibles.</div>
+    <div class="gof-principle"><strong>Datos representativos</strong><br>Capturar variaciones seguras en lugar de demostraciones perfectamente escenificadas.</div>
+    <div class="gof-principle"><strong>Supervisión humana</strong><br>Los robots deben apoyar la agencia y las decisiones humanas, especialmente en situaciones de alto riesgo.</div>
+    <div class="gof-principle"><strong>Calidad antes que cantidad</strong><br>Más grabaciones no significa automáticamente mejores datos; deben ser consistentes, relevantes y validados.</div>
+  </div>
+
+  <h2>La seguridad y la IA responsable no son opcionales</h2>
+  <p>Los robots de asistencia operan muy cerca de las personas. Algunos pueden sostener físicamente el cuerpo de una persona o interactuar con objetos a su alrededor. Por eso, sus fallas son fundamentalmente diferentes de una respuesta incorrecta de un chatbot.</p>
+
+  <p>ISO 13482 establece requisitos de seguridad para robots de cuidado personal, incluidos los riesgos asociados con la interacción física entre personas y robots. El estándar forma parte del panorama de seguridad para robots que trabajan alrededor de personas; ciertas aplicaciones médicas y de rehabilitación también pueden estar sujetas a marcos regulatorios y de seguridad específicos. <a href="https://www.iso.org/standard/53820.html" target="_blank" rel="noopener">ISO 13482</a></p>
+
+  <p>Para los sistemas de IA, la guía de la OMS sobre ética y gobernanza de la IA en salud destaca la autonomía humana, la seguridad y el beneficio público, la transparencia y explicabilidad, la responsabilidad, la inclusión y equidad, y la sostenibilidad. <a href="https://www.who.int/publications/i/item/9789240029200" target="_blank" rel="noopener">OMS, Ética y gobernanza de la inteligencia artificial para la salud</a></p>
+
+  <p>El Marco de Gestión de Riesgos de IA de NIST ofrece otra referencia útil. Sus características de confiabilidad incluyen validez y confiabilidad, seguridad, protección y resiliencia, responsabilidad y transparencia, explicabilidad e interpretabilidad, privacidad y equidad con manejo de sesgos perjudiciales. NIST organiza la gestión práctica de riesgos alrededor de las funciones Gobernar, Mapear, Medir y Gestionar. <a href="https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10" target="_blank" rel="noopener">NIST AI RMF 1.0</a></p>
+
+  <h2>¿Cómo podrían verse los próximos 10 a 15 años?</h2>
+  <p>Sería un error presentar un calendario preciso para la robótica. La adopción tecnológica depende del costo, la seguridad, la regulación, la confiabilidad del hardware, los datos, la aceptación de los usuarios y muchos otros factores. Una forma útil de pensar en el camino es observar una ampliación gradual de las tareas que los robots pueden realizar, en lugar de esperar un único momento dramático en el que “lleguen los robots”.</p>
+
+  <h3>Corto plazo: aproximadamente 1–3 años</h3>
+  <ul>
+    <li>Continuación de la expansión de exoesqueletos comerciales y sistemas de rehabilitación.</li>
+    <li>Más programas de robots sociales y de compañía para poblaciones mayores.</li>
+    <li>Aplicaciones específicas de logística, recuperación de objetos, limpieza y manipulación.</li>
+    <li>Crecimiento de conjuntos de datos de demostraciones del mundo real para IA física.</li>
+  </ul>
+
+  <h3>Mediano plazo: aproximadamente 3–7 años</h3>
+  <ul>
+    <li>Manipuladores móviles capaces de realizar una mayor variedad de tareas domésticas y laborales.</li>
+    <li>Mayor personalización para necesidades individuales de movilidad y accesibilidad.</li>
+    <li>Combinaciones más capaces de teleoperación humana y comportamiento autónomo.</li>
+    <li>Prácticas más sólidas de seguridad, evaluación y certificación para robots de servicio.</li>
+  </ul>
+
+  <h3>Más largo plazo: aproximadamente 7–15 años</h3>
+  <ul>
+    <li>Robots de asistencia capaces de generalizar entre más hogares, objetos y variaciones de tareas.</li>
+    <li>Robots capaces de adquirir nuevos comportamientos a partir de demostraciones humanas.</li>
+    <li>Asistencia física más adaptable a las necesidades individuales.</li>
+    <li>Posible integración de la robótica de asistencia en una infraestructura más amplia para envejecer en casa.</li>
+  </ul>
+
+  <p>Estos son escenarios ilustrativos, no fechas de lanzamiento prometidas ni pronósticos de un fabricante específico.</p>
+
+  <h2>Qué significa esto para las organizaciones hoy</h2>
+  <p>Una organización no necesita tener un robot para participar en el ecosistema de la robótica. Es posible que ya realice los tipos de actividades físicas que los robots del futuro tendrán que comprender.</p>
+
+  <p>Un centro de donaciones tiene personas que recogen objetos irregulares, clasifican ropa, trasladan artículos y los colocan en estantes. Un banco de alimentos realiza actividades de empaque, inspección, manejo de recipientes y abastecimiento. Una organización comunitaria puede realizar tareas de lavandería, limpieza y organización de materiales. Estas actividades no son “demostraciones de robótica” en el sentido tradicional. Son ejemplos de personas resolviendo problemas físicos en entornos reales.</p>
+
+  <p>Esa es la oportunidad que Gofer AI ve: ayudar a convertir demostraciones cotidianas realizadas con consentimiento en una capa de datos de mayor calidad para desarrolladores que están construyendo IA física útil.</p>
+
+  <div class="gof-callout">
+    <h3 style="margin-top:0">Una lista práctica para comenzar</h3>
+    <ol>
+      <li><strong>Elige una tarea específica.</strong> Empieza con algo repetitivo y fácil de describir.</li>
+      <li><strong>Haz que la participación sea voluntaria.</strong> Toda persona que aparezca en una grabación debe comprender el programa y dar su consentimiento mediante el proceso aplicable.</li>
+      <li><strong>Mantén fuera los entornos sensibles.</strong> No incluyas pacientes, información médica, menores, documentos confidenciales u otra información protegida en un flujo estándar.</li>
+      <li><strong>Captura variaciones reales.</strong> No hagas que todas las demostraciones se vean idénticas.</li>
+      <li><strong>Documenta el contexto.</strong> Descripciones consistentes de las tareas y metadatos del entorno hacen que las demostraciones sean más útiles.</li>
+      <li><strong>Revisa los datos.</strong> El control de calidad debe ocurrir antes de considerar que la información está lista para entrenamiento.</li>
+    </ol>
+  </div>
+
+  <h2>La perspectiva más amplia</h2>
+  <p>El futuro más emocionante de la robótica de asistencia quizá no sea una máquina que parezca una persona. Podría ser una colección de sistemas prácticos y discretos que ayuden a las personas a hacer las cosas que quieren hacer: moverse por su hogar, alcanzar objetos, mantenerse conectadas, practicar ejercicios de rehabilitación, organizar su entorno y pasar menos tiempo teniendo que pedir ayuda.</p>
+
+  <p>Para llegar ahí se necesitará mucho más que mejores motores y modelos de IA más grandes. Se necesitará diseño cuidadoso, evaluación rigurosa, buenas prácticas de seguridad, productos accesibles, recopilación responsable de datos y un compromiso con mantener a las personas en el centro.</p>
+
+  <p>Para Gofer AI, eso se resume en una idea sencilla: <strong>si los robots van a ser útiles en el mundo real, necesitan aprender del mundo real.</strong> Las tareas cotidianas que las personas ya realizan pueden formar parte de ese proceso de aprendizaje cuando la participación es informada y voluntaria, se respeta la privacidad y los datos resultantes se manejan de manera responsable.</p>
+
+  <h2>Fuentes y lecturas recomendadas</h2>
+  <ol class="gof-sources">
+    <li>Organización Mundial de la Salud y UNICEF. <em>Global Report on Assistive Technology</em> (2022). <a href="https://www.who.int/publications/i/item/9789240049451" target="_blank" rel="noopener">who.int</a></li>
+    <li>Organización Mundial de la Salud. <em>Assistive technology</em>, ficha informativa (2024, información actualizada). <a href="https://www.who.int/news-room/fact-sheets/detail/assistive-technology" target="_blank" rel="noopener">who.int</a></li>
+    <li>Federación Internacional de Robótica. <em>World Robotics 2025 — Service Robots</em>. <a href="https://ifr.org/worldrobotics/report-2025" target="_blank" rel="noopener">ifr.org</a></li>
+    <li>Lifeward. <em>FDA Issues Clearance for ReWalk 7 Exoskeleton</em> (13 de marzo de 2025). <a href="https://ir.rewalk.com/news-releases/news-release-details/fda-issues-clearance-rewalk-7-exoskeleton" target="_blank" rel="noopener">Lifeward / relaciones con inversionistas</a></li>
+    <li>Spungen, A. M., et al. <em>Exoskeletal-Assisted Walking in Veterans With Paralysis: A Randomized Clinical Trial.</em> JAMA Network Open (2024). <a href="https://pubmed.ncbi.nlm.nih.gov/39230903/" target="_blank" rel="noopener">PubMed</a></li>
+    <li>Olatunji, S. A., et al. <em>Immersive participatory design of assistive robots to support older adults.</em> Ergonomics (2024). <a href="https://pubmed.ncbi.nlm.nih.gov/38351886/" target="_blank" rel="noopener">PubMed</a></li>
+    <li>Oficina para el Envejecimiento del Estado de Nueva York. <em>Innovations in Aging Report</em> (2024), incluida la descripción de su programa ElliQ. <a href="https://aging.ny.gov/system/files/documents/2024/09/innovations-in-aging-report.pdf" target="_blank" rel="noopener">aging.ny.gov</a></li>
+    <li>Inoue, et al. <em>A Randomized Trial Using PARO with Minimal Caregiver Involvement on Older Adults with Dementia in Group Homes.</em> Alzheimer's &amp; Dementia (2026). <a href="https://doi.org/10.1002/alz.71163" target="_blank" rel="noopener">DOI</a></li>
+    <li>ISO. <em>ISO 13482:2014 — Robots and robotic devices: Safety requirements for personal care robots.</em> <a href="https://www.iso.org/standard/53820.html" target="_blank" rel="noopener">iso.org</a></li>
+    <li>Organización Mundial de la Salud. <em>Ethics and governance of artificial intelligence for health</em> (2021). <a href="https://www.who.int/publications/i/item/9789240029200" target="_blank" rel="noopener">who.int</a></li>
+    <li>National Institute of Standards and Technology. <em>Artificial Intelligence Risk Management Framework (AI RMF 1.0)</em> (2023). <a href="https://www.nist.gov/publications/artificial-intelligence-risk-management-framework-ai-rmf-10" target="_blank" rel="noopener">nist.gov</a></li>
+  </ol>
+
+  <p class="gof-disclaimer"><strong>Nota editorial:</strong> Este artículo es una síntesis original de The Gofer AI Team basada en la guía de investigación proporcionada y en páginas de fuentes verificadas de manera independiente. Los ejemplos de productos y los resultados de investigación se describen dentro de los límites de la evidencia citada. Este artículo es informativo y no constituye asesoría médica, legal, regulatoria ni de accesibilidad.</p>
+
+  <p class="gof-signoff">The Gofer AI Team · Go For It y Pa'lante Más!</p>
+</article>
+    </main>
 
     <footer class="site-footer">
         <div class="footer-top">
@@ -111,7 +464,7 @@
             </div>
         </div>
         <div class="footer-bottom">
-            <div class="copyright">© Gofer AI 2026</div>
+            <div class="copyright">&copy; Gofer AI 2026</div>
             <div class="social-links">
                 <a href="https://www.linkedin.com/company/gofer-ai" aria-label="LinkedIn">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
