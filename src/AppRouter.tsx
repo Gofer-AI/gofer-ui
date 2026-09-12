@@ -11,6 +11,7 @@ import PrivacyPolicy from './pages/PrivacyPolicy';
 import ContributorTerms from './pages/ContributorTerms';
 import LabLabDemo from './components/LabLabDemo';
 import ProfileMenu from './components/ProfileMenu';
+import CookieBanner from './components/CookieBanner';
 import { ErrorBoundaryWithLogging } from './components/ErrorBoundary';
 import { getLoggedInUser } from './lib/auth';
 import { AppProvider, VideoProvider, SearchProvider } from './context';
@@ -104,6 +105,7 @@ export default function AppRouter() {
                   {/* Catch all - redirect to landing */}
                   <Route path="*" element={<Navigate to="/" replace />} />
                 </Routes>
+                <CookieBanner />
               </BrowserRouter>
             </SearchProvider>
           </VideoProvider>

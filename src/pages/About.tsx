@@ -9,7 +9,7 @@ import LabLabLogo from '../assets/lablab_surge_transparent.png';
 export default function About() {
   const { t } = useTranslation();
   return (
-    <div className="min-h-screen bg-gray-950">
+    <div className="min-h-screen bg-gray-950 page-enter">
       <SiteHeader />
 
       {/* Hero Section */}

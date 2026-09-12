@@ -399,10 +399,54 @@ function setLanguage(lang) {
     try { localStorage.setItem('gofer_lang_new', lang); } catch(e) {}
 }
 
+function initCookieBanner() {
+    var KEY = 'gofer_cookie_consent';
+    try { if (localStorage.getItem(KEY)) return; } catch(e) { return; }
+    if (document.querySelector('.gofer-cookie-banner')) return;
+
+    if (typeof translations !== 'undefined') {
+        if (translations.en) {
+            translations.en.cookie_msg = 'We use cookies to operate this site and improve your experience.';
+            translations.en.cookie_accept = 'Accept';
+            translations.en.cookie_privacy = 'Privacy Policy';
+        }
+        if (translations.es) {
+            translations.es.cookie_msg = 'Usamos cookies para operar este sitio y mejorar tu experiencia.';
+            translations.es.cookie_accept = 'Aceptar';
+            translations.es.cookie_privacy = 'Política de Privacidad';
+        }
+    }
+
+    var t = (typeof translations !== 'undefined' && translations[currentLang]) ? translations[currentLang] : null;
+    var msg = t ? t.cookie_msg : 'We use cookies to operate this site and improve your experience.';
+    var acceptTxt = t ? t.cookie_accept : 'Accept';
+    var privacyTxt = t ? t.cookie_privacy : 'Privacy Policy';
+
+    var banner = document.createElement('div');
+    banner.className = 'gofer-cookie-banner';
+    banner.setAttribute('role', 'dialog');
+    banner.setAttribute('aria-label', 'Cookie notice');
+    banner.innerHTML =
+        '<p class="gofer-cookie-text"><span data-i18n="cookie_msg"></span> ' +
+        '<a class="gofer-cookie-link" href="/privacy-policy" data-i18n="cookie_privacy"></a></p>' +
+        '<button type="button" class="gofer-cookie-accept" data-i18n="cookie_accept"></button>';
+    banner.querySelector('[data-i18n="cookie_msg"]').textContent = msg;
+    banner.querySelector('[data-i18n="cookie_privacy"]').textContent = privacyTxt;
+    banner.querySelector('[data-i18n="cookie_accept"]').textContent = acceptTxt;
+
+    document.body.appendChild(banner);
+
+    banner.querySelector('.gofer-cookie-accept').addEventListener('click', function() {
+        try { localStorage.setItem(KEY, 'accepted'); } catch(e) {}
+        if (banner.parentNode) banner.parentNode.removeChild(banner);
+    });
+}
+
 function initPage() {
     let saved = 'en';
     try { saved = localStorage.getItem('gofer_lang_new') || 'en'; } catch(e) {}
     setLanguage(saved);
+    initCookieBanner();
 
     // Apply intentional, slow sequential stagger delays to Recent Dispatches (0.50s -> 1.00s -> 1.50s)
     document.querySelectorAll('.journal-grid').forEach(container => {

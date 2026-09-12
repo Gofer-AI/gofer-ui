@@ -6,7 +6,7 @@ import SiteFooter from '../components/SiteFooter';
 export default function Features() {
   const { t } = useTranslation();
   return (
-    <div className="min-h-screen bg-gray-950">
+    <div className="min-h-screen bg-gray-950 page-enter">
       <SiteHeader />
 
       {/* Hero Section */}

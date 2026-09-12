@@ -30,6 +30,12 @@
     "contributorTerms": "Contributor Terms",
     "copyright": "© Gofer AI 2026"
   },
+  "cookie": {
+    "message": "We use cookies to operate this site and improve your experience.",
+    "learnMore": "Privacy Policy",
+    "accept": "Accept",
+    "ariaLabel": "Cookie notice"
+  },
   "landing": {
     "waitlist": {
       "placeholder": "Enter your work email to apply",

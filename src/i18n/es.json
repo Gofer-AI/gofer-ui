@@ -30,6 +30,12 @@
     "contributorTerms": "Términos de colaboración",
     "copyright": "© Gofer AI 2026"
   },
+  "cookie": {
+    "message": "Usamos cookies para operar este sitio y mejorar tu experiencia.",
+    "learnMore": "Política de Privacidad",
+    "accept": "Aceptar",
+    "ariaLabel": "Aviso de cookies"
+  },
   "landing": {
     "waitlist": {
       "placeholder": "Escribe el correo de tu organización para postular",
